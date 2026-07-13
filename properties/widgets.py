@@ -23,7 +23,7 @@ class LocationPickerWidget(forms.TextInput):
         address_field="address",
         city_field="city",
         district_field="district",
-        default_lat=41.7151,   # поставь координаты своего города по умолчанию
+        default_lat=41.7151,  
         default_lng=44.8271,
         default_zoom=12,
         attrs=None,
@@ -37,8 +37,6 @@ class LocationPickerWidget(forms.TextInput):
         super().__init__(attrs)
  
     def format_value(self, value):
-        # value может быть GEOSGeometry (Point) при редактировании,
-        # либо уже строка "lat,lng" при ошибке валидации формы.
         if value is None or value == "":
             return ""
         if hasattr(value, "y") and hasattr(value, "x"):

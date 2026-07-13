@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
+import builtins
 
 
 class Language(models.TextChoices):
@@ -346,6 +347,27 @@ class Property(BaseModel):
         verbose_name = _("Объект недвижимости")
         verbose_name_plural = _("Объекты недвижимости")
 
+
+    @property
+    def main_image(self):
+        return self.images.filter(is_main=True).first() or self.images.first()
+
+    @property
+    def title_ru(self):
+        t = self.translations.filter(language=Language.RU).first()
+        return t.title if t else self.slug
+
+    @property
+    def rooms(self):
+        val = self.attribute_values.filter(attribute__slug="rooms").first()
+        return val.value_integer if val else None
+    
+    @property
+    def is_new(self):
+        from django.utils import timezone
+        from datetime import timedelta
+        return self.created_at >= timezone.now() - timedelta(days=7)
+    
     def __str__(self):
         translation = self.translations.filter(language=Language.RU).first()
         return translation.title if translation else self.slug
@@ -622,6 +644,18 @@ class PropertyAttributeValue(BaseModel):
         ]
         verbose_name = _("Значение характеристики")
         verbose_name_plural = _("Значения характеристик")
+    
+    @builtins.property
+    def display_value(self):
+        if self.value_integer is not None:
+            return self.value_integer
+        if self.value_decimal is not None:
+            return self.value_decimal
+        if self.value_boolean is not None:
+            return "Да" if self.value_boolean else "Нет"
+        if self.value_choice:
+            return str(self.value_choice)
+        return self.value_text
 
     def __str__(self):
         return f"{self.property} — {self.attribute}"

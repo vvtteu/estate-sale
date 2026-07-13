@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Каталог недвижимости — Adjara Estate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/iconfont/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0e1c2e;
+    --navy-2: #142943;
+    --navy-soft: rgba(14,28,46,0.06);
+    --gold: #c9a24a;
+    --gold-light: #e9cf8f;
+    --teal: #2f7a74;
+    --teal-light: #dcece9;
+    --cream: #f7f2e6;
+    --white: #ffffff;
+    --text: #142132;
+    --text-muted: #6b7280;
+    --border: rgba(14,28,46,0.1);
+  }
+  body { font-family: 'Manrope', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+  h1, h2, h3, .display { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
+  a { text-decoration: none; color: inherit; }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+
+  /* HEADER */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(14,28,46,0.94); backdrop-filter: blur(14px);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--white); }
+  .brand-emblem { width: 38px; height: 38px; border: 1.5px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .brand-emblem i { color: var(--gold); font-size: 18px; }
+  .brand-text { line-height: 1.05; }
+  .brand-text .name { font-family: 'Cormorant Garamond', serif; font-size: 19px; letter-spacing: 0.14em; }
+  .brand-text .name span { color: var(--gold); }
+  .brand-text .tag { font-size: 9px; letter-spacing: 0.16em; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+
+  /* MAIN CONTENT AREA */
+  .catalog-page { padding-top: 130px; padding-bottom: 92px; }
+
+  .catalog-head { margin-bottom: 36px; }
+  .catalog-head h1 { font-size: 42px; color: var(--navy); margin-bottom: 8px; }
+  .catalog-head p { color: var(--text-muted); font-size: 15px; }
+
+  /* ADVANCED FILTER PANEL */
+  .filter-panel { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 28px; box-shadow: 0 10px 30px rgba(14,28,46,0.04); margin-bottom: 44px; }
+  .filter-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .filter-group { display: flex; flex-direction: column; gap: 6px; }
+  .filter-group label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--teal); }
+
+  .filter-panel select, .filter-panel input {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    font-family: 'Manrope', sans-serif; font-size: 14px; color: var(--text); background: var(--cream); outline: none; transition: border-color 0.2s;
+  }
+  .filter-panel select:focus, .filter-panel input:focus { border-color: var(--teal); background: var(--white); }
+
+  .range-inputs { display: flex; gap: 8px; }
+
+  .filter-actions { grid-column: span 4; display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .btn-reset { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 12px 24px; border-radius: 8px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+  .btn-reset:hover { background: rgba(14,28,46,0.03); color: var(--navy); }
+  .btn-submit { background: var(--navy); color: var(--white); border: none; padding: 12px 32px; border-radius: 8px; font-size: 13.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.2s; }
+  .btn-submit:hover { background: var(--navy-2); }
+
+  /* LISTINGS GRID */
+  .listings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .card { background: var(--white); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); transition: transform 0.25s, box-shadow 0.25s; position: relative;}
+  .card:hover { transform: translateY(-6px); box-shadow: 0 26px 50px rgba(14,28,46,0.14); }
+
+  .card-img-link { display: block; }
+  .card-img { height: 220px; position: relative; background: linear-gradient(135deg, #cfe4df 0%, #9ec7bd 100%); }
+
+  .card-badge { position: absolute; top: 16px; left: 16px; color: var(--white); padding: 5px 13px; border-radius: 20px; font-size: 11px; letter-spacing: 0.03em; }
+
+  .card-new {
+    position: absolute; top: 16px; right: 58px;
+    display: flex; align-items: center; gap: 3px;
+    background: rgba(255,255,255,0.9); color: var(--teal);
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em;
+    padding: 4px 10px 4px 6px; border-radius: 20px;
+  }
+  .card-new i { font-size: 14px; }
+
+  .card-fav {
+    position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,0.85); border: none; display: flex; align-items: center; justify-content: center;
+    color: var(--navy); font-size: 16px; cursor: pointer; transition: background 0.2s, color 0.2s;
+  }
+  .card-fav:hover { background: var(--white); }
+  .card-fav.active { color: #d1495b; }
+
+  .card-body { padding: 20px 22px 22px; }
+
+  .card-title-link { display: block; }
+  .card-title-link::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1; 
+  }
+  .card-title {
+    font-size: 17px; color: var(--navy); font-weight: 700; margin-bottom: 8px; line-height: 1.3;
+    display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  .card-price { font-family: 'Cormorant Garamond', serif; font-size: 27px; color: var(--navy); margin-bottom: 4px; }
+  .card-price span { font-size: 14px; color: var(--text-muted); font-family: 'Manrope', sans-serif; }
+  .card-addr { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
+  .card-meta { display: flex; gap: 18px; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 14px; }
+  .card-meta span { display: flex; align-items: center; gap: 5px; }
+  .card-meta i { color: var(--teal); }
+
+  .card-map-btn {
+    width: 100%; margin-top: 14px; padding: 10px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: transparent; color: var(--text-muted); font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .card-map-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 64px 0; grid-column: span 3; }
+  .empty-state i { font-size: 48px; color: var(--gold); margin-bottom: 16px; display: block; }
+  .empty-state h3 { font-size: 24px; color: var(--navy); margin-bottom: 8px; }
+  .empty-state p { color: var(--text-muted); font-size: 15px; }
+
+  /* FOOTER */
+  footer { background: var(--navy-2); padding: 40px 0 28px; margin-top: 92px; }
+  .footer-bottom { display: flex; justify-content: space-between; color: rgba(255,255,255,0.35); font-size: 12.5px; flex-wrap: wrap; gap: 10px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .filter-grid { grid-template-columns: repeat(2, 1fr); }
+    .filter-actions { grid-column: span 2; }
+    .listings-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 720px) {
+    .filter-grid { grid-template-columns: 1fr; }
+    .filter-actions { grid-column: span 1; flex-direction: column-reverse; }
+    .btn-submit, .btn-reset { width: 100%; justify-content: center; }
+    .listings-grid { grid-template-columns: 1fr; }
+    .catalog-head h1 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav-inner">
+    <a href="/" class="brand">
+      <div class="brand-emblem"><i class="ti ti-building-arch"></i></div>
+      <div class="brand-text">
+        <div class="name">ADJARA <span>ESTATE</span></div>
+        <div class="tag">Real Estate in Kobuleti</div>
+      </div>
+    </a>
+  </div>
+</header>
+
+<main class="container catalog-page">
+  <div class="catalog-head">
+    <h1>Каталог недвижимости</h1>
+    <p>Найдено объектов: {{ properties.count }}</p>
+  </div>
+
+  <form method="GET" action="" class="filter-panel">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label>Тип сделки</label>
+        <select name="deal_type">
+          <option value="">Все варианты</option>
+          <option value="sale" {% if request.GET.deal_type == 'sale' %}selected{% endif %}>Купить</option>
+          <option value="rent" {% if request.GET.deal_type == 'rent' %}selected{% endif %}>Арендовать</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Тип недвижимости</label>
+        <select name="property_type">
+          <option value="">Все типы</option>
+          {% for type in property_types %}
+            <option value="{{ type.id }}" {% if request.GET.property_type == type.id|stringformat:"i" %}selected{% endif %}>{{ type }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Цена</label>
+        <div class="range-inputs">
+          <input type="number" name="min_price" placeholder="От" value="{{ request.GET.min_price }}">
+          <input type="number" name="max_price" placeholder="До" value="{{ request.GET.max_price }}">
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>Поиск по локации</label>
+        <input type="text" name="search" placeholder="Улица, район..." value="{{ request.GET.search }}">
+      </div>
+      <div class="filter-group">
+        <label>Комнат</label>
+        <select name="rooms">
+          <option value="">Любое</option>
+          <option value="1" {% if request.GET.rooms == '1' %}selected{% endif %}>1 комната</option>
+          <option value="2" {% if request.GET.rooms == '2' %}selected{% endif %}>2 комнаты</option>
+          <option value="3" {% if request.GET.rooms == '3' %}selected{% endif %}>3 комнаты</option>
+          <option value="4" {% if request.GET.rooms == '4' %}selected{% endif %}>4+ комнат</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Площадь м²</label>
+        <div class="range-inputs">
+          <input type="number" name="min_area" placeholder="От" value="{{ request.GET.min_area }}">
+          <input type="number" name="max_area" placeholder="До" value="{{ request.GET.max_area }}">
+        </div>
+      </div>
+    </div>
+    <div class="filter-actions">
+      <a href="{% url 'properties:catalog' %}" class="btn-reset">Сбросить</a>
+      <button type="submit" class="btn-submit">
+        <i class="ti ti-search"></i> Найти объекты
+      </button>
+    </div>
+  </form>
+
+  <div class="listings-grid">
+    {% for property in properties %}
+      <div class="card">
+        <a href="{% url 'properties:detail' property.slug %}" class="card-img-link">
+          <div class="card-img"
+               {% with img=property.main_image %}
+                 {% if img %}style="background-image: url('{{ img.image.url }}'); background-size: cover; background-position: center;"{% endif %}
+               {% endwith %}>
+            <span class="card-badge" style="background: {{ property.status.color|default:'#0e1c2e' }};">
+              {{ property.status }}
+            </span>
+            {% if property.is_new %}
+              <span class="card-new"><i class="ti ti-point-filled"></i> Новое</span>
+            {% endif %}
+          </div>
+        </a>
+        <button class="card-fav" type="button" data-property-id="{{ property.id }}" aria-label="В избранное">
+          <i class="ti ti-heart"></i>
+        </button>
+        <div class="card-body">
+          <a href="{% url 'properties:detail' property.slug %}" class="card-title-link">
+            <div class="card-title">{{ property.title_ru }}</div>
+          </a>
+          <div class="card-price">
+            {% if property.deal_type.slug == 'rent' %}
+              {{ property.price }} {{ property.currency }} <span>/ мес</span>
+            {% else %}
+              {{ property.price }} {{ property.currency }}
+            {% endif %}
+          </div>
+          <div class="card-addr">
+            <i class="ti ti-map-pin"></i>
+            {{ property.address|default:property.district|default:property.city }}
+          </div>
+          <div class="card-meta">
+            {% if property.rooms %}
+              <span><i class="ti ti-bed"></i> {{ property.rooms }} комн.</span>
+            {% endif %}
+            {% if property.area_total %}
+              <span><i class="ti ti-ruler-2"></i> {{ property.area_total }} м²</span>
+            {% endif %}
+          </div>
+          {% if property.location %}
+            <button class="card-map-btn" type="button"
+                    data-lat="{{ property.location.y }}" data-lng="{{ property.location.x }}">
+              <i class="ti ti-map-2"></i> Показать на карте
+            </button>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <div class="empty-state">
+        <i class="ti ti-search-off"></i>
+        <h3>Ничего не найдено</h3>
+        <p>Попробуйте изменить параметры фильтрации или сбросить их.</p>
+      </div>
+    {% endfor %}
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-bottom">
+    <p>© 2026 Adjara Estate. Все права защищены.</p>
+    <p>Кобулети, Аджария, Грузия</p>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.card-fav').forEach(function(btn) {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    this.classList.toggle('active');
+    // TODO: когда будет готов backend для избранного — отправлять запрос, например:
+    // fetch(`/api/favorites/${this.dataset.propertyId}/toggle/`, {method: 'POST', headers: {...}})
+  });
+});
+
+document.querySelectorAll('.card-map-btn').forEach(function(btn) {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    // TODO: реализовать позже — открыть модалку/секцию с картой,
+    // используя btn.dataset.lat и btn.dataset.lng
+  });
+});
+</script>
+</body>
+</html>
