@@ -1,0 +1,103 @@
+<div class="price-panel">
+  <div class="panel-label">Стоимость предложения</div>
+
+  {% if price_usd and price_gel %}
+    <div class="currency-toggle">
+      <button type="button" class="curr-btn active" data-currency="usd">USD</button>
+      <button type="button" class="curr-btn" data-currency="gel">GEL</button>
+    </div>
+  {% endif %}
+
+  <div class="main-price">
+    {% if price_usd %}
+      <span class="price-usd">${{ price_usd }}</span>
+    {% endif %}
+    {% if price_gel %}
+      <span class="price-gel" style="display:none;">{{ price_gel }} ₾</span>
+    {% endif %}
+    {% if property.deal_type.slug == 'rent' %}<span class="price-period">/ месяц</span>{% endif %}
+  </div>
+
+  <div class="contact-block">
+    <button type="button" class="btn-action btn-reveal" id="revealPhoneBtn">
+      <i class="ti ti-phone"></i> <span id="revealPhoneText">Показать номер</span>
+    </button>
+
+    {% if site_settings.whatsapp_number %}
+      <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Здравствуйте!%20Меня%20интересует%20объект%20{{ property.slug }}"
+         target="_blank" class="btn-action btn-whatsapp">
+        <i class="ti ti-brand-whatsapp"></i> Написать в WhatsApp
+      </a>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .currency-toggle { display: flex; gap: 6px; margin-bottom: 14px; }
+  .curr-btn {
+    flex: 1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--cream);
+    font-size: 12.5px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+  }
+  .curr-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+  .price-gel { display: none; }
+  .contact-block { border-top: 1px solid var(--border); padding-top: 20px; display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+
+  .btn-reveal { background: var(--gold); color: var(--navy); }
+  .btn-reveal:hover { background: var(--gold-light); }
+  .btn-reveal.revealed { background: var(--cream); color: var(--navy); border: 1.5px solid var(--border); cursor: default; }
+
+  .price-panel { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: 0 20px 40px rgba(14,28,46,0.05); }
+  .panel-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal); margin-bottom: 6px; }
+
+  .main-price { font-family: 'Cormorant Garamond', serif; font-size: 38px; color: var(--navy); font-weight: 600; margin-bottom: 20px; }
+  .main-price .price-usd,
+  .main-price .price-gel {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  /* Только подпись "/ месяц" маленькая и серая, а не сама цена */
+  .main-price .price-period {
+    font-size: 16px;
+    font-family: 'Manrope', sans-serif;
+    color: var(--text-muted);
+    margin-left: 4px;
+  }
+
+  .agent-form { border-top: 1px solid var(--border); padding-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .agent-form h3 { font-size: 18px; color: var(--navy); font-weight: 700; margin-bottom: 4px; }
+  .form-input { width: 100%; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; background: var(--cream); outline: none; transition: all 0.2s; }
+  .form-input:focus { border-color: var(--teal); background: var(--white); }
+
+  .btn-action { width: 100%; background: var(--navy); color: var(--white); border: none; padding: 14px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+  .btn-whatsapp { background: var(--teal); }
+  .btn-whatsapp:hover { background: #235d58; }
+</style>
+
+<script>
+  document.querySelectorAll('.curr-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      var showGel = this.dataset.currency === 'gel';
+      var usdEl = document.querySelector('.price-usd');
+      var gelEl = document.querySelector('.price-gel');
+      if (usdEl) usdEl.style.display = showGel ? 'none' : 'inline';
+      if (gelEl) gelEl.style.display = showGel ? 'inline' : 'none';
+    });
+  });
+
+  var revealBtn = document.getElementById('revealPhoneBtn');
+  if (revealBtn) {
+    revealBtn.addEventListener('click', function () {
+      var phone = "{{ site_settings.phone_number|default:'' }}";
+      if (!phone) {
+        alert('Номер телефона не заполнен в настройках сайта');
+        return;
+      }
+      this.outerHTML = '<a href="tel:' + phone + '" class="btn-action btn-reveal revealed"><i class="ti ti-phone"></i> ' + phone + '</a>';
+    });
+  }
+</script>

@@ -76,7 +76,19 @@
 
   .card-img-link { display: block; }
   .card-img { height: 220px; position: relative; background: linear-gradient(135deg, #cfe4df 0%, #9ec7bd 100%); }
-
+  .card-img-lazy {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    z-index: 0;
+  }
+  
+  .card-badge, .card-new {
+    z-index: 2; 
+  }
   .card-badge { position: absolute; top: 16px; left: 16px; color: var(--white); padding: 5px 13px; border-radius: 20px; font-size: 11px; letter-spacing: 0.03em; }
 
   .card-new {
@@ -125,6 +137,7 @@
     background: transparent; color: var(--text-muted); font-size: 13px; font-weight: 600;
     display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;
     transition: border-color 0.2s, color 0.2s;
+    z-index: 4;
   }
   .card-map-btn:hover { border-color: var(--teal); color: var(--teal); }
 
@@ -232,13 +245,18 @@
     {% for property in properties %}
       <div class="card">
         <a href="{% url 'properties:detail' property.slug %}" class="card-img-link">
-          <div class="card-img"
-               {% with img=property.main_image %}
-                 {% if img %}style="background-image: url('{{ img.image.url }}'); background-size: cover; background-position: center;"{% endif %}
-               {% endwith %}>
+          <div class="card-img">
+            
+            {% with img=property.main_image %}
+              {% if img %}
+                <img src="{{ img.image.url }}" alt="{{ property.title_ru }}" loading="lazy" class="card-img-lazy">
+              {% endif %}
+            {% endwith %}
+
             <span class="card-badge" style="background: {{ property.status.color|default:'#0e1c2e' }};">
               {{ property.status }}
             </span>
+            
             {% if property.is_new %}
               <span class="card-new"><i class="ti ti-point-filled"></i> Новое</span>
             {% endif %}

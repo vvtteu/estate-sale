@@ -91,21 +91,6 @@
   /* RIGHT COLUMN: Sticky Booking Panel */
   .sidebar-sticky { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 24px; }
   
-  .price-panel { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: 0 20px 40px rgba(14,28,46,0.05); }
-  .panel-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal); margin-bottom: 6px; }
-  .main-price { font-family: 'Cormorant Garamond', serif; font-size: 38px; color: var(--navy); font-weight: 600; margin-bottom: 20px; }
-  .main-price span { font-size: 16px; font-family: 'Manrope', sans-serif; color: var(--text-muted); }
-
-  /* Contact Agent Form */
-  .agent-form { border-top: 1px solid var(--border); padding-top: 24px; display: flex; flex-direction: column; gap: 14px; }
-  .agent-form h3 { font-size: 18px; color: var(--navy); font-weight: 700; margin-bottom: 4px; }
-  .form-input { width: 100%; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px; background: var(--cream); outline: none; transition: all 0.2s; }
-  .form-input:focus { border-color: var(--teal); background: var(--white); }
-  
-  .btn-action { width: 100%; background: var(--navy); color: var(--white); border: none; padding: 14px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
-  .btn-action:hover { background: var(--navy-2); }
-  .btn-whatsapp { background: var(--teal); }
-  .btn-whatsapp:hover { background: #235d58; }
 
   /* SIMILAR LISTINGS SECTION */
   .similar-section { margin-top: 64px; border-top: 1px solid var(--border); padding-top: 48px; }
@@ -178,7 +163,7 @@
       <div class="thumbs-grid">
         {% for img in property.images.all %}
           <div class="thumb {% if forloop.first %}active{% endif %}" onclick="switchPhoto(this, '{{ img.image.url }}')">
-            <img src="{{ img.image.url }}" alt="Галерея объекта">
+            <img src="{{ img.image.url }}" alt="Галерея объекта" loading="lazy">
           </div>
         {% empty %}
           <!-- Если картинок вообще нет, генерируем пустой слот -->
@@ -210,7 +195,7 @@
         <div class="metric-item">
           <i class="ti ti-building"></i>
           <div class="metric-label">Тип жилья</div>
-          <div class="metric-value">{{ property.property_type.name }}</div>
+          <div class="metric-value">{{ property.property_type }}</div>
         </div>
       </div>
 
@@ -234,7 +219,7 @@
         <div class="tech-specs">
           <div class="spec-row">
             <span class="spec-label">Тип сделки</span>
-            <span class="spec-value">{{ property.deal_type.name }}</span>
+            <span class="spec-value">{{ property.deal_type }}</span>
           </div>
           <div class="spec-row">
             <span class="spec-label">Город</span>
@@ -251,9 +236,9 @@
           {% for attr_val in property.attribute_values.all %}
             {% if attr_val.attribute.slug != 'rooms' %} <!-- Пропускаем комнаты, они уже сверху -->
               <div class="spec-row">
-                <span class="spec-label">{{ attr_val.attribute.name }}</span>
+                <span class="spec-label">{{ attr_val.attribute }}</span>
                 <span class="spec-value">
-                  {{ attr_val.value_string|default:attr_val.value_integer|default:attr_val.value_boolean|yesno:"Да,Нет" }}
+                  {{ attr_val.display_value }}
                 </span>
               </div>
             {% endif %}
@@ -279,28 +264,7 @@
 
     <!-- СПРАВА: Прайс-панель и заявка -->
     <aside class="sidebar-sticky">
-      <div class="price-panel">
-        <div class="panel-label">Стоимость предложения</div>
-        <div class="main-price">
-          {{ property.price }} {{ property.currency }}
-          {% if property.deal_type.slug == 'rent' %}<span>/ месяц</span>{% endif %}
-        </div>
-
-        <!-- Кнопки быстрых мессенджеров -->
-        <form class="agent-form" onsubmit="event.preventDefault(); alert('Заявка отправлена менеджеру!');">
-          <h3>Связаться с агентом</h3>
-          <input type="text" class="form-input" placeholder="Ваше имя" required>
-          <input type="tel" class="form-input" placeholder="+7 (999) 000-00-00" required>
-          
-          <button type="submit" class="btn-action">
-            <i class="ti ti-mail"></i> Оставить заявку
-          </button>
-          
-          <a href="https://wa.me/995555000000?text=Здравствуйте!%20Меня%20интересует%20объект%20{{ property.slug }}" target="_blank" class="btn-action btn-whatsapp">
-            <i class="ti ti-brand-whatsapp"></i> Написать в WhatsApp
-          </a>
-        </form>
-      </div>
+      {% include "properties/includes/price_panel.html" %}
     </aside>
 
   </div>

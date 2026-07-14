@@ -78,7 +78,6 @@ def catalog_view(request):
 
 
 def property_detail_view(request, slug):
-    # Извлекаем объект с учетом оптимизации запросов и проверки публикации
     property_obj = get_object_or_404(
         Property.objects.filter(is_published=True)
         .select_related("deal_type", "property_type", "status")
@@ -86,7 +85,6 @@ def property_detail_view(request, slug):
         slug=slug
     )
     
-    # Рекомендации: берем 3 похожих объекта того же типа недвижимости
     similar_properties = (
         Property.objects.filter(is_published=True, property_type=property_obj.property_type)
         .exclude(id=property_obj.id)
@@ -95,8 +93,23 @@ def property_detail_view(request, slug):
         .order_by("-created_at")[:3]
     )
 
+    latest_rate = ExchangeRate.objects.order_by("-effective_date").first()
+ 
+    price_usd, price_gel = None, None
+    if property_obj.currency == Currency.GEL:
+        price_gel = property_obj.price
+        if latest_rate:
+            price_usd = round(property_obj.price / latest_rate.usd_to_gel, 2)
+    else:  # USD
+        price_usd = property_obj.price
+        if latest_rate:
+            price_gel = round(property_obj.price * latest_rate.usd_to_gel, 2)
+ 
     context = {
         "property": property_obj,
         "similar_properties": similar_properties,
+        "site_settings": SiteSettings.objects.first(),
+        "price_usd": price_usd,
+        "price_gel": price_gel,
     }
     return render(request, "properties/detail.html", context)

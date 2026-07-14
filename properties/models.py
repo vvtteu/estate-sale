@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 import builtins
-
+from PIL import Image
 
 class Language(models.TextChoices):
     RU = "ru", _("Русский")
@@ -441,6 +441,22 @@ class PropertyImage(BaseModel):
         verbose_name = _("Фотография")
         verbose_name_plural = _("Фотографии")
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Сжимаем/уменьшаем изображение после сохранения на диск
+        img_path = self.image.path
+        img = Image.open(img_path)
+
+        max_size = (1920, 1920)
+        if img.width > max_size[0] or img.height > max_size[1]:
+            img.thumbnail(max_size, Image.LANCZOS)
+
+        # Конвертируем в RGB на случай PNG с альфа-каналом, чтобы сохранить как JPEG
+        if img.mode in ("RGBA", "P"):
+            img = img.convert("RGB")
+
+        img.save(img_path, format="JPEG", quality=82, optimize=True)
+        
     def __str__(self):
         return f"Фото #{self.sort_order} — {self.property}"
 

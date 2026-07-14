@@ -205,7 +205,7 @@
     </a>
     <nav>
       <ul>
-        <li><a href="#listings">Объекты</a></li>
+        <li><a href="{% url 'properties:catalog' %}">Объекты</a></li>
         <li><a href="#perks">Почему Кобулети</a></li>
         <li><a href="#why">О нас</a></li>
         <li><a href="#cta">Контакты</a></li>
@@ -224,7 +224,7 @@
       <h1>Ваш дом у <em>Чёрного моря</em>, в самом Кобулети</h1>
       <p>Квартиры, дома и коммерческие помещения в Кобулети и окрестностях — от первой линии моря до тихих улиц в глубине города. Подберём объект под ваши задачи: жить, сдавать или инвестировать.</p>
       <div class="hero-actions">
-        <a href="#listings" class="btn-primary">Смотреть объекты</a>
+        <a href="{% url 'properties:catalog' %}" class="btn-primary">Смотреть объекты</a>
         <a href="#cta" class="btn-outline">Получить консультацию</a>
       </div>
       <div class="hero-stats">
@@ -251,26 +251,6 @@
   </div>
 </section>
 
-<div class="search-wrap">
-  <div class="container">
-    <div class="search-bar">
-      <select>
-        <option>Тип сделки</option>
-        <option>Купить</option>
-        <option>Арендовать</option>
-      </select>
-      <select>
-        <option>Тип недвижимости</option>
-        <option>Квартира</option>
-        <option>Дом</option>
-        <option>Коммерческая</option>
-      </select>
-      <input type="text" placeholder="Район, например: Кобулети, Улица Лентехи">
-      <button>Найти <i class="ti ti-search"></i></button>
-    </div>
-  </div>
-</div>
-
 <section class="listings-section" id="listings">
   <div class="container">
     <div class="sec-head">
@@ -279,7 +259,7 @@
         <h2 class="sec-title">Актуальные предложения</h2>
         <p class="sec-sub">Объекты обновляются ежедневно — от студий у моря до просторных семейных домов.</p>
       </div>
-      <a href="#" class="see-all">Все объекты →</a>
+      <a href="{% url 'properties:catalog' %}" class="see-all">Все объекты →</a>
     </div>
     <div class="listings-grid">
       <div class="card">
@@ -377,15 +357,8 @@
     <div>
       <div class="sec-eyebrow">О нас</div>
       <h2 class="sec-title">Знаем каждую улицу этого города</h2>
-      <p class="sec-sub" style="margin-bottom:36px;">Adjara Estate специализируется только на недвижимости Кобулети и ближайших посёлков — это позволяет точно оценивать объекты и находить варианты, которых нет в общих каталогах.</p>
+      <p class="sec-sub" style="margin-bottom:36px;">Adjara Estate специализируется на недвижимости Кобулети и ближайших посёлков — это позволяет точно оценивать объекты и находить варианты, которых нет в общих каталогах.</p>
       <div class="why-points">
-        <div class="why-point">
-          <div class="why-point-icon"><i class="ti ti-map-2"></i></div>
-          <div>
-            <h4>Только Кобулети и Аджария</h4>
-            <p>Не распыляемся на всю Грузию — фокус даёт точное знание района и реальных цен.</p>
-          </div>
-        </div>
         <div class="why-point">
           <div class="why-point-icon"><i class="ti ti-language"></i></div>
           <div>

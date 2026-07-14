@@ -6,5 +6,5 @@ app_name = 'properties'
 urlpatterns = [
     path('', index_page, name='index'),
     path('catalog/', catalog_view, name='catalog'),
-    path('<slug:slug>/', property_detail_view, name='detail'),
+    path('catalog/<slug:slug>/', property_detail_view, name='detail'),
 ]
