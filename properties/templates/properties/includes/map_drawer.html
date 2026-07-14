@@ -1,0 +1,216 @@
+<!-- Стили для адаптивной панели -->
+<style>
+  /* Затемнение фона */
+  #map-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(14,28,46,0.4);
+    z-index: 499;
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  #map-overlay.visible {
+    display: block;
+    opacity: 1;
+  }
+
+  /* Сама выезжающая панель */
+  #map-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 600px; /* Сделали пошире, как ты просила */
+    height: 100vh;
+    height: 100dvh; /* Специально для Safari на iPhone, чтобы не пряталось за адресной строкой */
+    background: var(--white);
+    z-index: 500;
+    box-shadow: -8px 0 40px rgba(14,28,46,0.18);
+    display: flex;
+    flex-direction: column;
+    /* Убираем панель за правый край на 100% её ширины */
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden; /* Чтобы не скроллилась, когда спрятана */
+  }
+
+  /* Класс, который добавляется через JS для открытия */
+  #map-drawer.open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    background: var(--white); /* Убеждаемся, что шапка не прозрачная */
+    z-index: 2;
+  }
+
+  #map-drawer-map {
+    flex: 1;
+    width: 100%;
+    z-index: 1;
+  }
+
+  /* АДАПТИВ ДЛЯ ТЕЛЕФОНОВ */
+  @media (max-width: 768px) {
+    #map-drawer {
+      width: 100%; /* На мобилках занимает весь экран */
+    }
+    .drawer-header {
+      padding: 16px 20px; /* Чуть компактнее шапка на телефонах */
+    }
+  }
+</style>
+
+<!-- HTML Каркас -->
+<div id="map-overlay"></div>
+
+<div id="map-drawer">
+  <div class="drawer-header">
+    <span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); font-weight: 600;">Расположение объекта</span>
+    <button id="map-drawer-close" style="background: none; border: none; cursor: pointer; font-size: 26px; color: var(--text-muted); line-height: 1; padding: 5px;">
+      <i class="ti ti-x">x</i>
+    </button>
+  </div>
+  <div id="map-drawer-map"></div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- JS Логика -->
+<script>
+(function () {
+  let allFeatures = null;
+  let drawerMap = null;
+  let drawerMarker = null;
+
+  async function loadFeatures() {
+    if (allFeatures) return allFeatures;
+    const resp = await fetch("{% url 'properties:properties_geojson' %}");
+    const data = await resp.json();
+    allFeatures = data.features;
+    return allFeatures;
+  }
+
+  function initDrawerMap() {
+    if (drawerMap) return;
+    drawerMap = L.map("map-drawer-map", {
+      zoomControl: false // Скрываем дефолтный зум, добавим свой ниже
+    }).setView([41.7151, 44.8271], 12);
+    
+    // Переносим кнопки зума вниз направо, чтобы на телефонах было удобно тянуться пальцем
+    L.control.zoom({ position: 'bottomright' }).addTo(drawerMap);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "© OpenStreetMap contributors",
+      maxZoom: 19,
+    }).addTo(drawerMap);
+  }
+
+  async function openDrawer(propertyId) {
+    const drawer = document.getElementById("map-drawer");
+    const overlay = document.getElementById("map-overlay");
+
+    // Открываем через добавление классов (CSS сам сделает плавную анимацию)
+    overlay.classList.add("visible");
+    drawer.classList.add("open");
+    document.body.style.overflow = "hidden"; // Блокируем скролл сайта
+
+    initDrawerMap();
+
+    const features = await loadFeatures();
+    const feature = features.find(f => f.id === propertyId);
+
+    if (!feature) {
+        console.error("Объект не найден! ID:", propertyId);
+        return;
+    }
+
+    // Ждем 350мс, пока закончится CSS анимация выезда, и обновляем карту
+    setTimeout(() => {
+      drawerMap.invalidateSize();
+      drawerMap.setView([feature.lat, feature.lng], 16);
+
+      if (drawerMarker) drawerMap.removeLayer(drawerMarker);
+
+      const priceText = `${Number(feature.price).toLocaleString()} ${feature.currency}`;
+
+      const icon = L.divIcon({
+          className: "",
+          html: `
+              <div style="
+                  background: #0e1c2e;
+                  color: #fff;
+                  padding: 5px 10px;
+                  border-radius: 12px;
+                  font-family: 'Manrope', sans-serif;
+                  font-size: 13px;
+                  font-weight: 700;
+                  white-space: nowrap;
+                  box-shadow: 0 4px 15px rgba(14,28,46,0.25);
+                  border: 2px solid #c9a24a;
+                  position: relative;
+                  display: inline-block;
+              ">
+                  ${priceText}
+                  <div style="
+                      position: absolute;
+                      bottom: -6px;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: 0; height: 0;
+                      border-left: 6px solid transparent;
+                      border-right: 6px solid transparent;
+                      border-top: 6px solid #0e1c2e;
+                  "></div>
+              </div>
+          `,
+          iconSize: [120, 32],
+          iconAnchor: [60, 38],
+          popupAnchor: [0, -42],
+      });
+
+      drawerMarker = L.marker([feature.lat, feature.lng], { icon })
+          .addTo(drawerMap)
+          .bindPopup(`
+              <div style="min-width: 180px; font-family: 'Manrope', sans-serif;">
+                  ${feature.image
+                      ? `<img src="${feature.image}" style="width:100%; height:110px; object-fit:cover; border-radius:6px; margin-bottom:8px;">`
+                      : ""}
+                  <strong style="font-size:14px; color:#0e1c2e; line-height: 1.2; display: block; margin-bottom: 4px;">${feature.title}</strong>
+                  <span style="color:#6b7280; font-size:12px;"><i class="ti ti-map-pin"></i> ${feature.city}</span><br>
+                  <a href="/catalog/${feature.slug}/" style="color:#2f7a74; font-size:13px; font-weight:600; margin-top:8px; display:inline-block; border-bottom: 1px solid currentColor; padding-bottom: 2px;">
+                      Открыть карточку →
+                  </a>
+              </div>
+          `, { maxWidth: 260 })
+          .openPopup();
+
+    }, 350);
+  }
+
+  function closeDrawer() {
+    // Закрываем, просто удаляя классы
+    document.getElementById("map-drawer").classList.remove("open");
+    document.getElementById("map-overlay").classList.remove("visible");
+    
+    // Возвращаем скролл сайта с небольшой задержкой (чтобы мобилки не дергались)
+    setTimeout(() => {
+      document.body.style.overflow = "";
+    }, 300);
+  }
+
+  document.getElementById("map-drawer-close").addEventListener("click", closeDrawer);
+  document.getElementById("map-overlay").addEventListener("click", closeDrawer);
+
+  window.openPropertyOnMap = openDrawer;
+})();
+</script>

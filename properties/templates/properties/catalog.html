@@ -137,6 +137,7 @@
     background: transparent; color: var(--text-muted); font-size: 13px; font-weight: 600;
     display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;
     transition: border-color 0.2s, color 0.2s;
+    position: relative;
     z-index: 4;
   }
   .card-map-btn:hover { border-color: var(--teal); color: var(--teal); }
@@ -290,7 +291,7 @@
           </div>
           {% if property.location %}
             <button class="card-map-btn" type="button"
-                    data-lat="{{ property.location.y }}" data-lng="{{ property.location.x }}">
+                    onclick="openPropertyOnMap({{ property.id }})">
               <i class="ti ti-map-2"></i> Показать на карте
             </button>
           {% endif %}
@@ -333,4 +334,5 @@ document.querySelectorAll('.card-map-btn').forEach(function(btn) {
 });
 </script>
 </body>
+{% include "properties/includes/map_drawer.html" %}
 </html>

@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import *
 from django.db.models import Q
+from django.http import JsonResponse
+
 
 def index_page(request):
     properties = Property.objects.filter(
@@ -113,3 +115,32 @@ def property_detail_view(request, slug):
         "price_gel": price_gel,
     }
     return render(request, "properties/detail.html", context)
+
+def properties_geojson(request):
+    """Возвращает координаты всех опубликованных объектов для карты каталога."""
+    properties = (
+        Property.objects.filter(is_published=True, location__isnull=False)
+        .select_related("status")
+        .prefetch_related("translations", "images")
+        .only("id", "slug", "price", "currency", "city", "location", "status")
+    )
+
+    features = []
+    for p in properties:
+        ru_trans = next((t for t in p.translations.all() if t.language == "ru"), None)
+        main_img = p.images.filter(is_main=True).first() or p.images.first()
+
+        features.append({
+            "id": p.id,
+            "slug": p.slug,
+            "title": ru_trans.title if ru_trans else p.slug,
+            "price": str(p.price),
+            "currency": p.currency,
+            "city": p.city,
+            "status_color": p.status.color if p.status else "#0e1c2e",
+            "image": main_img.image.url if main_img else None,
+            "lat": p.location.y,
+            "lng": p.location.x,
+        })
+
+    return JsonResponse({"features": features})
