@@ -247,16 +247,25 @@
       </div>
 
       {% if property.location %}
-      <div class="info-section">
-        <h2>Расположение на карте</h2>
-        <div style="width:100%; height:300px; background: var(--cream); border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid var(--border);">
-          <div style="text-align:center; color: var(--text-muted);">
-            <i class="ti ti-map-2" style="font-size:36px; color: var(--teal); margin-bottom:8px;"></i>
-            <p>Карта инициализируется по координатам:</p>
-            <strong>Lat: {{ property.location.y }} | Lng: {{ property.location.x }}</strong>
+        <div class="info-section">
+          <h2>Расположение на карте</h2>
+
+          <div id="map-trigger" onclick="initDetailMap()" style="
+            width: 100%; height: 220px; background: var(--teal-light);
+            border-radius: 12px; border: 1.5px dashed var(--teal);
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; gap: 12px; cursor: pointer;
+            transition: background 0.2s;
+          ">
+            <i class="ti ti-map-2" style="font-size: 40px; color: var(--teal);"></i>
+            <span style="color: var(--teal); font-weight: 600; font-size: 15px;">Нажмите, чтобы показать карту</span>
+            <span style="color: var(--text-muted); font-size: 13px;">
+              {{ property.address|default:property.city }}
+            </span>
           </div>
+
+          <div id="detail-map" style="display: none; height: 380px; border-radius: 12px; overflow: hidden;"></div>
         </div>
-      </div>
       {% endif %}
 
     </section>
@@ -303,12 +312,65 @@
 </footer>
 
 <script>
-// Интерактивное переключение фотографий в галерее
 function switchPhoto(thumbElement, imageUrl) {
   document.getElementById('viewed-photo').src = imageUrl;
   document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
   thumbElement.classList.add('active');
 }
 </script>
+{% if property.location %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+var detailMapInitialized = false;
+
+function initDetailMap() {
+  if (detailMapInitialized) return;
+  detailMapInitialized = true;
+
+  document.getElementById("map-trigger").style.display = "none";
+  var mapEl = document.getElementById("detail-map");
+  mapEl.style.display = "block";
+
+  var lat = parseFloat("{{ property.location.y|stringformat:'.6f' }}");
+  var lng = parseFloat("{{ property.location.x|stringformat:'.6f' }}");
+
+  var map = L.map("detail-map").setView([lat, lng], 16);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors",
+    maxZoom: 19,
+  }).addTo(map);
+
+  var icon = L.divIcon({
+    className: "",
+    html: `<div style="
+      width: 16px; height: 16px;
+      background: #c9a24a;
+      border: 3px solid #0e1c2e;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(14,28,46,0.4);
+    "></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+    popupAnchor: [0, -12],
+  });
+
+  L.marker([lat, lng], { icon })
+    .addTo(map)
+    .bindPopup(`
+      <div style="font-family: 'Manrope', sans-serif; min-width: 180px;">
+        <strong style="font-size: 14px; color: #0e1c2e;">
+          {% for trans in property.translations.all %}{% if trans.language == 'ru' %}{{ trans.title }}{% endif %}{% endfor %}
+        </strong><br>
+        <span style="color: #6b7280; font-size: 12px;">
+          {{ property.address|default:property.city }}
+        </span>
+      </div>
+    `)
+    .openPopup();
+}
+</script>
+{% endif %}
 </body>
 </html>

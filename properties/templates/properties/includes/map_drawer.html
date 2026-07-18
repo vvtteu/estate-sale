@@ -58,18 +58,16 @@
     z-index: 1;
   }
 
-  /* АДАПТИВ ДЛЯ ТЕЛЕФОНОВ */
   @media (max-width: 768px) {
     #map-drawer {
-      width: 100%; /* На мобилках занимает весь экран */
+      width: 100%; 
     }
     .drawer-header {
-      padding: 16px 20px; /* Чуть компактнее шапка на телефонах */
+      padding: 16px 20px; 
     }
   }
 </style>
 
-<!-- HTML Каркас -->
 <div id="map-overlay"></div>
 
 <div id="map-drawer">
@@ -85,7 +83,6 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- JS Логика -->
 <script>
 (function () {
   let allFeatures = null;
@@ -141,42 +138,22 @@
 
       if (drawerMarker) drawerMap.removeLayer(drawerMarker);
 
-      const priceText = `${Number(feature.price).toLocaleString()} ${feature.currency}`;
-
       const icon = L.divIcon({
-          className: "",
-          html: `
-              <div style="
-                  background: #0e1c2e;
-                  color: #fff;
-                  padding: 5px 10px;
-                  border-radius: 12px;
-                  font-family: 'Manrope', sans-serif;
-                  font-size: 13px;
-                  font-weight: 700;
-                  white-space: nowrap;
-                  box-shadow: 0 4px 15px rgba(14,28,46,0.25);
-                  border: 2px solid #c9a24a;
-                  position: relative;
-                  display: inline-block;
-              ">
-                  ${priceText}
-                  <div style="
-                      position: absolute;
-                      bottom: -6px;
-                      left: 50%;
-                      transform: translateX(-50%);
-                      width: 0; height: 0;
-                      border-left: 6px solid transparent;
-                      border-right: 6px solid transparent;
-                      border-top: 6px solid #0e1c2e;
-                  "></div>
-              </div>
-          `,
-          iconSize: [120, 32],
-          iconAnchor: [60, 38],
-          popupAnchor: [0, -42],
-      });
+        className: "",
+        html: `
+            <div style="
+                width: 16px;
+                height: 16px;
+                background: #c9a24a;
+                border: 3px solid #0e1c2e;
+                border-radius: 50%;
+                box-shadow: 0 2px 8px rgba(14,28,46,0.4);
+            "></div>
+        `,
+        iconSize: [16, 16],
+        iconAnchor: [8, 8],
+        popupAnchor: [0, -12],
+    });
 
       drawerMarker = L.marker([feature.lat, feature.lng], { icon })
           .addTo(drawerMap)

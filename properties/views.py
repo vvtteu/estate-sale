@@ -86,7 +86,7 @@ def property_detail_view(request, slug):
         .prefetch_related("images", "translations", "attribute_values__attribute"),
         slug=slug
     )
-    
+                                                                   
     similar_properties = (
         Property.objects.filter(is_published=True, property_type=property_obj.property_type)
         .exclude(id=property_obj.id)

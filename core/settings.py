@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 from django.templatetags.static import static
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,8 +44,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django.contrib.gis",
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    # 'allauth.socialaccount',
     'properties',
+    'users',
+    
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -61,7 +71,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,7 +142,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 UNFOLD = {
     "SITE_TITLE": _("Панель управления"),
     "SITE_HEADER": _("Недвижимость"),
-    "SITE_SYMBOL": "home",  # иконка из Google Material Symbols
+    "SITE_SYMBOL": "home", 
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": False,
     "SIDEBAR": {
@@ -190,7 +200,7 @@ UNFOLD = {
                     {
                         "title": _("Пользователи"),
                         "icon": "person",
-                        "link": "/admin/auth/user/",
+                        "link": reverse_lazy("admin:users_customuser_changelist"),
                     },
                     {
                         "title": _("Настройки сайта"),
@@ -202,3 +212,24 @@ UNFOLD = {
         ],
     },
 }
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Вход только по email
+ACCOUNT_EMAIL_REQUIRED = True            # Email обязателен
+ACCOUNT_USERNAME_REQUIRED = False        # Логин (username) не нужен
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username' # У AbstractUser логин есть под капотом, просто мы его не просим у юзера
+
+# Пока отключим обязательное подтверждение почты, чтобы было легко тестировать локально.
+# На боевом сервере поменяем на 'mandatory' (обязательно).
+ACCOUNT_EMAIL_VERIFICATION = 'none' 
+
+# Куда перенаправлять пользователя после успешного входа/выхода
+LOGIN_REDIRECT_URL = '/'  # На главную страницу
+LOGOUT_REDIRECT_URL = '/'
