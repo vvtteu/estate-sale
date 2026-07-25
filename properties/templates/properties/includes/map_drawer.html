@@ -131,7 +131,6 @@
         return;
     }
 
-    // Ждем 350мс, пока закончится CSS анимация выезда, и обновляем карту
     setTimeout(() => {
       drawerMap.invalidateSize();
       drawerMap.setView([feature.lat, feature.lng], 16);

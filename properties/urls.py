@@ -7,5 +7,6 @@ urlpatterns = [
     path('', index_page, name='index'),
     path('catalog/', catalog_view, name='catalog'),
     path('catalog/map-data/', properties_geojson, name='properties_geojson'),
+    path('favorite/<int:property_id>/toggle/', toggle_favorite, name='toggle_favorite'),
     path('catalog/<slug:slug>/', property_detail_view, name='detail'),
 ]

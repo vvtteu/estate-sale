@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% block title %}Личный кабинет — Adjara Estate{% endblock %}
+
+{% block extra_head %}
+<style>
+  .profile-page { padding-top: 130px; padding-bottom: 92px; }
+  
+  /* Структура кабинета: Сайдбар слева, Контент справа */
+  .profile-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* СТИЛИ САЙДБАРА (Настройки) */
+  .profile-sidebar {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(14,28,46,0.04);
+  }
+  .profile-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--teal-light); color: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin-bottom: 20px;
+  }
+  .profile-sidebar h2 { font-size: 22px; color: var(--navy); margin-bottom: 6px; }
+  .profile-sidebar p { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+
+  /* Форма в сайдбаре */
+  .profile-form .form-group { margin-bottom: 16px; }
+  .profile-form label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--teal); margin-bottom: 6px; }
+  .profile-form input {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    font-family: 'Manrope', sans-serif; font-size: 14px; color: var(--text); background: var(--cream); outline: none; transition: border-color 0.2s;
+  }
+  .profile-form input:focus { border-color: var(--navy); background: var(--white); }
+  
+  .btn-save {
+    width: 100%; background: var(--navy); color: var(--white); border: none; padding: 14px;
+    border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: background 0.2s;
+  }
+  .btn-save:hover { background: var(--navy-2); }
+  
+  /* Системные сообщения (Успешно сохранено) */
+  .messages { list-style: none; margin-bottom: 20px; }
+  .messages li { padding: 12px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; background: #dcece9; color: var(--teal); border: 1px solid #b8ddd6; }
+
+  /* СТИЛИ КОНТЕНТА (Избранное) */
+  .profile-content h1 { font-size: 32px; color: var(--navy); margin-bottom: 24px; }
+  
+  /* Пустое состояние избранного */
+  .empty-favorites { text-align: center; padding: 64px 32px; background: var(--white); border: 1px dashed var(--border); border-radius: 18px; }
+  .empty-favorites i { font-size: 48px; color: var(--gold); margin-bottom: 16px; display: block; opacity: 0.5; }
+  .empty-favorites h3 { font-size: 22px; color: var(--navy); margin-bottom: 8px; }
+  .empty-favorites p { color: var(--text-muted); font-size: 15px; margin-bottom: 24px; }
+  .empty-favorites .btn-outline { border: 1px solid var(--navy); color: var(--navy); padding: 12px 24px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: all 0.2s; display: inline-block; }
+  .empty-favorites .btn-outline:hover { background: var(--navy); color: var(--white); }
+
+  /* АДАПТИВ */
+  @media (max-width: 992px) {
+    .profile-layout { grid-template-columns: 1fr; }
+    .listings-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 720px) {
+    .listings-grid { grid-template-columns: 1fr; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="container profile-page">
+  
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li><i class="ti ti-check"></i> {{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="profile-layout">
+    
+    <!-- ЛЕВАЯ КОЛОНКА: Настройки профиля -->
+    <aside class="profile-sidebar">
+      <div class="profile-avatar">
+        <i class="ti ti-user"></i>
+      </div>
+      <h2>Мой профиль</h2>
+      <p>Управление контактными данными</p>
+
+      <form method="POST" class="profile-form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <label for="{{ form.email.id_for_label }}">Email</label>
+          {{ form.email }}
+          {% if form.email.errors %}<div style="color:#d1495b; font-size:12px; margin-top:4px;">{{ form.email.errors.0 }}</div>{% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.phone_number.id_for_label }}">Номер телефона</label>
+          {{ form.phone_number }}
+          {% if form.phone_number.errors %}<div style="color:#d1495b; font-size:12px; margin-top:4px;">{{ form.phone_number.errors.0 }}</div>{% endif %}
+        </div>
+
+        <button type="submit" class="btn-save">Сохранить изменения</button>
+      </form>
+    </aside>
+
+    <!-- ПРАВАЯ КОЛОНКА: Избранное -->
+    <section class="profile-content">
+      <h1>Моё избранное ({{ properties.count }})</h1>
+      
+      {% if properties %}
+        <div class="listings-grid">
+          {% for property in properties %}
+            <div class="card">
+              <a href="{% url 'properties:detail' property.slug %}" class="card-img-link">
+                <div class="card-img">
+                  {% with img=property.main_image %}
+                    {% if img %}
+                      <img src="{{ img.image.url }}" alt="{{ property.title_ru }}" loading="lazy" class="card-img-lazy">
+                    {% endif %}
+                  {% endwith %}
+                  <span class="card-badge" style="background: {{ property.status.color|default:'#0e1c2e' }};">
+                    {{ property.status }}
+                  </span>
+                </div>
+              </a>
+              <button class="card-fav active" type="button" data-property-id="{{ property.id }}" aria-label="Убрать из избранного">
+                <i class="ti ti-heart-filled"></i>
+              </button>
+              
+              <div class="card-body">
+                <a href="{% url 'properties:detail' property.slug %}" class="card-title-link">
+                  <div class="card-title">{{ property.title_ru }}</div>
+                </a>
+                <div class="card-price">
+                  {{ property.price }} {{ property.currency }}
+                </div>
+                <div class="card-addr">
+                  <i class="ti ti-map-pin"></i>
+                  {{ property.address|default:property.city }}
+                </div>
+                <div class="card-meta">
+                  {% if property.rooms %}<span><i class="ti ti-bed"></i> {{ property.rooms }} комн.</span>{% endif %}
+                  {% if property.area_total %}<span><i class="ti ti-ruler-2"></i> {{ property.area_total }} м²</span>{% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-favorites">
+          <i class="ti ti-bookmark-off"></i>
+          <h3>Список избранного пуст</h3>
+          <p>Вы еще не добавили ни одного объекта. Перейдите в каталог, чтобы найти дом вашей мечты.</p>
+          <a href="{% url 'properties:catalog' %}" class="btn-outline">Перейти в каталог</a>
+        </div>
+      {% endif %}
+    </section>
+
+  </div>
+</main>
+{% endblock %}

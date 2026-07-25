@@ -7,10 +7,10 @@ from django.http import JsonResponse
 def index_page(request):
     properties = Property.objects.filter(
         is_published=True
-    ).prefetch_related('translations', 'images').order_by('-created_at')
+    ).prefetch_related('translations', 'images').order_by('-created_at')[:3]
     
     site_settings = SiteSettings.objects.first()
-
+    
     context = {
         'properties': properties,
         'settings': site_settings
@@ -144,3 +144,29 @@ def properties_geojson(request):
         })
 
     return JsonResponse({"features": features})
+
+def toggle_favorite(request, property_id):
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            return JsonResponse({'status': 'unauthorized'}, status=401)
+            
+        property_obj = get_object_or_404(Property, id=property_id)
+        
+        # get_or_create ищет запись. Если не находит — создает новую.
+        # Возвращает кортеж: (найденный/созданный объект, True/False)
+        favorite, created = FavoriteProperty.objects.get_or_create(
+            user=request.user,
+            property=property_obj
+        )
+        
+        if not created:
+            # Запись уже была в базе, значит юзер хочет убрать лайк
+            favorite.delete()
+            is_favorited = False
+        else:
+            # Записи не было, она только что создалась (поставили лайк)
+            is_favorited = True
+            
+        return JsonResponse({'status': 'ok', 'is_favorited': is_favorited})
+    
+    return JsonResponse({'status': 'error'}, status=400)

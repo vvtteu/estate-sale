@@ -3,3 +3,8 @@ psycopg2-binary
 Pillow
 django-unfold
 django-allauth
+requests
+PyJWT
+deepl
+python-dotenv
+cryptography
