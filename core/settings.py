@@ -24,15 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)-d4(0q^mzjs#vt40nq1o2+&byq()k)$_)m4s3o279l8$-y3hy'
 
+SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-dev-key")
+DEBUG = os.environ.get("DEBUG", "True") == "True"
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
 
 DEEPL_API_KEY = os.environ.get("DEEPL_API_KEY", "")
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -137,12 +134,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR / "properties" / "static",
 ]
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 UNFOLD = {
     "SITE_TITLE": _("Панель управления"),
@@ -226,15 +225,13 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
-ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Вход только по email
-ACCOUNT_EMAIL_REQUIRED = True            # Email обязателен
-ACCOUNT_USERNAME_REQUIRED = False        # Логин (username) не нужен
-ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username' # У AbstractUser логин есть под капотом, просто мы его не просим у юзера
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  
+ACCOUNT_EMAIL_REQUIRED = True          
+ACCOUNT_USERNAME_REQUIRED = False      
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username' 
 
-# Пока отключим обязательное подтверждение почты, чтобы было легко тестировать локально.
-# На боевом сервере поменяем на 'mandatory' (обязательно).
+
 ACCOUNT_EMAIL_VERIFICATION = 'none' 
 
-# Куда перенаправлять пользователя после успешного входа/выхода
-LOGIN_REDIRECT_URL = '/'  # На главную страницу
+LOGIN_REDIRECT_URL = '/'  
 LOGOUT_REDIRECT_URL = '/'
