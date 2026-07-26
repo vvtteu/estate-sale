@@ -2,7 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from .models import *
 from django.db.models import Q
 from django.http import JsonResponse
-
+import deepl
+from django.conf import settings
+from django.contrib.admin.views.decorators import staff_member_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 def index_page(request):
     properties = Property.objects.filter(
@@ -170,3 +174,19 @@ def toggle_favorite(request, property_id):
         return JsonResponse({'status': 'ok', 'is_favorited': is_favorited})
     
     return JsonResponse({'status': 'error'}, status=400)
+
+
+@require_POST
+@staff_member_required
+def translate_view(request):
+    text = request.POST.get("text", "").strip()
+    if not text:
+        return JsonResponse({"error": "Нет текста"}, status=400)
+
+    try:
+        translator = deepl.Translator(settings.DEEPL_API_KEY)
+        result_en = translator.translate_text(text, source_lang="RU", target_lang="EN-US")
+        result_ka = translator.translate_text(text, source_lang="RU", target_lang="KA")
+        return JsonResponse({"en": result_en.text, "ka": result_ka.text})
+    except deepl.DeepLException as e:
+        return JsonResponse({"error": str(e)}, status=500)

@@ -120,6 +120,16 @@
     {% for property in properties %}
       <div class="card">
         <!-- 1. КАРТИНКА И БЕЙДЖИ -->
+           <button class="card-fav {% if property.id in user_favorites %}active{% endif %}" 
+                type="button" 
+                data-property-id="{{ property.id }}" 
+                aria-label="В избранное"
+                {% if property.id in user_favorites %}style="color: #d1495b;"{% endif %}>
+                <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                        stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+        </button>
         <div class="card-img">
           {% if property.images.first %}
             <img src="{{ property.images.first.image.url }}" alt="{{ property.title_ru }}" loading="lazy" class="card-img-lazy">
@@ -135,16 +145,6 @@
             <span class="card-new"><i class="ti ti-point-filled"></i> Новое</span>
           {% endif %}
         </div>
-
-        <!-- 2. ПРАВИЛЬНАЯ КНОПКА ИЗБРАННОГО -->
-        <!-- Обязательно убедись, что из views.py передается список user_favorites -->
-        <button class="card-fav {% if property.id in user_favorites %}active{% endif %}" 
-                type="button" 
-                data-property-id="{{ property.id }}" 
-                aria-label="В избранное"
-                {% if property.id in user_favorites %}style="color: #d1495b;"{% endif %}>
-            <i class="ti {% if property.id in user_favorites %}ti-heart-filled{% else %}ti-heart{% endif %}"></i>
-        </button>
 
         <!-- 3. КОНТЕНТ КАРТОЧКИ -->
         <div class="card-body">

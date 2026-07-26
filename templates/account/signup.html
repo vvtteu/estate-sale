@@ -1,40 +1,47 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <title>Регистрация — Adjara Estate</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* Вставляем те же стили, что и в login.html для консистентности */
-    :root { --navy: #0e1c2e; --navy-2: #142943; --gold: #c9a24a; --cream: #f7f2e6; --white: #ffffff; --text: #142132; --border: rgba(14,28,46,0.15); }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Manrope', sans-serif; background: var(--cream); color: var(--text); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-    .auth-card { background: var(--white); width: 100%; max-width: 420px; border-radius: 18px; padding: 40px; box-shadow: 0 20px 40px rgba(14,28,46,0.06); text-align: center; border: 1px solid var(--border); }
-    .auth-brand { font-family: 'Cormorant Garamond', serif; font-size: 26px; letter-spacing: 0.1em; color: var(--navy); margin-bottom: 8px; }
-    .auth-brand span { color: var(--gold); }
-    .auth-title { font-size: 16px; color: #6b7280; margin-bottom: 32px; }
-    
-    .auth-form p { margin-bottom: 20px; text-align: left; }
-    .auth-form label { display: block; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
-    .auth-form input[type="text"], .auth-form input[type="email"], .auth-form input[type="password"] { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 15px; outline: none; transition: border-color 0.2s; }
-    .auth-form input:focus { border-color: var(--navy); }
-    .auth-form .helptext { display: block; font-size: 11px; color: #6b7280; margin-top: 6px; line-height: 1.4; }
-    
-    .btn-submit { width: 100%; background: var(--navy); color: var(--white); border: none; padding: 16px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
-    .btn-submit:hover { background: var(--navy-2); }
-    
-    .auth-links { margin-top: 24px; font-size: 14px; color: #6b7280; }
-    .auth-links a { color: var(--navy); font-weight: 600; text-decoration: none; }
-    .auth-links a:hover { text-decoration: underline; }
-    .errorlist { color: #d1495b; font-size: 13px; text-align: left; list-style: none; margin-bottom: 10px; font-weight: 600; }
-  </style>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load socialaccount %}
+
+{% block title %}Регистрация — Adjara Estate{% endblock %}
+
+{% block extra_head %}
+<style>
+  /* Используем те же стили обертки, что и в login.html */
+  .auth-wrapper { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 20px 60px; }
+  .auth-card { background: var(--white); width: 100%; max-width: 420px; border-radius: 18px; padding: 40px; box-shadow: 0 20px 40px rgba(14,28,46,0.06); text-align: center; border: 1px solid var(--border); }
+  .auth-brand { font-family: 'Cormorant Garamond', serif; font-size: 26px; letter-spacing: 0.1em; color: var(--navy); margin-bottom: 8px; }
+  .auth-brand span { color: var(--gold); }
+  .auth-title { font-size: 16px; color: var(--text-muted); margin-bottom: 32px; }
+  
+  .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: var(--white); color: var(--text); border: 1.5px solid var(--border); padding: 14px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; text-decoration: none; margin-bottom: 24px; }
+  .btn-google:hover { border-color: var(--navy); background: rgba(14,28,46,0.02); }
+  .btn-google i { font-size: 20px; color: #DB4437; }
+  
+  .auth-divider { display: flex; align-items: center; text-align: center; margin-bottom: 24px; color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;}
+  .auth-divider::before, .auth-divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border); }
+  .auth-divider:not(:empty)::before { margin-right: 1em; }
+  .auth-divider:not(:empty)::after { margin-left: 1em; }
+
+  .auth-form p { margin-bottom: 20px; text-align: left; }
+  .auth-form label { display: block; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .auth-form input[type="text"], .auth-form input[type="email"], .auth-form input[type="password"] { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 15px; outline: none; transition: border-color 0.2s; }
+  .auth-form input:focus { border-color: var(--navy); }
+  .auth-form .helptext { display: block; font-size: 11px; color: var(--text-muted); margin-top: 6px; line-height: 1.4; }
+  
+  .btn-submit { width: 100%; background: var(--navy); color: var(--white); border: none; padding: 16px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+  .btn-submit:hover { background: var(--navy-2); }
+  
+  .auth-links { margin-top: 24px; font-size: 14px; color: var(--text-muted); }
+  .auth-links a { color: var(--navy); font-weight: 600; text-decoration: none; }
+  .auth-links a:hover { text-decoration: underline; }
+  .errorlist { color: #d1495b; font-size: 13px; text-align: left; list-style: none; margin-bottom: 10px; padding-left: 0; font-weight: 600; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
   <div class="auth-card">
     <div class="auth-brand">ADJARA <span>ESTATE</span></div>
     <div class="auth-title">Создать аккаунт</div>
-
     <form class="auth-form" id="signup_form" method="POST" action="{% url 'account_signup' %}">
       {% csrf_token %}
       {% for field in form %}
@@ -63,5 +70,5 @@
       Уже есть аккаунт? <a href="{% url 'account_login' %}">Войти</a>
     </div>
   </div>
-</body>
-</html>
+</div>
+{% endblock %}

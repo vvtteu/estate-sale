@@ -217,6 +217,9 @@ class PropertyAdmin(ModelAdmin):
             obj.created_by = request.user
         super().save_model(request, obj, form, change)
 
+    class Media:
+        js = ("properties/js/translate.js",)
+
 # ==============================================================================
 # Избранное
 # ==============================================================================

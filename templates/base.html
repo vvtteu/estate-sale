@@ -86,6 +86,19 @@
       z-index: 10; transition: all 0.2s; 
     }
     .card-fav:hover { background: var(--white); transform: scale(1.1); }
+    .card-fav .heart-icon {
+      width: 18px;
+      height: 18px;
+      transition: fill 0.2s, color 0.2s;
+      color: var(--navy);
+      fill: transparent;
+    }
+
+    .card-fav.active .heart-icon,
+    .card-fav:hover .heart-icon {
+      fill: #d1495b;
+      color: #d1495b;
+    }
     
     .card-body { padding: 20px 22px 22px; }
     
@@ -109,6 +122,42 @@
       .burger { display: block; }
       .footer-top { grid-template-columns: 1fr; gap: 32px; }
     }
+    .mobile-menu {
+  position: fixed;
+  top: 76px; /* Равно высоте шапки, чтобы меню выезжало из-под неё */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 76px);
+  background: rgba(14, 28, 46, 0.98);
+  backdrop-filter: blur(10px);
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%); /* Прячем меню за правым краем экрана */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 199;
+  overflow-y: auto;
+}
+
+/* Этот класс будет добавлять JS при клике на бургер */
+header.menu-open .mobile-menu {
+  transform: translateX(0); 
+}
+
+/* Стилизуем внутренности мобильного меню */
+.mobile-nav ul { list-style: none; display: flex; flex-direction: column; gap: 24px; margin-bottom: 40px; padding: 0; }
+.mobile-nav a { color: var(--white); font-size: 20px; font-weight: 500; }
+
+.mobile-auth { display: flex; flex-direction: column; gap: 18px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 32px; margin-bottom: 40px; }
+.mobile-auth a { color: var(--gold-light); font-size: 16px; display: flex; align-items: center; font-weight: 600; }
+.mobile-auth a.logout { color: #d1495b; }
+
+.mobile-cta { background: var(--gold); color: var(--navy); text-align: center; padding: 16px; border-radius: 8px; font-weight: 700; font-size: 15px; margin-top: auto; }
+
+/* Прячем мобильное меню на больших экранах */
+@media (min-width: 721px) {
+  .mobile-menu { display: none; }
+}
   </style>
 
   <meta name="csrf-token" content="{{ csrf_token }}">
@@ -120,41 +169,66 @@
 
   <!-- ================= ШАПКА ================= -->
   <header>
-    <div class="container nav-inner">
-      <a href="/" class="brand">
-        <div class="brand-emblem"><i class="ti ti-building-arch"></i></div>
-        <div class="brand-text">
-          <div class="name">ADJARA <span>ESTATE</span></div>
-          <div class="tag">Real Estate in Kobuleti</div>
-        </div>
-      </a>
-      
-      <div class="nav-center">
-        <nav>
-          <ul>
-            <li><a href="{% url 'properties:catalog' %}">Объекты</a></li>
-            <li><a href="/#perks">Почему Кобулети</a></li>
-            <li><a href="/#why">О нас</a></li>
-            <li><a href="/#cta">Контакты</a></li>
-          </ul>
-        </nav>
+  <div class="container nav-inner">
+    <a href="/" class="brand">
+      <div class="brand-emblem"><i class="ti ti-building-arch"></i></div>
+      <div class="brand-text">
+        <div class="name">ADJARA <span>ESTATE</span></div>
+        <div class="tag">Real Estate in Kobuleti</div>
       </div>
-
-      <div class="header-actions">
-        {% if user.is_authenticated %}
-          <a href="{% url 'profile' %}" class="auth-link"><i class="ti ti-user"></i> Кабинет</a>
-          <a href="{% url 'account_logout' %}" class="auth-link logout">Выйти</a>
-        {% else %}
-          <a href="{% url 'account_login' %}" class="auth-link">Войти</a>
-          <a href="{% url 'account_signup' %}" class="auth-link">Регистрация</a>
-        {% endif %}
-        
-        <a href="#cta" class="nav-cta">Оставить заявку</a>
-        <button class="burger" aria-label="Меню">☰</button>
-      </div>
+    </a>
+    
+    <!-- Десктопное меню -->
+    <div class="nav-center">
+      <nav>
+        <ul>
+          <li><a href="{% url 'properties:catalog' %}">Объекты</a></li>
+          <li><a href="/#perks">Почему Кобулети</a></li>
+          <li><a href="/#why">О нас</a></li>
+          <li><a href="/#cta">Контакты</a></li>
+        </ul>
+      </nav>
     </div>
-  </header>
 
+    <!-- Десктопные кнопки -->
+    <div class="header-actions">
+      {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}" class="auth-link"><i class="ti ti-user"></i> Кабинет</a>
+        <a href="{% url 'account_logout' %}" class="auth-link logout">Выйти</a>
+      {% else %}
+        <a href="{% url 'account_login' %}" class="auth-link">Войти</a>
+        <a href="{% url 'account_signup' %}" class="auth-link">Регистрация</a>
+      {% endif %}
+      
+      <a href="#cta" class="nav-cta">Оставить заявку</a>
+      <button class="burger" aria-label="Меню">☰</button>
+    </div>
+  </div>
+
+  <!-- Мобильное выезжающее меню (спрятано на десктопе) -->
+  <div class="mobile-menu">
+    <nav class="mobile-nav">
+      <ul>
+        <li><a href="{% url 'properties:catalog' %}">Объекты</a></li>
+        <li><a href="/#perks">Почему Кобулети</a></li>
+        <li><a href="/#why">О нас</a></li>
+        <li><a href="/#cta">Контакты</a></li>
+      </ul>
+    </nav>
+    
+    <div class="mobile-auth">
+      {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}"><i class="ti ti-user"></i> Кабинет</a>
+        <a href="{% url 'account_logout' %}" class="logout">Выйти</a>
+      {% else %}
+        <a href="{% url 'account_login' %}">Войти</a>
+        <a href="{% url 'account_signup' %}">Регистрация</a>
+      {% endif %}
+    </div>
+    
+    <a href="#cta" class="mobile-cta">Оставить заявку</a>
+  </div>
+</header>
   <!-- ================= КОНТЕНТ ================= -->
   <main>
     {% block content %}{% endblock %}
@@ -262,6 +336,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+// --- ЛОГИКА БУРГЕР МЕНЮ ---
+  const burgerBtn = document.querySelector('.burger');
+  const header = document.querySelector('header');
+  const mobileLinks = document.querySelectorAll('.mobile-menu a');
+
+  if (burgerBtn) {
+    burgerBtn.addEventListener('click', function() {
+      // Переключаем класс menu-open у шапки
+      header.classList.toggle('menu-open');
+      
+      // Меняем иконку (бургер на крестик и обратно)
+      if (header.classList.contains('menu-open')) {
+        burgerBtn.innerHTML = '✕'; 
+      } else {
+        burgerBtn.innerHTML = '☰';
+      }
+    });
+
+    // Умное закрытие: если пользователь кликнул на ссылку в меню, оно само закрывается
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        header.classList.remove('menu-open');
+        burgerBtn.innerHTML = '☰';
+      });
+    });
+  }
 </script>
 </body>
 </html>
