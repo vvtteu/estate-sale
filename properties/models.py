@@ -135,6 +135,23 @@ class PropertyType(BaseModel):
         translation = self.translations.filter(language=Language.RU).first()
         return translation.title if translation else self.slug
 
+    def get_descendants_ids(self):
+        ids = [self.pk]
+        for child in self.children.filter(is_active=True):
+            ids.extend(child.get_descendants_ids())
+        return ids
+
+    def get_full_name(self, language="ru"):
+        translation = self.translations.filter(language=language).first()
+        title = translation.title if translation else self.slug
+
+        if self.parent:
+            parent_translation = self.parent.translations.filter(language=language).first()
+            parent_title = parent_translation.title if parent_translation else self.parent.slug
+            return f"{parent_title} — {title}"
+
+        return title
+
 
 class PropertyTypeTranslation(TranslationBase):
     property_type = models.ForeignKey(

@@ -7,6 +7,7 @@ from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 
 def index_page(request):
     properties = Property.objects.filter(
@@ -36,7 +37,12 @@ def catalog_view(request):
  
     property_type = request.GET.get("property_type")
     if property_type:
-        queryset = queryset.filter(property_type_id=property_type)
+        try:
+            pt = PropertyType.objects.get(pk=property_type)
+            descendant_ids = pt.get_descendants_ids()
+            queryset = queryset.filter(property_type_id__in=descendant_ids)
+        except PropertyType.DoesNotExist:
+            pass
  
     min_price = request.GET.get("min_price")
     max_price = request.GET.get("max_price")
@@ -45,14 +51,14 @@ def catalog_view(request):
     if max_price:
         queryset = queryset.filter(price__lte=max_price)
  
-    search_query = request.GET.get("search")
-    if search_query:
-        queryset = queryset.filter(
-            Q(address__icontains=search_query)
-            | Q(city__icontains=search_query)
-            | Q(district__icontains=search_query)
-            | Q(translations__title__icontains=search_query)
-        ).distinct()
+    # search_query = request.GET.get("search")
+    # if search_query:
+    #     queryset = queryset.filter(
+    #         Q(address__icontains=search_query)
+    #         | Q(city__icontains=search_query)
+    #         | Q(district__icontains=search_query)
+    #         | Q(translations__title__icontains=search_query)
+    #     ).distinct()
  
     rooms = request.GET.get("rooms")
     if rooms:
@@ -73,12 +79,47 @@ def catalog_view(request):
         queryset = queryset.filter(area_total__gte=min_area)
     if max_area:
         queryset = queryset.filter(area_total__lte=max_area)
+
+    search_query = request.GET.get("search")
+    if search_query:
+        search = SearchQuery(search_query, config="russian")
+        vector = SearchVector(
+            "translations__title",      
+            weight="A",                  
+            config="russian",
+        ) + SearchVector(
+            "translations__description", 
+            weight="B",
+            config="russian",
+        ) + SearchVector(
+            "address", "city", "district", 
+            weight="C",
+            config="russian",
+        )
+        queryset = (
+            queryset
+            .annotate(rank=SearchRank(vector, search))
+            .filter(rank__gte=0.01)
+            .order_by("-rank")
+            .distinct()
+        )
+
+    user_favorites = []
+    if request.user.is_authenticated:
+        user_favorites = FavoriteProperty.objects.filter(
+            user=request.user
+        ).values_list('property_id', flat=True)
  
-    property_types = PropertyType.objects.filter(is_active=True)
+    property_types = (
+        PropertyType.objects
+        .filter(is_active=True, parent=None)  
+        .prefetch_related("children")          
+    )
  
     context = {
         "properties": queryset,
         "property_types": property_types,
+        'user_favorites': user_favorites,
     }
     return render(request, "properties/catalog.html", context)
 
@@ -106,7 +147,7 @@ def property_detail_view(request, slug):
         price_gel = property_obj.price
         if latest_rate:
             price_usd = round(property_obj.price / latest_rate.usd_to_gel, 2)
-    else:  # USD
+    else:  
         price_usd = property_obj.price
         if latest_rate:
             price_gel = round(property_obj.price * latest_rate.usd_to_gel, 2)
@@ -156,19 +197,15 @@ def toggle_favorite(request, property_id):
             
         property_obj = get_object_or_404(Property, id=property_id)
         
-        # get_or_create ищет запись. Если не находит — создает новую.
-        # Возвращает кортеж: (найденный/созданный объект, True/False)
         favorite, created = FavoriteProperty.objects.get_or_create(
             user=request.user,
             property=property_obj
         )
         
         if not created:
-            # Запись уже была в базе, значит юзер хочет убрать лайк
             favorite.delete()
             is_favorited = False
         else:
-            # Записи не было, она только что создалась (поставили лайк)
             is_favorited = True
             
         return JsonResponse({'status': 'ok', 'is_favorited': is_favorited})

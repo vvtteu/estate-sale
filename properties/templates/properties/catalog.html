@@ -5,9 +5,9 @@
 {% block extra_head %}
 <style>
   /* ================= СТИЛИ ТОЛЬКО ДЛЯ КАТАЛОГА ================= */
-  .catalog-page { padding-top: 130px; padding-bottom: 92px; }
+  .catalog-page { padding-top: 90px; padding-bottom: 92px; }
 
-  .catalog-head { margin-bottom: 36px; }
+  .catalog-head { margin-bottom: 20px; }
   .catalog-head h1 { font-size: 42px; color: var(--navy); margin-bottom: 8px; }
   .catalog-head p { color: var(--text-muted); font-size: 15px; }
 
@@ -30,26 +30,114 @@
 
   .card-map-btn { width: 100%; margin-top: 14px; padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; background: transparent; color: var(--text-muted); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: border-color 0.2s, color 0.2s; position: relative; z-index: 4; }
   .card-map-btn:hover { border-color: var(--teal); color: var(--teal); }
-
+  .card { 
+    border-radius: 12px !important; /* Уменьшили скругление (было 18-24px) */
+    transform: translateZ(0); /* Аппаратное ускорение, убирает "мыло" шрифтов */
+  }
+  .card-img { 
+    border-radius: 12px 12px 0 0 !important; 
+  }
+  .card-img img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; /* Обязательно! Картинка обрезается, но не плющится */
+  }
   /* EMPTY STATE */
   .empty-state { text-align: center; padding: 64px 0; grid-column: span 3; }
   .empty-state i { font-size: 48px; color: var(--gold); margin-bottom: 16px; display: block; }
   .empty-state h3 { font-size: 24px; color: var(--navy); margin-bottom: 8px; }
   .empty-state p { color: var(--text-muted); font-size: 15px; }
+  .search-bar {
+  margin-bottom: 20px;
+}
+  .btn-toggle-filters {
+    display: none; 
+    width: 100%;
+    padding: 14px;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    transition: background 0.2s;
+  }
+  .btn-toggle-filters:hover { background: rgba(14,28,46,0.03); }
 
+  .filters-collapsible { display: block; }
+
+  /* ========================================= */
+  /*        КАЧЕСТВЕННЫЙ МОБИЛЬНЫЙ АДАПТИВ     */
+  /* ========================================= */
+  @media (max-width: 720px) {
+    /* 1. ЧИНИМ ФИЛЬТРЫ (Выстраиваем в 1 колонку) */
+    .filter-panel { padding: 20px 16px; }
+    .filter-grid { 
+      grid-template-columns: 1fr !important; /* Принудительно 1 колонка */
+      gap: 16px; 
+    }
+    .filter-group[style] { 
+      grid-column: span 1 !important; /* Сбиваем инлайн-стили для площади */
+    }
+    
+    /* Инпуты "От" и "До" ставим рядом */
+    .range-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } 
+    
+    .filter-actions { flex-direction: column-reverse; gap: 10px; }
+    .btn-submit, .btn-reset { width: 100%; justify-content: center; }
+
+    /* Логика кнопки показа фильтров */
+    .btn-toggle-filters { display: flex; } 
+    .filters-collapsible { display: none; } 
+    .filters-collapsible.show { display: block; animation: fadeIn 0.3s ease; }
+
+    /* 2. СЕТКА КАРТОЧЕК (2 в ряд, расширяем за счет меньших зазоров) */
+    .listings-grid { 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 10px; /* Зазор меньше, карточки шире */
+    }
+
+    /* 3. КОМПАКТНЫЕ КАРТОЧКИ А-ЛЯ АВИТО */
+    .card-img { height: 140px; } 
+    .card-badge { padding: 4px 8px; font-size: 10px; border-radius: 6px; top: 8px; left: 8px; }
+    .card-fav { top: 8px; right: 8px; width: 28px; height: 28px; }
+    .card-fav i, .card-fav svg { width: 16px; height: 16px; }
+    
+    .card-body { padding: 12px; } 
+    .card-title { font-size: 13.5px; line-height: 1.3; margin-bottom: 6px; }
+    .card-price { font-size: 15px; margin-bottom: 6px; }
+    .card-addr { font-size: 11px; margin-bottom: 8px; }
+    
+    .card-meta { gap: 8px; flex-wrap: wrap; }
+    .card-meta span { font-size: 11px; }
+    
+    .card-map-btn { font-size: 12px; padding: 8px; margin-top: 10px; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
   /* RESPONSIVE */
-  @media (max-width: 1024px) {
+  /* @media (max-width: 1024px) {
     .filter-grid { grid-template-columns: repeat(2, 1fr); }
     .filter-actions { grid-column: span 2; }
     .listings-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 720px) {
+  } */
+  /* @media (max-width: 720px) {
     .filter-grid { grid-template-columns: 1fr; }
     .filter-actions { grid-column: span 1; flex-direction: column-reverse; }
     .btn-submit, .btn-reset { width: 100%; justify-content: center; }
     .listings-grid { grid-template-columns: 1fr; }
     .catalog-head h1 { font-size: 32px; }
-  }
+  } */
 </style>
 {% endblock %}
 
@@ -59,63 +147,83 @@
     <h1>Каталог недвижимости</h1>
     <p>Найдено объектов: {{ properties.count }}</p>
   </div>
-
+  <div class="search-bar">
   <form method="GET" action="" class="filter-panel">
-    <div class="filter-grid">
-      <div class="filter-group">
-        <label>Тип сделки</label>
-        <select name="deal_type">
-          <option value="">Все варианты</option>
-          <option value="sale" {% if request.GET.deal_type == 'sale' %}selected{% endif %}>Купить</option>
-          <option value="rent" {% if request.GET.deal_type == 'rent' %}selected{% endif %}>Арендовать</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>Тип недвижимости</label>
-        <select name="property_type">
-          <option value="">Все типы</option>
-          {% for type in property_types %}
-            <option value="{{ type.id }}" {% if request.GET.property_type == type.id|stringformat:"i" %}selected{% endif %}>{{ type }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>Цена</label>
-        <div class="range-inputs">
-          <input type="number" name="min_price" placeholder="От" value="{{ request.GET.min_price }}">
-          <input type="number" name="max_price" placeholder="До" value="{{ request.GET.max_price }}">
-        </div>
-      </div>
-      <div class="filter-group">
-        <label>Поиск по локации</label>
-        <input type="text" name="search" placeholder="Улица, район..." value="{{ request.GET.search }}">
-      </div>
-      <div class="filter-group">
-        <label>Комнат</label>
-        <select name="rooms">
-          <option value="">Любое</option>
-          <option value="1" {% if request.GET.rooms == '1' %}selected{% endif %}>1 комната</option>
-          <option value="2" {% if request.GET.rooms == '2' %}selected{% endif %}>2 комнаты</option>
-          <option value="3" {% if request.GET.rooms == '3' %}selected{% endif %}>3 комнаты</option>
-          <option value="4" {% if request.GET.rooms == '4' %}selected{% endif %}>4+ комнат</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>Площадь м²</label>
-        <div class="range-inputs">
-          <input type="number" name="min_area" placeholder="От" value="{{ request.GET.min_area }}">
-          <input type="number" name="max_area" placeholder="До" value="{{ request.GET.max_area }}">
-        </div>
-      </div>
+    <!-- ГЛАВНАЯ СТРОКА ПОИСКА (всегда видна) -->
+    <div class="search-input-wrap" style="margin-bottom: 24px;">
+      <i class="ti ti-search"></i>
+      <input type="text" name="search" placeholder="Поиск по названию, описанию, адресу..." value="{{ request.GET.search }}" autocomplete="off">
+      {% if request.GET.search %}
+        <a href="{% url 'properties:catalog' %}" class="search-clear" title="Очистить поиск"><i class="ti ti-x"></i></a>
+      {% endif %}
     </div>
-    <div class="filter-actions">
-      <a href="{% url 'properties:catalog' %}" class="btn-reset">Сбросить</a>
-      <button type="submit" class="btn-submit">
-        <i class="ti ti-search"></i> Найти объекты
-      </button>
+
+    <!-- КНОПКА ПОКАЗА ФИЛЬТРОВ (появится только на мобилках) -->
+    <button type="button" class="btn-toggle-filters">
+      <i class="ti ti-adjustments-horizontal"></i> <span>Показать фильтры</span>
+    </button>
+
+    <!-- СКРЫВАЕМАЯ ЧАСТЬ -->
+    <div class="filters-collapsible">
+      <div class="filter-grid">
+        <div class="filter-group">
+          <label>Тип сделки</label>
+          <select name="deal_type">
+            <option value="">Все варианты</option>
+            <option value="sale" {% if request.GET.deal_type == 'sale' %}selected{% endif %}>Купить</option>
+            <option value="rent" {% if request.GET.deal_type == 'rent' %}selected{% endif %}>Арендовать</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Тип недвижимости</label>
+          <select name="property_type">
+            <option value="">Все типы</option>
+            {% for type in property_types %}
+              {% if not type.parent %}
+                <option value="{{ type.id }}" {% if request.GET.property_type == type.id|stringformat:"i" %}selected{% endif %}>{{ type }}</option>
+                {% for child in type.children.all %}
+                  {% if child.is_active %}
+                    <option value="{{ child.id }}" {% if request.GET.property_type == child.id|stringformat:"i" %}selected{% endif %}>&nbsp;&nbsp;&nbsp;* {{ child }}</option>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Цена</label>
+          <div class="range-inputs">
+            <input type="number" name="min_price" placeholder="От" value="{{ request.GET.min_price }}">
+            <input type="number" name="max_price" placeholder="До" value="{{ request.GET.max_price }}">
+          </div>
+        </div>
+        <div class="filter-group">
+          <label>Комнат</label>
+          <select name="rooms">
+            <option value="">Любое</option>
+            <option value="1" {% if request.GET.rooms == '1' %}selected{% endif %}>1 комната</option>
+            <option value="2" {% if request.GET.rooms == '2' %}selected{% endif %}>2 комнаты</option>
+            <option value="3" {% if request.GET.rooms == '3' %}selected{% endif %}>3 комнаты</option>
+            <option value="4" {% if request.GET.rooms == '4' %}selected{% endif %}>4+ комнат</option>
+          </select>
+        </div>
+        <div class="filter-group" style="grid-column: span 2;">
+          <label>Площадь м²</label>
+          <div class="range-inputs">
+            <input type="number" name="min_area" placeholder="От" value="{{ request.GET.min_area }}">
+            <input type="number" name="max_area" placeholder="До" value="{{ request.GET.max_area }}">
+          </div>
+        </div>
+      </div>
+      
+      <div class="filter-actions">
+        <a href="{% url 'properties:catalog' %}" class="btn-reset">Сбросить всё</a>
+        <button type="submit" class="btn-submit">
+          <i class="ti ti-search"></i> Найти объекты
+        </button>
+      </div>
     </div>
   </form>
-
   <div class="listings-grid">
     {% for property in properties %}
       <div class="card">
@@ -191,6 +299,29 @@ document.querySelectorAll('.card-map-btn').forEach(function(btn) {
     e.preventDefault();
     e.stopPropagation();
   });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const toggleBtn = document.querySelector('.btn-toggle-filters');
+  const filtersWrapper = document.querySelector('.filters-collapsible');
+  const btnText = toggleBtn ? toggleBtn.querySelector('span') : null;
+  const btnIcon = toggleBtn ? toggleBtn.querySelector('i') : null;
+
+  if (toggleBtn && filtersWrapper) {
+    toggleBtn.addEventListener('click', function() {
+      filtersWrapper.classList.toggle('show');
+      
+      if (filtersWrapper.classList.contains('show')) {
+        btnText.textContent = 'Скрыть фильтры';
+        btnIcon.className = 'ti ti-x';
+      } else {
+        btnText.textContent = 'Показать фильтры';
+        btnIcon.className = 'ti ti-adjustments-horizontal';
+      }
+    });
+  }
 });
 </script>
 

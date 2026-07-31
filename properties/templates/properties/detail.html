@@ -31,12 +31,61 @@
   .location-bar i { color: var(--teal); font-size: 18px; }
 
   /* Key Metrics Row */
-  .metrics-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 36px; }
-  .metric-item { text-align: center; border-right: 1px solid var(--border); }
-  .metric-item:last-child { border-right: none; }
-  .metric-item i { font-size: 24px; color: var(--teal); margin-bottom: 6px; display: block; }
-  .metric-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
-  .metric-value { font-size: 16px; font-weight: 700; color: var(--navy); }
+  .metrics-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+  .metric-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 140px;
+    padding-right: 24px;
+    border-right: 1px solid var(--border);
+  }
+  .metric-item:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+  .metric-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--teal-light);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .metric-icon i { font-size: 22px; color: var(--teal); }
+  .metric-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 3px;
+  }
+  .metric-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+
+  @media (max-width: 720px) {
+    .metrics-card { flex-direction: column; gap: 16px; }
+    .metric-item { border-right: none; border-bottom: 1px solid var(--border); padding-right: 0; padding-bottom: 16px; width: 100%; }
+    .metric-item:last-child { border-bottom: none; padding-bottom: 0; }
+  }
 
   /* Description & Details Block */
   .info-section { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-bottom: 32px; }
@@ -122,21 +171,29 @@
       </div>
 
       <div class="metrics-card">
+        {% if property.area_total %}
         <div class="metric-item">
-          <i class="ti ti-ruler-2"></i>
-          <div class="metric-label">Общая площадь</div>
-          <div class="metric-value">{{ property.area_total|default:"—" }} м²</div>
+          <div>
+            <div class="metric-label">Площадь</div>
+            <div class="metric-value">{{ property.area_total }} м²</div>
+          </div>
         </div>
+        {% endif %}
+
         <div class="metric-item">
-          <i class="ti ti-bed"></i>
-          <div class="metric-label">Комнат</div>
-          <div class="metric-value">{{ property.rooms|default:"—" }}</div>
+          <div>
+            <div class="metric-label">Тип</div>
+            <div class="metric-value">{{ property.property_type.get_full_name }}</div>
+          </div>
         </div>
+
         <div class="metric-item">
-          <i class="ti ti-building"></i>
-          <div class="metric-label">Тип жилья</div>
-          <div class="metric-value">{{ property.property_type }}</div>
+          <div>
+            <div class="metric-label">Тип сделки</div>
+            <div class="metric-value">{{ property.deal_type }}</div>
+          </div>
         </div>
+
       </div>
 
       <div class="info-section">
