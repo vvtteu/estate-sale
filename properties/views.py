@@ -8,6 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from django.core.paginator import Paginator
 
 def index_page(request):
     properties = Property.objects.filter(
@@ -50,15 +51,6 @@ def catalog_view(request):
         queryset = queryset.filter(price__gte=min_price)
     if max_price:
         queryset = queryset.filter(price__lte=max_price)
- 
-    # search_query = request.GET.get("search")
-    # if search_query:
-    #     queryset = queryset.filter(
-    #         Q(address__icontains=search_query)
-    #         | Q(city__icontains=search_query)
-    #         | Q(district__icontains=search_query)
-    #         | Q(translations__title__icontains=search_query)
-    #     ).distinct()
  
     rooms = request.GET.get("rooms")
     if rooms:
@@ -115,9 +107,13 @@ def catalog_view(request):
         .filter(is_active=True, parent=None)  
         .prefetch_related("children")          
     )
- 
+
+    paginator = Paginator(queryset, 12) 
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        "properties": queryset,
+        "properties": page_obj,
         "property_types": property_types,
         'user_favorites': user_favorites,
     }

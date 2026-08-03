@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 import builtins
+from django.core.cache import cache
 from PIL import Image
 
 class Language(models.TextChoices):
@@ -37,7 +38,7 @@ class TranslationBase(BaseModel):
 
 
 # ==============================================================================
-# Тип сделки (Продажа / Аренда)
+# Тип сделки
 # ==============================================================================
 
 class DealType(BaseModel):
@@ -252,6 +253,22 @@ class ExchangeRate(BaseModel):
         verbose_name = _("Курс валют")
         verbose_name_plural = _("Курсы валют")
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete("latest_usd_to_gel")
+
+    @classmethod
+    def get_latest_rate(cls):
+        rate = cache.get("latest_usd_to_gel")
+        
+        if not rate:
+            latest = cls.objects.order_by("-effective_date").first()
+            rate = latest.usd_to_gel if latest else 2.75
+            
+            cache.set("latest_usd_to_gel", rate, 86400)
+            
+        return rate
+
     def __str__(self):
         return f"1 USD = {self.usd_to_gel} GEL ({self.effective_date})"
 
@@ -384,6 +401,22 @@ class Property(BaseModel):
         from django.utils import timezone
         from datetime import timedelta
         return self.created_at >= timezone.now() - timedelta(days=7)
+
+    @property
+    def price_in_usd(self):
+        """Гарантированно возвращает цену в долларах"""
+        if self.currency == Currency.USD:
+            return int(self.price)
+        rate = ExchangeRate.get_latest_rate()
+        return int(self.price / rate)
+
+    @property
+    def price_in_gel(self):
+        """Гарантированно возвращает цену в лари"""
+        if self.currency == Currency.GEL:
+            return int(self.price)
+        rate = ExchangeRate.get_latest_rate()
+        return int(self.price * rate)
     
     def __str__(self):
         translation = self.translations.filter(language=Language.RU).first()
