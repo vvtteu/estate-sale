@@ -347,8 +347,19 @@ class Property(BaseModel):
         decimal_places=2,
         null=True,
         blank=True,
-        verbose_name=_("Общая площадь, м²")
+        verbose_name=_("Площадь участка / общая площадь, м²"),  
+        help_text=_("Для домов — площадь земельного участка. Для квартир — общая площадь.")
     )
+    
+    area_living = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name=_("Площадь дома / жилая площадь, м²"),
+        help_text=_("Для домов — площадь самого строения.")
+    )
+    
     slug = models.SlugField(
         unique=True,
         max_length=255,

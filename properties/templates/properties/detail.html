@@ -226,6 +226,13 @@
             <span class="spec-value">{{ property.district }}</span>
           </div>
           {% endif %}
+
+          {% if property.area_living %}
+          <div class="spec-row">
+              <div class="spec-label">Площадь дома</div>
+              <div class="spec-value">{{ property.area_living }} м²</div>
+          </div>
+          {% endif %}
           
           {% for attr_val in property.attribute_values.all %}
             {% if attr_val.attribute.slug != 'rooms' %}

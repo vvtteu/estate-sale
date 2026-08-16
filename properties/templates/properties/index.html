@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}  
 {% block title %}Adjara Estate — недвижимость в Кобулети{% endblock %}
 
 {% block extra_head %}
@@ -47,29 +47,102 @@
 
   /* WHY / LOCATION PERKS */
   .perks-section { background: var(--navy); }
-  .perks-section .sec-title, .perks-section .card-price { color: var(--white); }
+  .perks-section .sec-title, .perks-section .card-price .card-name { color: var(--white); }
   .perks-section .sec-sub { color: rgba(255,255,255,0.55); }
-  .perks-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 8px; }
+  .perks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 8px; }
   .perk-card { padding: 30px 26px; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; transition: border-color 0.25s, background 0.25s; }
   .perk-card:hover { border-color: var(--gold); background: rgba(201,162,74,0.06); }
   .perk-icon { width: 50px; height: 50px; background: rgba(201,162,74,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
   .perk-icon i { font-size: 24px; color: var(--gold); }
-  .perk-card h3 { font-size: 19px; color: var(--white); margin-bottom: 10px; }
-  .perk-card p { font-size: 13.5px; color: rgba(255,255,255,0.5); line-height: 1.65; }
+  .perk-card h3 { font-size: 22px; color: var(--white); margin-bottom: 10px; }
+  .perk-card p { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.65; }
 
   /* WHY US */
-  .why-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
-  .why-visual { background: var(--teal-light); border-radius: 24px; padding: 48px; min-height: 400px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-  .why-badge { width: 168px; height: 168px; border: 2px solid var(--gold); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: var(--white); }
-  .why-badge i { font-size: 38px; color: var(--gold); }
-  .why-badge span { font-size: 11px; color: var(--navy); text-align: center; text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.4; padding: 0 20px; }
-  .why-mark { position: absolute; font-size: 220px; color: var(--navy); opacity: 0.06; right: 0; bottom: -30px; font-family: 'Cormorant Garamond', serif; }
-  .why-points { display: flex; flex-direction: column; gap: 26px; }
-  .why-point { display: flex; gap: 18px; }
-  .why-point-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--teal-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .why-point-icon i { color: var(--teal); font-size: 19px; }
-  .why-point h4 { font-size: 17.5px; color: var(--navy); margin-bottom: 6px; }
-  .why-point p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+  .why-layout { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 72px; 
+    align-items: center; 
+  }
+
+  .why-visual { 
+    position: relative;
+    border-radius: 24px; 
+    overflow: hidden;
+    min-height: 500px;
+    background: var(--teal-light);
+  }
+
+  .why-image {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .why-badge { 
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    padding: 18px 24px;
+    background: rgba(14, 28, 46, 0.88);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(201, 162, 74, 0.35);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: 280px;
+  }
+
+  .why-badge i { 
+    font-size: 26px; 
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .why-badge span { 
+    font-size: 13px; 
+    color: var(--white); 
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .why-mark { display: none; }
+
+  /* Адаптив */
+  @media (max-width: 980px) {
+    .why-layout { 
+      grid-template-columns: 1fr; 
+      gap: 40px; 
+    }
+    .why-visual, .why-image { 
+      min-height: 340px;
+    }
+    .why-badge {
+      left: 20px;
+      bottom: 20px;
+      padding: 14px 20px;
+      max-width: 240px;
+    }
+    .why-badge i { font-size: 22px; }
+    .why-badge span { font-size: 12px; }
+  }
+
+  @media (max-width: 720px) {
+    .why-visual, .why-image { 
+      min-height: 260px;
+    }
+    .why-badge {
+      left: 14px;
+      bottom: 14px;
+      padding: 12px 16px;
+      max-width: 200px;
+    }
+    .why-badge i { font-size: 18px; }
+    .why-badge span { font-size: 11px; }
+  }
 
   /* CTA */
   .cta-section { background: var(--cream); }
@@ -105,9 +178,9 @@
   <i class="ti ti-palm-tree palm-mark" aria-hidden="true"></i>
   <div class="container hero-grid">
     <div>
-      <div class="eyebrow">Недвижимость на побережье Аджарии</div>
-      <h1>Ваш дом у <em>Чёрного моря</em>, в самом Кобулети</h1>
-      <p>Квартиры, дома и коммерческие помещения в Кобулети и окрестностях — от первой линии моря до тихих улиц в глубине города. Подберём объект под ваши задачи: жить, сдавать или инвестировать.</p>
+      <div class="eyebrow">Недвижимость в солнечной Грузии</div>
+      <h1>Недвижимость в <em>Грузии</em> для жизни, отдыха и инвестиций</h1>
+      <p>Квартиры, дома, земельные участки и коммерческая недвижимость в лучших локациях Грузии. Подберём объект под ваши цели: для жизни, отдыха, бизнеса или инвестиций.</p>
       <div class="hero-actions">
         <a href="{% url 'properties:catalog' %}" class="btn-primary">Смотреть объекты</a>
         <a href="#cta" class="btn-outline">Получить консультацию</a>
@@ -119,7 +192,7 @@
         </div>
         <div>
           <div class="stat-num"><span>9</span> лет</div>
-          <div class="stat-label">Работаем в Кобулети</div>
+          <div class="stat-label">Работаем в Грузии</div>
         </div>
         <div>
           <div class="stat-num"><span>3</span> языка</div>
@@ -142,7 +215,7 @@
       <div>
         <div class="sec-eyebrow">Каталог</div>
         <h2 class="sec-title">Актуальные предложения</h2>
-        <p class="sec-sub">Объекты обновляются ежедневно — от студий у моря до просторных семейных домов.</p>
+        <p class="sec-sub">Объекты обновляются ежедневно — от участков до просторных семейных домов.</p>
       </div>
       <a href="{% url 'properties:catalog' %}" class="see-all">Все объекты →</a>
     </div>
@@ -154,18 +227,14 @@
             {% if property.images.first %}
             style="background: url('{{ property.images.first.image.url }}') center/cover no-repeat;"
             {% endif %}>
-          
-          <span class="card-badge">{{ property.deal_type.name|default:"Продажа" }}</span>
-          
-          <div class="card-fav"><i class="ti ti-heart"></i></div>
         </div>
-        
+      
         <div class="card-body">
+          <div class="card-title">{{ property.title_ru|default:"Без названия" }}</div>
           <div class="card-price">${{ property.price }}</div>
           
           <div class="card-addr"><i class="ti ti-map-pin"></i>{{ property.address|default:"центр" }}</div>
             <div class="card-meta">
-            <span><i class="ti ti-bed"></i> {{ property.rooms|default:"-" }} комн.</span>
             <span><i class="ti ti-ruler-2"></i> {{ property.area_total|default:"—" }} м²</span>
           </div>
         </div>
@@ -182,42 +251,108 @@
   <div class="container">
     <div class="sec-head">
       <div>
-        <div class="sec-eyebrow" style="color:var(--gold-light)">Почему Кобулети</div>
-        <h2 class="sec-title">Курорт, который растёт круглый год</h2>
-        <p class="sec-sub">Аджария — не только летний сезон: город развивается, а недвижимость остаётся одной из самых доступных на грузинском побережье.</p>
+        <div class="sec-eyebrow" style="color:var(--gold-light)">Почему Грузия</div>
+        <h2 class="sec-title">Грузия — страна, где комфортная жизнь сочетается с возможностями для инвестиций в недвижимость.</h2>
+        <!-- <p class="sec-sub">Аджария — не только летний сезон: город развивается, а недвижимость остаётся одной из самых доступных на грузинском побережье.</p> -->
       </div>
     </div>
     <div class="perks-grid">
+      <!-- 1. Природа и климат -->
       <div class="perk-card">
-        <div class="perk-icon"><i class="ti ti-beach"></i></div>
-        <h3>12 км пляжей</h3>
-        <p>Один из самых протяжённых пляжей Чёрного моря в Грузии — рядом всегда вода и набережная.</p>
+        <h3>Мягкий климат и природа</h3>
+        <p>Субтропики, море и горы рядом. Здесь мягкая зима и теплое лето, а уникальный ландшафт позволяет наслаждаться природой круглый год.</p>
       </div>
+
+      <!-- 2. Инфраструктура и развитие -->
+      <div class="perk-card">
+        <h3>Активное развитие</h3>
+        <p>В курортных городах активно обновляется инфраструктура: от современных набережных и парков до новых жилых комплексов и торговых центров.</p>
+      </div>
+
+      <!-- 3. Гостеприимство и менталитет -->
+      <div class="perk-card">
+        <h3>Гостеприимство и колорит</h3>
+        <p>Местная культура, кухня и традиционное радушие создают атмосферу уюта. Сюда хочется возвращаться, а переезд проходит комфортно и легко.</p>
+      </div>
+
     </div>
   </div>
 </section>
 
 <section class="why-section" id="why">
   <div class="container why-layout">
+    <!-- Левая часть: картинка -->
     <div class="why-visual">
-      <div class="why-mark">AE</div>
+      <img src="{% static 'images/about/adjara-estate-office.jpg' %}" 
+           alt="Adjara Estate — агентство недвижимости в Грузии" 
+           class="why-image">
       <div class="why-badge">
-        <i class="ti ti-award"></i>
-        <span>Локальная экспертиза Кобулети</span>
+        <span>Надёжный проводник в мире недвижимости Грузии</span>
       </div>
     </div>
+    
+    <!-- Правая часть: текст -->
     <div>
       <div class="sec-eyebrow">О нас</div>
-      <h2 class="sec-title">Знаем каждую улицу этого города</h2>
-      <p class="sec-sub" style="margin-bottom:36px;">Adjara Estate специализируется на недвижимости Кобулети и ближайших посёлков — это позволяет точно оценивать объекты и находить варианты, которых нет в общих каталогах.</p>
-      <div class="why-points">
-        <div class="why-point">
-          <div class="why-point-icon"><i class="ti ti-language"></i></div>
-          <div>
-            <h4>Работаем на трёх языках</h4>
-            <p>Сопровождение сделки на русском, английском и грузинском — без языкового барьера.</p>
+      <h2 class="sec-title">Знаем рынок недвижимости <br><span style="color: var(--gold);">Грузии</span></h2>
+      
+      <!-- Первый абзац -->
+      <p class="sec-sub" style="margin-bottom: 16px; margin-top: 10px; max-width: 100%;">
+        Adjara Estate — агентство недвижимости в Грузии. Мы помогаем нашим клиентам найти недвижимость для жизни, отдыха, бизнеса и инвестиций.
+      </p>
+      
+      <!-- Второй абзац -->
+      <p style="font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">
+        Мы работаем с объектами в Кобулети, Батуми и других перспективных районах Грузии: квартирами, частными домами, земельными участками, коммерческой и инвестиционной недвижимостью.
+      </p>
+      
+      <!-- Третий абзац -->
+      <p style="font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 24px;">
+        Наша задача — сделать покупку недвижимости понятной и комфортной. Мы сопровождаем клиента на всех этапах — от подбора объекта и организации просмотров до проверки документов и оформления сделки. Для нас важно не просто предложить недвижимость, а подобрать вариант, который действительно соответствует вашим целям и бюджету.
+      </p>
+      
+      <!-- Блок "Почему выбирают Adjara Estate" -->
+      <div style="margin-bottom: 24px;">
+        <h4 style="font-size: 18px; color: var(--navy); margin-bottom: 14px; font-weight: 700;">
+          Почему выбирают Adjara Estate
+        </h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px;">
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);">
+            <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
+            Индивидуальный подбор недвижимости
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);">
+            <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
+            Актуальная база объектов
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);">
+            <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
+            Знание местного рынка
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);">
+            <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
+            Помощь в проверке документов
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);">
+            <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
+            Сопровождение сделки
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);">
+            <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
+            Поддержка иностранных покупателей
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted); grid-column: span 2;">
+            <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
+            Консультации по вопросам покупки и инвестиций
           </div>
         </div>
+      </div>
+      <div style="font-size: 16px; color: var(--navy); font-weight: 600; padding-top: 16px; border-top: 1px solid var(--border);">
+        Adjara Estate — ваш надёжный проводник в мире недвижимости Грузии.
+      </div>
+      <div style="font-size: 15px; color: var(--gold); font-weight: 500; margin-top: 6px;">
+        Найдите своё место в Грузии вместе с нами.
+      </div>
       </div>
     </div>
   </div>
