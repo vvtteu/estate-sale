@@ -201,6 +201,9 @@
       </div>
     </div>
     <div class="hero-visual">
+      <img src="{% static 'images/about/adjara-estate-office.jpg' %}" 
+           alt="Adjara Estate — агентство недвижимости в Грузии" 
+           class="why-image">
       <div class="hero-visual-badge">
         <div class="t1">Первая линия</div>
         <div class="t2">Апартаменты с видом на море</div>
@@ -240,7 +243,6 @@
         </div>
       </a>
       {% empty %}
-        <!-- Этот текст покажется, если в базе вообще нет ни одной опубликованной квартиры -->
         <p style="grid-column: span 3; text-align: center; color: var(--text-muted);">Объекты скоро появятся...</p>
       {% endfor %}
     </div>
@@ -283,12 +285,12 @@
   <div class="container why-layout">
     <!-- Левая часть: картинка -->
     <div class="why-visual">
-      <img src="{% static 'images/about/adjara-estate-office.jpg' %}" 
+      <img src="{% static 'images/about/adjara-estate.jpg' %}" 
            alt="Adjara Estate — агентство недвижимости в Грузии" 
            class="why-image">
-      <div class="why-badge">
+      <!-- <div class="why-badge">
         <span>Надёжный проводник в мире недвижимости Грузии</span>
-      </div>
+      </div> -->
     </div>
     
     <!-- Правая часть: текст -->
@@ -364,10 +366,10 @@
       <div class="cta-text">
         <h2>Готовы найти свой дом у моря?</h2>
         <p>Оставьте заявку — подберём варианты под ваш бюджет и расскажем всё о районе на понятном вам языке.</p>
-        <a href="tel:+995591234567" class="btn-primary" style="margin-top:22px;">Позвонить нам</a>
+        <a href="tel:+995557930679" class="btn-primary" style="margin-top:22px;">Позвонить нам</a>
       </div>
       <div class="cta-side">
-        <a href="tel:+995591234567" class="cta-phone">+995 591 23 45 67</a>
+        <a href="tel:+995557930679" class="cta-phone">+995 557 930 679</a>
         <p>Ежедневно с 10:00 до 20:00</p>
       </div>
     </div>
