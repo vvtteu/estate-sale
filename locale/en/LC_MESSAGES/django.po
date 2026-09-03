@@ -1,0 +1,871 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-02 15:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: core/settings.py:132 properties/models.py:9
+msgid "Русский"
+msgstr ""
+
+#: core/settings.py:133 properties/models.py:10
+msgid "English"
+msgstr ""
+
+#: core/settings.py:134 properties/models.py:11
+msgid "ქართული"
+msgstr ""
+
+#: core/settings.py:164
+msgid "Панель управления"
+msgstr ""
+
+#: core/settings.py:165
+msgid "Недвижимость"
+msgstr ""
+
+#: core/settings.py:174
+msgid "Объявления"
+msgstr ""
+
+#: core/settings.py:177 properties/models.py:393
+msgid "Объекты недвижимости"
+msgstr ""
+
+#: core/settings.py:184
+msgid "Справочники"
+msgstr ""
+
+#: core/settings.py:187 properties/models.py:62
+msgid "Типы сделок"
+msgstr ""
+
+#: core/settings.py:192 properties/models.py:133 properties/models.py:568
+msgid "Типы недвижимости"
+msgstr ""
+
+#: core/settings.py:197
+msgid "Статусы"
+msgstr ""
+
+#: core/settings.py:202 properties/models.py:574
+msgid "Характеристики"
+msgstr ""
+
+#: core/settings.py:207 properties/models.py:649
+msgid "Варианты выбора"
+msgstr ""
+
+#: core/settings.py:212 properties/models.py:253
+msgid "Курс валют"
+msgstr ""
+
+#: core/settings.py:219
+msgid "Система"
+msgstr ""
+
+#: core/settings.py:222 users/models.py:14
+msgid "Пользователи"
+msgstr ""
+
+#: core/settings.py:227 properties/models.py:791 properties/models.py:792
+msgid "Настройки сайта"
+msgstr ""
+
+#: properties/admin.py:13
+msgid "Точка на карте"
+msgstr ""
+
+#: properties/admin.py:36 properties/admin.py:55 properties/admin.py:77
+#: properties/admin.py:106 properties/admin.py:131 properties/admin.py:151
+msgid "Перевод"
+msgstr ""
+
+#: properties/admin.py:37 properties/admin.py:56 properties/admin.py:78
+#: properties/admin.py:107 properties/admin.py:132
+msgid "Переводы (RU / EN / KA)"
+msgstr ""
+
+#: properties/admin.py:113
+msgid "Привязка к типу недвижимости"
+msgstr ""
+
+#: properties/admin.py:114
+msgid "Привязки к типам недвижимости"
+msgstr ""
+
+#: properties/admin.py:152
+msgid "Тексты объявления (RU / EN / KA)"
+msgstr ""
+
+#: properties/admin.py:159 properties/models.py:482 properties/models.py:502
+msgid "Фотография"
+msgstr ""
+
+#: properties/admin.py:160 properties/models.py:503
+msgid "Фотографии"
+msgstr ""
+
+#: properties/admin.py:175 properties/models.py:573 properties/models.py:586
+#: properties/models.py:606 properties/models.py:636 properties/models.py:688
+msgid "Характеристика"
+msgstr ""
+
+#: properties/admin.py:176
+msgid "Характеристики объекта"
+msgstr ""
+
+#: properties/admin.py:191
+msgid "Основное"
+msgstr ""
+
+#: properties/admin.py:192 properties/models.py:319
+msgid "Цена"
+msgstr ""
+
+#: properties/admin.py:193
+msgid "Местоположение"
+msgstr ""
+
+#: properties/admin.py:194
+msgid ""
+"Кликните на карте — адрес, город и район заполнятся автоматически. Поля "
+"можно поправить вручную."
+msgstr ""
+
+#: properties/admin.py:197
+msgid "Параметры"
+msgstr ""
+
+#: properties/admin.py:198
+msgid "Публикация"
+msgstr ""
+
+#: properties/admin.py:199
+msgid "Служебное"
+msgstr ""
+
+#: properties/admin.py:233 templates/base.html:214 templates/base.html:256
+#: templates/base.html:306
+msgid "Контакты"
+msgstr "Contacts"
+
+#: properties/admin.py:234
+msgid "Эти данные отображаются на сайте во всех карточках объявлений."
+msgstr ""
+
+#: properties/models.py:17
+msgid "Создано"
+msgstr ""
+
+#: properties/models.py:21
+msgid "Обновлено"
+msgstr ""
+
+#: properties/models.py:33
+msgid "Язык"
+msgstr ""
+
+#: properties/models.py:47 properties/models.py:106 properties/models.py:185
+#: properties/models.py:366 properties/models.py:540 properties/models.py:639
+msgid "Slug"
+msgstr ""
+
+#: properties/models.py:48
+msgid "Используется в URL. Только латинские буквы и дефис."
+msgstr ""
+
+#: properties/models.py:52 properties/models.py:123
+msgid "Активно"
+msgstr ""
+
+#: properties/models.py:56 properties/models.py:127 properties/models.py:196
+#: properties/models.py:562
+msgid "Порядок сортировки"
+msgstr ""
+
+#: properties/models.py:61 properties/models.py:74 properties/models.py:285
+msgid "Тип сделки"
+msgstr ""
+
+#: properties/models.py:78 properties/models.py:166 properties/models.py:218
+#: properties/models.py:590 properties/models.py:665
+msgid "Название"
+msgstr ""
+
+#: properties/models.py:83
+msgid "Перевод типа сделки"
+msgstr ""
+
+#: properties/models.py:84
+msgid "Переводы типов сделок"
+msgstr ""
+
+#: properties/models.py:101
+msgid "Родительская категория"
+msgstr ""
+
+#: properties/models.py:102
+msgid "Оставьте пустым для категории верхнего уровня."
+msgstr ""
+
+#: properties/models.py:112
+msgid "Иконка"
+msgstr ""
+
+#: properties/models.py:118
+msgid "Применимые типы сделок"
+msgstr ""
+
+#: properties/models.py:119
+msgid "К каким типам сделок относится данная категория."
+msgstr ""
+
+#: properties/models.py:132 properties/models.py:162 properties/models.py:291
+#: properties/models.py:611
+msgid "Тип недвижимости"
+msgstr ""
+
+#: properties/models.py:171
+msgid "Перевод типа недвижимости"
+msgstr ""
+
+#: properties/models.py:172
+msgid "Переводы типов недвижимости"
+msgstr ""
+
+#: properties/models.py:186
+msgid "Например: active, sold, rented, reserved, draft"
+msgstr ""
+
+#: properties/models.py:191
+msgid "Цвет (HEX)"
+msgstr ""
+
+#: properties/models.py:192
+msgid "Цвет бэйджика на карточке. Например: #27AE60"
+msgstr ""
+
+#: properties/models.py:201
+msgid "Статус объявления"
+msgstr ""
+
+#: properties/models.py:202
+msgid "Статусы объявлений"
+msgstr ""
+
+#: properties/models.py:214 properties/models.py:297
+msgid "Статус"
+msgstr ""
+
+#: properties/models.py:223
+msgid "Перевод статуса"
+msgstr ""
+
+#: properties/models.py:224
+msgid "Переводы статусов"
+msgstr ""
+
+#: properties/models.py:243
+msgid "Курс USD → GEL"
+msgstr ""
+
+#: properties/models.py:244
+msgid "Сколько лари за 1 доллар. Например: 2.6500"
+msgstr ""
+
+#: properties/models.py:248
+msgid "Дата"
+msgstr ""
+
+#: properties/models.py:254
+msgid "Курсы валют"
+msgstr ""
+
+#: properties/models.py:304
+msgid "Город"
+msgstr ""
+
+#: properties/models.py:305
+msgid "Например: Тбилиси"
+msgstr ""
+
+#: properties/models.py:311
+msgid "Район"
+msgstr ""
+
+#: properties/models.py:312
+msgid "Например: Ваке"
+msgstr ""
+
+#: properties/models.py:320
+msgid "Введите цену в выбранной валюте."
+msgstr ""
+
+#: properties/models.py:326
+msgid "Валюта"
+msgstr ""
+
+#: properties/models.py:334
+msgid "Местоположение на карте"
+msgstr ""
+
+#: properties/models.py:335
+msgid "Кликните на карте, чтобы указать точное местоположение объекта."
+msgstr ""
+
+#: properties/models.py:341
+msgid "Адрес"
+msgstr ""
+
+#: properties/models.py:342
+msgid "Заполняется автоматически при клике на карте, можно поправить вручную."
+msgstr ""
+
+#: properties/models.py:350
+msgid "Площадь участка / общая площадь, м²"
+msgstr ""
+
+#: properties/models.py:351
+msgid "Для домов — площадь земельного участка. Для квартир — общая площадь."
+msgstr ""
+
+#: properties/models.py:359
+msgid "Площадь дома / жилая площадь, м²"
+msgstr ""
+
+#: properties/models.py:360
+msgid "Для домов — площадь самого строения."
+msgstr ""
+
+#: properties/models.py:367
+msgid "Уникальный идентификатор для URL. Заполняется вручную латиницей."
+msgstr ""
+
+#: properties/models.py:372
+msgid "Опубликовано"
+msgstr ""
+
+#: properties/models.py:373
+msgid "Снимите галочку, чтобы скрыть объявление с сайта."
+msgstr ""
+
+#: properties/models.py:378
+msgid "Дата публикации"
+msgstr ""
+
+#: properties/models.py:385
+msgid "Создал"
+msgstr ""
+
+#: properties/models.py:392
+msgid "Объект недвижимости"
+msgstr ""
+
+#: properties/models.py:442 properties/models.py:478 properties/models.py:682
+#: properties/models.py:756
+msgid "Объект"
+msgstr ""
+
+#: properties/models.py:446
+msgid "Заголовок"
+msgstr ""
+
+#: properties/models.py:447
+msgid "Например: 3-комнатная квартира в центре Тбилиси"
+msgstr ""
+
+#: properties/models.py:451
+msgid "Описание"
+msgstr ""
+
+#: properties/models.py:456
+msgid "Адрес (текст)"
+msgstr ""
+
+#: properties/models.py:457
+msgid "Например: ул. Руставели 5, кв. 12. Отображается на карточке."
+msgstr ""
+
+#: properties/models.py:462
+msgid "Перевод объекта"
+msgstr ""
+
+#: properties/models.py:463
+msgid "Переводы объектов"
+msgstr ""
+
+#: properties/models.py:486
+msgid "Главное фото"
+msgstr ""
+
+#: properties/models.py:487
+msgid "Отображается на превью карточки."
+msgstr ""
+
+#: properties/models.py:491 properties/models.py:619 properties/models.py:643
+msgid "Порядок"
+msgstr ""
+
+#: properties/models.py:496
+msgid "Описание фото"
+msgstr ""
+
+#: properties/models.py:497
+msgid "Для SEO. Например: вид из окна на горы."
+msgstr ""
+
+#: properties/models.py:530
+msgid "Целое число"
+msgstr ""
+
+#: properties/models.py:531
+msgid "Десятичное число"
+msgstr ""
+
+#: properties/models.py:532
+msgid "Да / Нет"
+msgstr ""
+
+#: properties/models.py:533
+msgid "Текст"
+msgstr ""
+
+#: properties/models.py:534 properties/models.py:648
+msgid "Вариант выбора"
+msgstr ""
+
+#: properties/models.py:541
+msgid "Например: rooms, floor, balcony"
+msgstr ""
+
+#: properties/models.py:546
+msgid "Тип значения"
+msgstr ""
+
+#: properties/models.py:547
+msgid "Определяет, какое поле будет заполнять администратор."
+msgstr ""
+
+#: properties/models.py:552
+msgid "Единица измерения"
+msgstr ""
+
+#: properties/models.py:553
+msgid "Например: м², эт., км. Отображается рядом со значением."
+msgstr ""
+
+#: properties/models.py:557
+msgid "Участвует в фильтрации"
+msgstr ""
+
+#: properties/models.py:558
+msgid "Если включено — характеристика доступна в фильтрах на сайте."
+msgstr ""
+
+#: properties/models.py:595
+msgid "Перевод характеристики"
+msgstr ""
+
+#: properties/models.py:596
+msgid "Переводы характеристик"
+msgstr ""
+
+#: properties/models.py:615
+msgid "Обязательна для заполнения"
+msgstr ""
+
+#: properties/models.py:624
+msgid "Связь характеристики с типом"
+msgstr ""
+
+#: properties/models.py:625
+msgid "Связи характеристик с типами"
+msgstr ""
+
+#: properties/models.py:661
+msgid "Вариант"
+msgstr ""
+
+#: properties/models.py:670
+msgid "Перевод варианта выбора"
+msgstr ""
+
+#: properties/models.py:671
+msgid "Переводы вариантов выбора"
+msgstr ""
+
+#: properties/models.py:692
+msgid "Значение (целое число)"
+msgstr ""
+
+#: properties/models.py:697
+msgid "Значение (дробное число)"
+msgstr ""
+
+#: properties/models.py:701
+msgid "Значение (да/нет)"
+msgstr ""
+
+#: properties/models.py:705
+msgid "Значение (текст)"
+msgstr ""
+
+#: properties/models.py:711
+msgid "Значение (вариант)"
+msgstr ""
+
+#: properties/models.py:722
+msgid "Значение характеристики"
+msgstr ""
+
+#: properties/models.py:723
+msgid "Значения характеристик"
+msgstr ""
+
+#: properties/models.py:750 users/models.py:13
+msgid "Пользователь"
+msgstr ""
+
+#: properties/models.py:761 properties/models.py:762
+msgid "Избранное"
+msgstr ""
+
+#: properties/models.py:776
+msgid "Номер WhatsApp"
+msgstr ""
+
+#: properties/models.py:777
+msgid "С кодом страны. Например: +995591234567"
+msgstr ""
+
+#: properties/models.py:782 users/models.py:9
+msgid "Номер телефона"
+msgstr ""
+
+#: properties/models.py:783
+msgid "Отображается на сайте как контактный номер."
+msgstr ""
+
+#: properties/models.py:787
+msgid "Email"
+msgstr ""
+
+#: properties/templates/properties/index.html:182
+msgid "Недвижимость в солнечной Грузии"
+msgstr "Real Estate in Sunny Georgia"
+
+#: properties/templates/properties/index.html:183
+msgid "Недвижимость в"
+msgstr "Real Estate in"
+
+#: properties/templates/properties/index.html:183
+#: properties/templates/properties/index.html:300
+msgid "Грузии"
+msgstr "Georgia"
+
+#: properties/templates/properties/index.html:183
+msgid "для жизни, отдыха и инвестиций"
+msgstr "for Living, Leisure, and Investment"
+
+#: properties/templates/properties/index.html:184
+msgid ""
+"Квартиры, дома, земельные участки и коммерческая недвижимость в лучших "
+"локациях Грузии. Подберём объект под ваши цели: для жизни, отдыха, бизнеса "
+"или инвестиций."
+msgstr ""
+"Apartments, houses, land plots, and commercial properties in Georgia's best "
+"locations. We'll find the right property for your goals: living, leisure, "
+"business, or investment."
+
+#: properties/templates/properties/index.html:186
+msgid "Смотреть объекты"
+msgstr "View Properties"
+
+#: properties/templates/properties/index.html:187
+msgid "Получить консультацию"
+msgstr "Get a Consultation"
+
+#: properties/templates/properties/index.html:192
+msgid "Объектов в базе"
+msgstr "Properties in Database"
+
+#: properties/templates/properties/index.html:195
+msgid "лет"
+msgstr "years"
+
+#: properties/templates/properties/index.html:196
+msgid "Работаем в Грузии"
+msgstr "Operating in Georgia"
+
+#: properties/templates/properties/index.html:199
+msgid "языка"
+msgstr "languages"
+
+#: properties/templates/properties/index.html:200
+msgid "Ru / En / Ka"
+msgstr "Ru / En / Ka"
+
+#: properties/templates/properties/index.html:206
+#: properties/templates/properties/index.html:290
+msgid "Adjara Estate — агентство недвижимости в Грузии"
+msgstr "Adjara Estate — Real Estate Agency in Georgia"
+
+#: properties/templates/properties/index.html:209
+msgid "Первая линия"
+msgstr "First Line"
+
+#: properties/templates/properties/index.html:210
+msgid "Апартаменты с видом на море"
+msgstr "Sea View Apartments"
+
+#: properties/templates/properties/index.html:220
+msgid "Каталог"
+msgstr "Catalog"
+
+#: properties/templates/properties/index.html:221
+msgid "Актуальные предложения"
+msgstr "Current Offers"
+
+#: properties/templates/properties/index.html:222
+msgid ""
+"Объекты обновляются ежедневно — от участков до просторных семейных домов."
+msgstr ""
+"Properties are updated daily — from land plots to spacious family homes."
+
+#: properties/templates/properties/index.html:224
+msgid "Все объекты"
+msgstr "All Properties"
+
+#: properties/templates/properties/index.html:242
+msgid "м²"
+msgstr "m²"
+
+#: properties/templates/properties/index.html:247
+msgid "Объекты скоро появятся..."
+msgstr "Properties coming soon..."
+
+#: properties/templates/properties/index.html:257 templates/base.html:212
+#: templates/base.html:254
+msgid "Почему Грузия"
+msgstr "Why Georgia"
+
+#: properties/templates/properties/index.html:258
+msgid ""
+"Грузия — страна, где комфортная жизнь сочетается с возможностями для "
+"инвестиций в недвижимость."
+msgstr ""
+"Georgia is a country where comfortable living meets real estate investment "
+"opportunities."
+
+#: properties/templates/properties/index.html:265
+msgid "Мягкий климат и природа"
+msgstr "Mild Climate and Nature"
+
+#: properties/templates/properties/index.html:266
+msgid ""
+"Субтропики, море и горы рядом. Здесь мягкая зима и теплое лето, а уникальный "
+"ландшафт позволяет наслаждаться природой круглый год."
+msgstr ""
+"Subtropics, sea, and mountains all nearby. Mild winters and warm summers, "
+"with a unique landscape that lets you enjoy nature all year round."
+
+#: properties/templates/properties/index.html:271
+msgid "Активное развитие"
+msgstr "Active Development"
+
+#: properties/templates/properties/index.html:272
+msgid ""
+"В курортных городах активно обновляется инфраструктура: от современных "
+"набережных и парков до новых жилых комплексов и торговых центров."
+msgstr ""
+"Resort towns are actively upgrading their infrastructure — from modern "
+"promenades and parks to new residential complexes and shopping centers."
+
+#: properties/templates/properties/index.html:277
+msgid "Гостеприимство и колорит"
+msgstr "Hospitality and Local Charm"
+
+#: properties/templates/properties/index.html:278
+msgid ""
+"Местная культура, кухня и традиционное радушие создают атмосферу уюта. Сюда "
+"хочется возвращаться, а переезд проходит комфортно и легко."
+msgstr ""
+"Local culture, cuisine, and traditional warmth create a cozy atmosphere. "
+"You'll want to come back, and moving here feels comfortable and easy."
+
+#: properties/templates/properties/index.html:299 templates/base.html:213
+#: templates/base.html:255 templates/base.html:304
+msgid "О нас"
+msgstr "About Us"
+
+#: properties/templates/properties/index.html:300
+msgid "Знаем рынок недвижимости"
+msgstr "We Know the Real Estate Market"
+
+#: properties/templates/properties/index.html:304
+msgid ""
+"Adjara Estate — агентство недвижимости в Грузии. Мы помогаем нашим клиентам "
+"найти недвижимость для жизни, отдыха, бизнеса и инвестиций."
+msgstr ""
+"Adjara Estate is a real estate agency in Georgia. We help our clients find "
+"properties for living, leisure, business, and investment."
+
+#: properties/templates/properties/index.html:309
+msgid ""
+"Мы работаем с объектами в Кобулети, Батуми и других перспективных районах "
+"Грузии: квартирами, частными домами, земельными участками, коммерческой и "
+"инвестиционной недвижимостью."
+msgstr ""
+"We work with properties in Kobuleti, Batumi, and other promising areas of "
+"Georgia: apartments, private houses, land plots, commercial, and investment "
+"properties."
+
+#: properties/templates/properties/index.html:314
+msgid ""
+"Наша задача — сделать покупку недвижимости понятной и комфортной. Мы "
+"сопровождаем клиента на всех этапах — от подбора объекта и организации "
+"просмотров до проверки документов и оформления сделки. Для нас важно не "
+"просто предложить недвижимость, а подобрать вариант, который действительно "
+"соответствует вашим целям и бюджету."
+msgstr ""
+"Our goal is to make property purchasing clear and comfortable. We guide our "
+"clients through every stage — from property selection and viewing "
+"arrangements to document verification and deal closing. For us, it's not "
+"just about offering a property, but finding one that truly matches your "
+"goals and budget."
+
+#: properties/templates/properties/index.html:320
+msgid "Почему выбирают Adjara Estate"
+msgstr "Why Choose Adjara Estate"
+
+#: properties/templates/properties/index.html:325
+msgid "Индивидуальный подбор недвижимости"
+msgstr "Individual Property Selection"
+
+#: properties/templates/properties/index.html:329
+msgid "Актуальная база объектов"
+msgstr "Up-to-Date Property Database"
+
+#: properties/templates/properties/index.html:333
+msgid "Знание местного рынка"
+msgstr "Local Market Knowledge"
+
+#: properties/templates/properties/index.html:337
+msgid "Помощь в проверке документов"
+msgstr "Document Verification Assistance"
+
+#: properties/templates/properties/index.html:341
+msgid "Сопровождение сделки"
+msgstr "Transaction Support"
+
+#: properties/templates/properties/index.html:345
+msgid "Поддержка иностранных покупателей"
+msgstr "Support for Foreign Buyers"
+
+#: properties/templates/properties/index.html:349
+msgid "Консультации по вопросам покупки и инвестиций"
+msgstr "Consultations on Purchasing and Investment"
+
+#: properties/templates/properties/index.html:354
+msgid "Adjara Estate — ваш надёжный проводник в мире недвижимости Грузии."
+msgstr "Adjara Estate — your trusted guide in Georgia's real estate market."
+
+#: properties/templates/properties/index.html:357
+msgid "Найдите своё место в Грузии вместе с нами."
+msgstr "Find your place in Georgia with us."
+
+#: properties/templates/properties/index.html:368
+msgid "Готовы найти свой дом у моря?"
+msgstr "Ready to find your seaside home?"
+
+#: properties/templates/properties/index.html:369
+msgid ""
+"Оставьте заявку — подберём варианты под ваш бюджет и расскажем всё о районе "
+"на понятном вам языке."
+msgstr ""
+"Leave a request — we'll find options within your budget and tell you "
+"everything about the area in a language you understand."
+
+#: properties/templates/properties/index.html:370
+msgid "Позвонить нам"
+msgstr "Call Us"
+
+#: properties/templates/properties/index.html:374
+msgid "Ежедневно с 10:00 до 20:00"
+msgstr "Daily from 10:00 AM to 8:00 PM"
+
+#: templates/base.html:204 templates/base.html:287
+msgid "Real Estate in Kobuleti"
+msgstr "Real Estate in Kobuleti"
+
+#: templates/base.html:211 templates/base.html:253 templates/base.html:293
+msgid "Объекты"
+msgstr "Properties"
+
+#: templates/base.html:236 templates/base.html:262
+msgid "Кабинет"
+msgstr "Dashboard"
+
+#: templates/base.html:238 templates/base.html:263
+msgid "Выйти"
+msgstr "Log Out"
+
+#: templates/base.html:240 templates/base.html:265
+msgid "Войти"
+msgstr "Log In"
+
+#: templates/base.html:241 templates/base.html:266
+msgid "Регистрация"
+msgstr "Sign Up"
+
+#: templates/base.html:244 templates/base.html:270
+msgid "Оставить заявку"
+msgstr "Submit Request"
+
+#: templates/base.html:245
+msgid "Меню"
+msgstr "Menu"
+
+#: templates/base.html:290 
+msgid ""
+"Агентство недвижимости, специализирующееся на Кобулети и побережье Аджарии."
+msgstr "Real estate agency specializing in Kobuleti and the Adjara coastline."
+
+#: templates/base.html:295
+msgid "Квартиры у моря"
+msgstr "Seaside Apartments"
+
+#: templates/base.html:296
+msgid "Дома с участком"
+msgstr "Houses with Land"
+
+#: templates/base.html:297
+msgid "Коммерческая"
+msgstr "Commercial"
+
+#: templates/base.html:298
+msgid "Новостройки"
+msgstr "New Developments"
+
+#: templates/base.html:302
+msgid "Компания"
+msgstr "Company"
+
+#: templates/base.html:305
+msgid "Отзывы"
+msgstr "Testimonials"

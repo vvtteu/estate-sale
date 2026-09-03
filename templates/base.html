@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -56,7 +57,34 @@
     .nav-cta { background: var(--gold); color: var(--navy); padding: 11px 24px; border-radius: 999px; font-size: 13px; font-weight: 700; transition: background 0.2s; }
     .nav-cta:hover { background: var(--gold-light); }
     .burger { display: none; background: none; border: none; color: var(--white); font-size: 26px; cursor: pointer; }
-
+     /* ================= ПЕРЕКЛЮЧЕНИЕ ЯЗЫКОВ ================= */
+     .lang-switcher form {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .lang-btn {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.25);
+        color: rgba(255,255,255,0.6);
+        padding: 5px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        letter-spacing: 0.05em;
+        transition: all 0.2s;
+        font-family: 'Manrope', sans-serif;
+      }
+      .lang-btn:hover {
+        background: rgba(255,255,255,0.1);
+        color: var(--white);
+      }
+      .lang-btn.active {
+        background: var(--gold);
+        border-color: var(--gold);
+        color: var(--navy);
+      }
     /* ================= ПОДВАЛ ================= */
     footer { background: var(--navy-2); padding: 64px 0 28px; }
     .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,0.08); }
@@ -107,7 +135,7 @@
     .card-title-link::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 1; }
     
     .card-title { font-size: 17px; color: var(--navy); font-weight: 700; margin-bottom: 8px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-    .card-price { font-family: 'Cormorant Garamond', serif; font-size: 27px; color: var(--navy); margin-bottom: 4px; }
+    .card-price { font-family: 'Manrope', sans-serif; font-size: 27px; color: var(--navy); margin-bottom: 4px; }
     .card-addr { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
     .card-meta { display: flex; gap: 18px; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 14px; }
     .card-meta span { display: flex; align-items: center; gap: 5px; }
@@ -166,109 +194,122 @@ header.menu-open .mobile-menu {
   
 </head>
 <body>
-
-  <!-- ================= ШАПКА ================= -->
-  <header>
+<!-- ШАПКА  -->
+<header>
   <div class="container nav-inner">
     <a href="/" class="brand">
       <div class="brand-emblem"><i class="ti ti-building-arch"></i></div>
       <div class="brand-text">
         <div class="name">ADJARA <span>ESTATE</span></div>
-        <div class="tag">Real Estate in Kobuleti</div>
+        <div class="tag">{% trans "Real Estate in Kobuleti" %}</div>
       </div>
     </a>
-    
-    <!-- Десктопное меню -->
+
     <div class="nav-center">
       <nav>
         <ul>
-          <li><a href="{% url 'properties:catalog' %}">Объекты</a></li>
-          <li><a href="/#perks">Почему Грузия</a></li>
-          <li><a href="/#why">О нас</a></li>
-          <li><a href="/#cta">Контакты</a></li>
+          <li><a href="{% url 'properties:catalog' %}">{% trans "Объекты" %}</a></li>
+          <li><a href="/#perks">{% trans "Почему Грузия" %}</a></li>
+          <li><a href="/#why">{% trans "О нас" %}</a></li>
+          <li><a href="/#cta">{% trans "Контакты" %}</a></li>
         </ul>
       </nav>
     </div>
 
-    <!-- Десктопные кнопки -->
     <div class="header-actions">
+      <!-- ДОРАБОТАТЬ -->
+      <div class="lang-switcher">
+        <form action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="/">
+          <button type="submit" name="language" value="ru"
+                  class="lang-btn {% if LANGUAGE_CODE == 'ru' %}active{% endif %}">RU</button>
+          <button type="submit" name="language" value="en"
+                  class="lang-btn {% if LANGUAGE_CODE == 'en' %}active{% endif %}">EN</button>
+          <button type="submit" name="language" value="ka"
+                  class="lang-btn {% if LANGUAGE_CODE == 'ka' %}active{% endif %}">KA</button>
+        </form>
+      </div
+
       {% if user.is_authenticated %}
-        <a href="{% url 'profile' %}" class="auth-link"><i class="ti ti-user"></i> Кабинет</a>
-        <a href="{% url 'account_logout' %}" class="auth-link logout">Выйти</a>
+        <a href="{% url 'profile' %}" class="auth-link">
+           {% trans "Кабинет" %}
+        </a>
+        <a href="{% url 'account_logout' %}" class="auth-link logout">{% trans "Выйти" %}</a>
       {% else %}
-        <a href="{% url 'account_login' %}" class="auth-link">Войти</a>
-        <a href="{% url 'account_signup' %}" class="auth-link">Регистрация</a>
+        <a href="{% url 'account_login' %}" class="auth-link">{% trans "Войти" %}</a>
+        <a href="{% url 'account_signup' %}" class="auth-link">{% trans "Регистрация" %}</a>
       {% endif %}
-      
-      <a href="#cta" class="nav-cta">Оставить заявку</a>
-      <button class="burger" aria-label="Меню">☰</button>
+
+      <a href="#cta" class="nav-cta">{% trans "Оставить заявку" %}</a>
+      <button class="burger" aria-label="{% trans 'Меню' %}">☰</button>
     </div>
   </div>
 
-  <!-- Мобильное выезжающее меню (спрятано на десктопе) -->
+  <!-- Мобильное меню -->
   <div class="mobile-menu">
     <nav class="mobile-nav">
       <ul>
-        <li><a href="{% url 'properties:catalog' %}">Объекты</a></li>
-        <li><a href="/#perks">Почему Грузия</a></li>
-        <li><a href="/#why">О нас</a></li>
-        <li><a href="/#cta">Контакты</a></li>
+        <li><a href="{% url 'properties:catalog' %}">{% trans "Объекты" %}</a></li>
+        <li><a href="/#perks">{% trans "Почему Грузия" %}</a></li>
+        <li><a href="/#why">{% trans "О нас" %}</a></li>
+        <li><a href="/#cta">{% trans "Контакты" %}</a></li>
       </ul>
     </nav>
-    
+
     <div class="mobile-auth">
       {% if user.is_authenticated %}
-        <a href="{% url 'profile' %}"><i class="ti ti-user"></i> Кабинет</a>
-        <a href="{% url 'account_logout' %}" class="logout">Выйти</a>
+        <a href="{% url 'profile' %}"><i class="ti ti-user"></i> {% trans "Кабинет" %}</a>
+        <a href="{% url 'account_logout' %}" class="logout">{% trans "Выйти" %}</a>
       {% else %}
-        <a href="{% url 'account_login' %}">Войти</a>
-        <a href="{% url 'account_signup' %}">Регистрация</a>
+        <a href="{% url 'account_login' %}">{% trans "Войти" %}</a>
+        <a href="{% url 'account_signup' %}">{% trans "Регистрация" %}</a>
       {% endif %}
     </div>
-    
-    <a href="#cta" class="mobile-cta">Оставить заявку</a>
+
+    <a href="#cta" class="mobile-cta">{% trans "Оставить заявку" %}</a>
   </div>
 </header>
-  <!-- ================= КОНТЕНТ ================= -->
+
+<!-- КОНТЕНТ  -->
   <main>
     {% block content %}{% endblock %}
   </main>
-
-  <!-- ================= ПОДВАЛ ================= -->
-  <footer>
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <div class="brand">
-            <div class="brand-emblem"><i class="ti ti-building-arch"></i></div>
-            <div class="brand-text">
-              <div class="name">ADJARA <span>ESTATE</span></div>
-              <div class="tag">Real Estate in Kobuleti</div>
-            </div>
+<!--  ПОДВАЛ  -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="brand">
+          <div class="brand-emblem"><i class="ti ti-building-arch"></i></div>
+          <div class="brand-text">
+            <div class="name">ADJARA <span>ESTATE</span></div>
+            <div class="tag">{% trans "Real Estate in Kobuleti" %}</div>
           </div>
-          <p>Агентство недвижимости, специализирующееся на Кобулети и побережье Аджарии.</p>
         </div>
-        <div class="footer-col">
-          <h4>Объекты</h4>
-          <ul>
-            <li><a href="#">Квартиры у моря</a></li>
-            <li><a href="#">Дома с участком</a></li>
-            <li><a href="#">Коммерческая</a></li>
-            <li><a href="#">Новостройки</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Компания</h4>
-          <ul>
-            <li><a href="#">О нас</a></li>
-            <li><a href="#">Отзывы</a></li>
-            <li><a href="#">Контакты</a></li>
-          </ul>
-        </div>
+        <p>{% trans "Агентство недвижимости, специализирующееся на Кобулети и побережье Аджарии." %}</p>
+      </div>
+      <div class="footer-col">
+        <h4>{% trans "Объекты" %}</h4>
+        <ul>
+          <li><a href="#">{% trans "Квартиры у моря" %}</a></li>
+          <li><a href="#">{% trans "Дома с участком" %}</a></li>
+          <li><a href="#">{% trans "Коммерческая" %}</a></li>
+          <li><a href="#">{% trans "Новостройки" %}</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>{% trans "Компания" %}</h4>
+        <ul>
+          <li><a href="#">{% trans "О нас" %}</a></li>
+          <li><a href="#">{% trans "Отзывы" %}</a></li>
+          <li><a href="#">{% trans "Контакты" %}</a></li>
+        </ul>
       </div>
     </div>
-  </footer>
-  <script>
+  </div>
+</footer>
+<script>
 document.addEventListener('DOMContentLoaded', function() {
   // Находим токен безопасности, который мы добавили в <head>
   const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');

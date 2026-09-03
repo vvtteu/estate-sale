@@ -56,11 +56,14 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+LANGUAGE_COOKIE_NAME = "django_language"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "django.middleware.locale.LocaleMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -125,13 +128,25 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
 LANGUAGE_CODE = 'ru'
+LANGUAGES = [
+    ("ru", _("Русский")),
+    ("en", _("English")),
+    ("ka", _("ქართული")),
+]
+
+
 
 TIME_ZONE = 'Asia/Tbilisi'
 
 USE_I18N = True
+USE_L10N = True
 
 USE_TZ = True
 
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
+LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/

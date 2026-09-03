@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}  
+{% load i18n property_tags %}
 {% block title %}Adjara Estate — недвижимость в Кобулети{% endblock %}
 
 {% block extra_head %}
@@ -178,35 +179,35 @@
   <i class="ti ti-palm-tree palm-mark" aria-hidden="true"></i>
   <div class="container hero-grid">
     <div>
-      <div class="eyebrow">Недвижимость в солнечной Грузии</div>
-      <h1>Недвижимость в <em>Грузии</em> для жизни, отдыха и инвестиций</h1>
-      <p>Квартиры, дома, земельные участки и коммерческая недвижимость в лучших локациях Грузии. Подберём объект под ваши цели: для жизни, отдыха, бизнеса или инвестиций.</p>
+      <div class="eyebrow">{% trans "Недвижимость в солнечной Грузии" %}</div>
+      <h1>{% trans "Недвижимость в" %} <em>{% trans "Грузии" %}</em> {% trans "для жизни, отдыха и инвестиций" %}</h1>
+      <p>{% trans "Квартиры, дома, земельные участки и коммерческая недвижимость в лучших локациях Грузии. Подберём объект под ваши цели: для жизни, отдыха, бизнеса или инвестиций." %}</p>
       <div class="hero-actions">
-        <a href="{% url 'properties:catalog' %}" class="btn-primary">Смотреть объекты</a>
-        <a href="#cta" class="btn-outline">Получить консультацию</a>
+        <a href="{% url 'properties:catalog' %}" class="btn-primary">{% trans "Смотреть объекты" %}</a>
+        <a href="#cta" class="btn-outline">{% trans "Получить консультацию" %}</a>
       </div>
       <div class="hero-stats">
         <div>
           <div class="stat-num"><span>120+</span></div>
-          <div class="stat-label">Объектов в базе</div>
+          <div class="stat-label">{% trans "Объектов в базе" %}</div>
         </div>
         <div>
-          <div class="stat-num"><span>9</span> лет</div>
-          <div class="stat-label">Работаем в Грузии</div>
+          <div class="stat-num"><span>9</span> {% trans "лет" %}</div>
+          <div class="stat-label">{% trans "Работаем в Грузии" %}</div>
         </div>
         <div>
-          <div class="stat-num"><span>3</span> языка</div>
-          <div class="stat-label">Ru / En / Ka</div>
+          <div class="stat-num"><span>3</span> {% trans "языка" %}</div>
+          <div class="stat-label">{% trans "Ru / En / Ka" %}</div>
         </div>
       </div>
     </div>
     <div class="hero-visual">
       <img src="{% static 'images/about/adjara-estate-office.jpg' %}" 
-           alt="Adjara Estate — агентство недвижимости в Грузии" 
+           alt="{% trans 'Adjara Estate — агентство недвижимости в Грузии' %}" 
            class="why-image">
       <div class="hero-visual-badge">
-        <div class="t1">Первая линия</div>
-        <div class="t2">Апартаменты с видом на море</div>
+        <div class="t1">{% trans "Первая линия" %}</div>
+        <div class="t2">{% trans "Апартаменты с видом на море" %}</div>
       </div>
     </div>
   </div>
@@ -216,34 +217,41 @@
   <div class="container">
     <div class="sec-head">
       <div>
-        <div class="sec-eyebrow">Каталог</div>
-        <h2 class="sec-title">Актуальные предложения</h2>
-        <p class="sec-sub">Объекты обновляются ежедневно — от участков до просторных семейных домов.</p>
+        <div class="sec-eyebrow">{% trans "Каталог" %}</div>
+        <h2 class="sec-title">{% trans "Актуальные предложения" %}</h2>
+        <p class="sec-sub">{% trans "Объекты обновляются ежедневно — от участков до просторных семейных домов." %}</p>
       </div>
-      <a href="{% url 'properties:catalog' %}" class="see-all">Все объекты →</a>
+      <a href="{% url 'properties:catalog' %}" class="see-all">{% trans "Все объекты" %} →</a>
     </div>
     <div class="listings-grid">
       {% for property in properties %}
-      <a href="{% url 'properties:detail' property.slug %}" class="card"> 
-        
+      <a href="{% url 'properties:detail' property.slug %}" class="card">
+
         <div class="card-img {% if not property.images.first %}i1{% endif %}"
             {% if property.images.first %}
             style="background: url('{{ property.images.first.image.url }}') center/cover no-repeat;"
             {% endif %}>
         </div>
-      
+
         <div class="card-body">
-          <div class="card-title">{{ property.title_ru|default:"Без названия" }}</div>
+          <div class="card-title">
+            {{ property|trans_title|default:_("Без названия") }}
+          </div>
           <div class="card-price">${{ property.price }}</div>
-          
-          <div class="card-addr"><i class="ti ti-map-pin"></i>{{ property.address|default:"центр" }}</div>
-            <div class="card-meta">
-            <span><i class="ti ti-ruler-2"></i> {{ property.area_total|default:"—" }} м²</span>
+
+          <div class="card-addr">
+            {{ property|trans_address|default:property.city }}
+          </div>
+
+          <div class="card-meta">
+            <span><i class="ti ti-ruler-2"></i> {{ property.area_total|default:"—" }} {% trans "м²" %}</span>
           </div>
         </div>
       </a>
       {% empty %}
-        <p style="grid-column: span 3; text-align: center; color: var(--text-muted);">Объекты скоро появятся...</p>
+        <p style="grid-column: span 3; text-align: center; color: var(--text-muted);">
+          {% trans "Объекты скоро появятся..." %}
+        </p>
       {% endfor %}
     </div>
   </div>
@@ -253,28 +261,28 @@
   <div class="container">
     <div class="sec-head">
       <div>
-        <div class="sec-eyebrow" style="color:var(--gold-light)">Почему Грузия</div>
-        <h2 class="sec-title">Грузия — страна, где комфортная жизнь сочетается с возможностями для инвестиций в недвижимость.</h2>
+        <div class="sec-eyebrow" style="color:var(--gold-light)">{% trans "Почему Грузия" %}</div>
+        <h2 class="sec-title">{% trans "Грузия — страна, где комфортная жизнь сочетается с возможностями для инвестиций в недвижимость." %}</h2>
         <!-- <p class="sec-sub">Аджария — не только летний сезон: город развивается, а недвижимость остаётся одной из самых доступных на грузинском побережье.</p> -->
       </div>
     </div>
     <div class="perks-grid">
       <!-- 1. Природа и климат -->
       <div class="perk-card">
-        <h3>Мягкий климат и природа</h3>
-        <p>Субтропики, море и горы рядом. Здесь мягкая зима и теплое лето, а уникальный ландшафт позволяет наслаждаться природой круглый год.</p>
+        <h3>{% trans "Мягкий климат и природа" %}</h3>
+        <p>{% trans "Субтропики, море и горы рядом. Здесь мягкая зима и теплое лето, а уникальный ландшафт позволяет наслаждаться природой круглый год." %}</p>
       </div>
 
       <!-- 2. Инфраструктура и развитие -->
       <div class="perk-card">
-        <h3>Активное развитие</h3>
-        <p>В курортных городах активно обновляется инфраструктура: от современных набережных и парков до новых жилых комплексов и торговых центров.</p>
+        <h3>{% trans "Активное развитие" %}</h3>
+        <p>{% trans "В курортных городах активно обновляется инфраструктура: от современных набережных и парков до новых жилых комплексов и торговых центров." %}</p>
       </div>
 
       <!-- 3. Гостеприимство и менталитет -->
       <div class="perk-card">
-        <h3>Гостеприимство и колорит</h3>
-        <p>Местная культура, кухня и традиционное радушие создают атмосферу уюта. Сюда хочется возвращаться, а переезд проходит комфортно и легко.</p>
+        <h3>{% trans "Гостеприимство и колорит" %}</h3>
+        <p>{% trans "Местная культура, кухня и традиционное радушие создают атмосферу уюта. Сюда хочется возвращаться, а переезд проходит комфортно и легко." %}</p>
       </div>
 
     </div>
@@ -286,7 +294,7 @@
     <!-- Левая часть: картинка -->
     <div class="why-visual">
       <img src="{% static 'images/about/adjara-estate.jpg' %}" 
-           alt="Adjara Estate — агентство недвижимости в Грузии" 
+           alt="{% trans 'Adjara Estate — агентство недвижимости в Грузии' %}" 
            class="why-image">
       <!-- <div class="why-badge">
         <span>Надёжный проводник в мире недвижимости Грузии</span>
@@ -295,65 +303,65 @@
     
     <!-- Правая часть: текст -->
     <div>
-      <div class="sec-eyebrow">О нас</div>
-      <h2 class="sec-title">Знаем рынок недвижимости <br><span style="color: var(--gold);">Грузии</span></h2>
+      <div class="sec-eyebrow">{% trans "О нас" %}</div>
+      <h2 class="sec-title">{% trans "Знаем рынок недвижимости" %} <br><span style="color: var(--gold);">{% trans "Грузии" %}</span></h2>
       
       <!-- Первый абзац -->
       <p class="sec-sub" style="margin-bottom: 16px; margin-top: 10px; max-width: 100%;">
-        Adjara Estate — агентство недвижимости в Грузии. Мы помогаем нашим клиентам найти недвижимость для жизни, отдыха, бизнеса и инвестиций.
+        {% trans "Adjara Estate — агентство недвижимости в Грузии. Мы помогаем нашим клиентам найти недвижимость для жизни, отдыха, бизнеса и инвестиций." %}
       </p>
       
       <!-- Второй абзац -->
       <p style="font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">
-        Мы работаем с объектами в Кобулети, Батуми и других перспективных районах Грузии: квартирами, частными домами, земельными участками, коммерческой и инвестиционной недвижимостью.
+        {% trans "Мы работаем с объектами в Кобулети, Батуми и других перспективных районах Грузии: квартирами, частными домами, земельными участками, коммерческой и инвестиционной недвижимостью." %}
       </p>
       
       <!-- Третий абзац -->
       <p style="font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 24px;">
-        Наша задача — сделать покупку недвижимости понятной и комфортной. Мы сопровождаем клиента на всех этапах — от подбора объекта и организации просмотров до проверки документов и оформления сделки. Для нас важно не просто предложить недвижимость, а подобрать вариант, который действительно соответствует вашим целям и бюджету.
+        {% trans "Наша задача — сделать покупку недвижимости понятной и комфортной. Мы сопровождаем клиента на всех этапах — от подбора объекта и организации просмотров до проверки документов и оформления сделки. Для нас важно не просто предложить недвижимость, а подобрать вариант, который действительно соответствует вашим целям и бюджету." %}
       </p>
       
       <!-- Блок "Почему выбирают Adjara Estate" -->
       <div style="margin-bottom: 24px;">
         <h4 style="font-size: 18px; color: var(--navy); margin-bottom: 14px; font-weight: 700;">
-          Почему выбирают Adjara Estate
+          {% trans "Почему выбирают Adjara Estate" %}
         </h4>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px;">
           <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);">
             <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
-            Индивидуальный подбор недвижимости
+            {% trans "Индивидуальный подбор недвижимости" %}
           </div>
           <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);">
             <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
-            Актуальная база объектов
+            {% trans "Актуальная база объектов" %}
           </div>
           <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);">
             <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
-            Знание местного рынка
+            {% trans "Знание местного рынка" %}
           </div>
           <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);">
             <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
-            Помощь в проверке документов
+            {% trans "Помощь в проверке документов" %}
           </div>
           <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);">
             <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
-            Сопровождение сделки
+            {% trans "Сопровождение сделки" %}
           </div>
           <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);">
             <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
-            Поддержка иностранных покупателей
+            {% trans "Поддержка иностранных покупателей" %}
           </div>
           <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted); grid-column: span 2;">
             <span style="display: inline-block; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0;"></span>
-            Консультации по вопросам покупки и инвестиций
+            {% trans "Консультации по вопросам покупки и инвестиций" %}
           </div>
         </div>
       </div>
       <div style="font-size: 16px; color: var(--navy); font-weight: 600; padding-top: 16px; border-top: 1px solid var(--border);">
-        Adjara Estate — ваш надёжный проводник в мире недвижимости Грузии.
+        {% trans "Adjara Estate — ваш надёжный проводник в мире недвижимости Грузии." %}
       </div>
       <div style="font-size: 15px; color: var(--gold); font-weight: 500; margin-top: 6px;">
-        Найдите своё место в Грузии вместе с нами.
+        {% trans "Найдите своё место в Грузии вместе с нами." %}
       </div>
       </div>
     </div>
@@ -364,13 +372,13 @@
   <div class="container">
     <div class="cta-box">
       <div class="cta-text">
-        <h2>Готовы найти свой дом у моря?</h2>
-        <p>Оставьте заявку — подберём варианты под ваш бюджет и расскажем всё о районе на понятном вам языке.</p>
-        <a href="tel:+995557930679" class="btn-primary" style="margin-top:22px;">Позвонить нам</a>
+        <h2>{% trans "Готовы найти свой дом у моря?" %}</h2>
+        <p>{% trans "Оставьте заявку — подберём варианты под ваш бюджет и расскажем всё о районе на понятном вам языке." %}</p>
+        <a href="tel:+995557930679" class="btn-primary" style="margin-top:22px;">{% trans "Позвонить нам" %}</a>
       </div>
       <div class="cta-side">
         <a href="tel:+995557930679" class="cta-phone">+995 557 930 679</a>
-        <p>Ежедневно с 10:00 до 20:00</p>
+        <p>{% trans "Ежедневно с 10:00 до 20:00" %}</p>
       </div>
     </div>
   </div>
