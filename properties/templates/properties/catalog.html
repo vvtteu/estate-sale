@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n property_tags %}
 {% block title %}Каталог недвижимости — Adjara Estate{% endblock %}
 
 {% block extra_head %}
@@ -187,42 +187,42 @@
 {% endblock %}
 
 {% block content %}
+{% load i18n %}
 <main class="container catalog-page">
   <div class="catalog-head">
-    <h1>Каталог недвижимости</h1>
-    <p>Найдено объектов: {{ properties.count }}</p>
+    <h1>{% trans "Каталог недвижимости" %}</h1>
   </div>
   <div class="search-bar">
   <form method="GET" action="" class="filter-panel">
     <!-- ГЛАВНАЯ СТРОКА ПОИСКА (всегда видна) -->
     <div class="search-input-wrap" style="margin-bottom: 24px;">
       <i class="ti ti-search"></i>
-      <input type="text" name="search" placeholder="Поиск по названию, описанию, адресу..." value="{{ request.GET.search }}" autocomplete="off">
+      <input type="text" name="search" placeholder="{% trans 'Поиск по названию, описанию, адресу...' %}" value="{{ request.GET.search }}" autocomplete="off">
       {% if request.GET.search %}
-        <a href="{% url 'properties:catalog' %}" class="search-clear" title="Очистить поиск"><i class="ti ti-x"></i></a>
+        <a href="{% url 'properties:catalog' %}" class="search-clear" title="{% trans 'Очистить поиск' %}"><i class="ti ti-x"></i></a>
       {% endif %}
     </div>
 
     <!-- КНОПКА ПОКАЗА ФИЛЬТРОВ (появится только на мобилках) -->
     <button type="button" class="btn-toggle-filters">
-      <i class="ti ti-adjustments-horizontal"></i> <span>Показать фильтры</span>
+      <span>{% trans "Показать фильтры" %}</span>
     </button>
 
     <!-- СКРЫВАЕМАЯ ЧАСТЬ -->
     <div class="filters-collapsible">
       <div class="filter-grid">
         <div class="filter-group">
-          <label>Тип сделки</label>
+          <label>{% trans "Тип сделки" %}</label>
           <select name="deal_type">
-            <option value="">Все варианты</option>
-            <option value="sale" {% if request.GET.deal_type == 'sale' %}selected{% endif %}>Купить</option>
-            <option value="rent" {% if request.GET.deal_type == 'rent' %}selected{% endif %}>Арендовать</option>
+            <option value="">{% trans "Все варианты" %}</option>
+            <option value="sale" {% if request.GET.deal_type == 'sale' %}selected{% endif %}>{% trans "Купить" %}</option>
+            <option value="rent" {% if request.GET.deal_type == 'rent' %}selected{% endif %}>{% trans "Арендовать" %}</option>
           </select>
         </div>
         <div class="filter-group">
-          <label>Тип недвижимости</label>
+          <label>{% trans "Тип недвижимости" %}</label>
           <select name="property_type">
-            <option value="">Все типы</option>
+            <option value="">{% trans "Все типы" %}</option>
             {% for type in property_types %}
               {% if not type.parent %}
                 <option value="{{ type.id }}" {% if request.GET.property_type == type.id|stringformat:"i" %}selected{% endif %}>{{ type }}</option>
@@ -236,102 +236,121 @@
           </select>
         </div>
         <div class="filter-group">
-          <label>Цена</label>
+          <label>{% trans "Цена" %}</label>
           <div class="range-inputs">
-            <input type="number" name="min_price" placeholder="От" value="{{ request.GET.min_price }}">
-            <input type="number" name="max_price" placeholder="До" value="{{ request.GET.max_price }}">
+            <input type="number" name="min_price" placeholder="{% trans 'От' %}" value="{{ request.GET.min_price }}">
+            <input type="number" name="max_price" placeholder="{% trans 'До' %}" value="{{ request.GET.max_price }}">
           </div>
         </div>
         <div class="filter-group">
-          <label>Комнат</label>
+          <label>{% trans "Комнат" %}</label>
           <select name="rooms">
-            <option value="">Любое</option>
-            <option value="1" {% if request.GET.rooms == '1' %}selected{% endif %}>1 комната</option>
-            <option value="2" {% if request.GET.rooms == '2' %}selected{% endif %}>2 комнаты</option>
-            <option value="3" {% if request.GET.rooms == '3' %}selected{% endif %}>3 комнаты</option>
-            <option value="4" {% if request.GET.rooms == '4' %}selected{% endif %}>4+ комнат</option>
+            <option value="">{% trans "Любое" %}</option>
+            <option value="1" {% if request.GET.rooms == '1' %}selected{% endif %}>{% trans "1 комната" %}</option>
+            <option value="2" {% if request.GET.rooms == '2' %}selected{% endif %}>{% trans "2 комнаты" %}</option>
+            <option value="3" {% if request.GET.rooms == '3' %}selected{% endif %}>{% trans "3 комнаты" %}</option>
+            <option value="4" {% if request.GET.rooms == '4' %}selected{% endif %}>{% trans "4+ комнат" %}</option>
           </select>
         </div>
         <div class="filter-group" style="grid-column: span 2;">
-          <label>Площадь м²</label>
+          <label>{% trans "Площадь м²" %}</label>
           <div class="range-inputs">
-            <input type="number" name="min_area" placeholder="От" value="{{ request.GET.min_area }}">
-            <input type="number" name="max_area" placeholder="До" value="{{ request.GET.max_area }}">
+            <input type="number" name="min_area" placeholder="{% trans 'От' %}" value="{{ request.GET.min_area }}">
+            <input type="number" name="max_area" placeholder="{% trans 'До' %}" value="{{ request.GET.max_area }}">
           </div>
         </div>
       </div>
       
       <div class="filter-actions">
-        <a href="{% url 'properties:catalog' %}" class="btn-reset">Сбросить всё</a>
+        <a href="{% url 'properties:catalog' %}" class="btn-reset">{% trans "Сбросить всё" %}</a>
         <button type="submit" class="btn-submit">
-          Найти объекты
+          {% trans "Найти объекты" %}
         </button>
       </div>
     </div>
   </form>
   <div class="listings-grid">
-    {% for property in properties %}
-      <div class="card">
-        <!-- 1. КАРТИНКА И БЕЙДЖИ -->
-           <button class="card-fav {% if property.id in user_favorites %}active{% endif %}" 
-                type="button" 
-                data-property-id="{{ property.id }}" 
-                aria-label="В избранное"
-                {% if property.id in user_favorites %}style="color: #d1495b;"{% endif %}>
-                <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                        stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                </svg>
-        </button>
-        <div class="card-img">
-          {% if property.images.first %}
-            <img src="{{ property.images.first.image.url }}" alt="{{ property.title_ru }}" loading="lazy" class="card-img-lazy">
-          {% elif property.main_image %}
-            <img src="{{ property.main_image.image.url }}" alt="{{ property.title_ru }}" loading="lazy" class="card-img-lazy">
-          {% endif %}
+  {% for property in properties %}
+    <!-- КАРТОЧКА (уже сделана тобой) -->
+    <div class="card">
+      <button class="card-fav {% if property.id in user_favorites %}active{% endif %}" 
+              type="button" 
+              data-property-id="{{ property.id }}" 
+              aria-label="{% trans 'В избранное' %}"
+              {% if property.id in user_favorites %}style="color: #d1495b;"{% endif %}>
+        <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      </button>
 
-          <span class="card-badge" style="background: {{ property.status.color|default:'#0e1c2e' }};">
-            {{ property.status|default:"Продажа" }}
+      <div class="card-img">
+        {% if property.images.first %}
+          <img src="{{ property.images.first.image.url }}" 
+               alt="{{ property|trans_title }}" 
+               loading="lazy" class="card-img-lazy">
+        {% elif property.main_image %}
+          <img src="{{ property.main_image.image.url }}" 
+               alt="{{ property|trans_title }}" 
+               loading="lazy" class="card-img-lazy">
+        {% endif %}
+
+        <span class="card-badge" style="background: {{ property.status.color|default:'#0e1c2e' }};">
+          {{ property|trans_status }}
+        </span>
+
+        {% if property.is_new %}
+          <span class="card-new">
+            <i class="ti ti-point-filled"></i> {% trans "Новое" %}
           </span>
-          
-          {% if property.is_new %}
-            <span class="card-new"><i class="ti ti-point-filled"></i> Новое</span>
+        {% endif %}
+      </div>
+
+      <div class="card-body">
+        <a href="{% url 'properties:detail' property.slug %}" class="card-title-link">
+          <div class="card-title">
+            {{ property|trans_title|default:_("Без названия") }}
+          </div>
+        </a>
+
+        <div class="card-price">
+          {{ property.price }} {{ property.currency|default:'$' }}
+        </div>
+
+        <div class="card-addr">
+          <i class="ti ti-map-pin"></i>
+          {{ property|trans_address|default:property.city|default:"Kobuleti" }}
+        </div>
+
+        <div class="card-meta">
+          {% if property.rooms %}
+            <span>
+              <i class="ti ti-bed"></i> 
+              {{ property.rooms }} {% trans "комн." %}
+            </span>
+          {% endif %}
+          {% if property.area_total %}
+            <span>
+              <i class="ti ti-ruler-2"></i> 
+              {{ property.area_total }} {% trans "м²" %}
+            </span>
           {% endif %}
         </div>
 
-        <!-- 3. КОНТЕНТ КАРТОЧКИ -->
-        <div class="card-body">
-          <!-- Ссылка-растяжка -->
-          <a href="{% url 'properties:detail' property.slug %}" class="card-title-link">
-            <div class="card-title">{{ property.title_ru|default:"Без названия" }}</div>
-          </a>
-          
-          <div class="card-price">
-            {{ property.price }} {{ property.currency|default:'$' }}
-          </div>
-          
-          <div class="card-addr">
-            <i class="ti ti-map-pin"></i> 
-            {{ property.address|default:property.city|default:"Кобулети" }}
-          </div>
-          
-          <div class="card-meta">
-            {% if property.rooms %}<span><i class="ti ti-bed"></i> {{ property.rooms }} комн.</span>{% endif %}
-            {% if property.area_total %}<span><i class="ti ti-ruler-2"></i> {{ property.area_total }} м²</span>{% endif %}
-          </div>
-          {% if property.location %}
-            <button class="card-map-btn" type="button"
-                    onclick="openPropertyOnMap({{ property.id }})">
-              <i class="ti ti-map-2"></i> Показать на карте
-            </button>
-          {% endif %}
-        </div>
+        {% if property.location %}
+          <button class="card-map-btn" type="button"
+                  onclick="openPropertyOnMap({{ property.id }})">
+            <i class="ti ti-map-2"></i> {% trans "Показать на карте" %}
+          </button>
+        {% endif %}
       </div>
+    </div>
+
     {% empty %}
       <div class="empty-state">
         <i class="ti ti-search-off"></i>
-        <h3>Ничего не найдено</h3>
-        <p>Попробуйте изменить параметры фильтрации или сбросить их.</p>
+        <h3>{% trans "Ничего не найдено" %}</h3>
+        <p>{% trans "Попробуйте изменить параметры фильтрации или сбросить их." %}</p>
       </div>
     {% endfor %}
   </div>
@@ -340,7 +359,7 @@
       
       <!-- Кнопка "Назад" -->
       {% if properties.has_previous %}
-        <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ properties.previous_page_number }}" class="page-link prev">&laquo; Назад</a>
+        <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ properties.previous_page_number }}" class="page-link prev">&laquo; {% trans "Назад" %}</a>
       {% endif %}
 
       <!-- Номера страниц (с умным ограничением, чтобы не выводить 100 кнопок сразу) -->
@@ -354,7 +373,7 @@
 
       <!-- Кнопка "Вперед" -->
       {% if properties.has_next %}
-        <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ properties.next_page_number }}" class="page-link next">Вперед &raquo;</a>
+        <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ properties.next_page_number }}" class="page-link next">{% trans "Вперед" %} &raquo;</a>
       {% endif %}
       
     </div>

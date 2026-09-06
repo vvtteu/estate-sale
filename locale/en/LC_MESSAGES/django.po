@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-02 15:05+0000\n"
+"POT-Creation-Date: 2026-09-06 11:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,8 +134,9 @@ msgid "Основное"
 msgstr ""
 
 #: properties/admin.py:192 properties/models.py:319
+#: properties/templates/properties/catalog.html:239
 msgid "Цена"
-msgstr ""
+msgstr "Price"
 
 #: properties/admin.py:193
 msgid "Местоположение"
@@ -199,8 +200,9 @@ msgid "Порядок сортировки"
 msgstr ""
 
 #: properties/models.py:61 properties/models.py:74 properties/models.py:285
+#: properties/templates/properties/catalog.html:215
 msgid "Тип сделки"
-msgstr ""
+msgstr "Transaction Type"
 
 #: properties/models.py:78 properties/models.py:166 properties/models.py:218
 #: properties/models.py:590 properties/models.py:665
@@ -236,9 +238,9 @@ msgid "К каким типам сделок относится данная к�
 msgstr ""
 
 #: properties/models.py:132 properties/models.py:162 properties/models.py:291
-#: properties/models.py:611
+#: properties/models.py:611 properties/templates/properties/catalog.html:223
 msgid "Тип недвижимости"
-msgstr ""
+msgstr "Property Type"
 
 #: properties/models.py:171
 msgid "Перевод типа недвижимости"
@@ -565,6 +567,126 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
+#: properties/templates/properties/catalog.html:193
+msgid "Каталог недвижимости"
+msgstr "Property Catalog"
+
+#: properties/templates/properties/catalog.html:200
+msgid "Поиск по названию, описанию, адресу..."
+msgstr "Search by name, description, address..."
+
+#: properties/templates/properties/catalog.html:202
+msgid "Очистить поиск"
+msgstr "Clear search"
+
+#: properties/templates/properties/catalog.html:208
+msgid "Показать фильтры"
+msgstr "Show filters"
+
+#: properties/templates/properties/catalog.html:217
+msgid "Все варианты"
+msgstr "All options"
+
+#: properties/templates/properties/catalog.html:218
+msgid "Купить"
+msgstr "Buy"
+
+#: properties/templates/properties/catalog.html:219
+msgid "Арендовать"
+msgstr "Rent"
+
+#: properties/templates/properties/catalog.html:225
+msgid "Все типы"
+msgstr "All types"
+
+#: properties/templates/properties/catalog.html:241
+#: properties/templates/properties/catalog.html:258
+msgid "От"
+msgstr "From"
+
+#: properties/templates/properties/catalog.html:242
+#: properties/templates/properties/catalog.html:259
+msgid "До"
+msgstr "To"
+
+#: properties/templates/properties/catalog.html:246
+msgid "Комнат"
+msgstr "Rooms"
+
+#: properties/templates/properties/catalog.html:248
+msgid "Любое"
+msgstr "Any"
+
+#: properties/templates/properties/catalog.html:249
+msgid "1 комната"
+msgstr "1 room"
+
+#: properties/templates/properties/catalog.html:250
+msgid "2 комнаты"
+msgstr "2 rooms"
+
+#: properties/templates/properties/catalog.html:251
+msgid "3 комнаты"
+msgstr "3 rooms"
+
+#: properties/templates/properties/catalog.html:252
+msgid "4+ комнат"
+msgstr "4+ rooms"
+
+#: properties/templates/properties/catalog.html:256
+msgid "Площадь м²"
+msgstr "Area m²"
+
+#: properties/templates/properties/catalog.html:265
+msgid "Сбросить всё"
+msgstr "Reset all"
+
+#: properties/templates/properties/catalog.html:267
+msgid "Найти объекты"
+msgstr "Find properties"
+
+#: properties/templates/properties/catalog.html:279
+msgid "В избранное"
+msgstr "Add to favorites"
+
+#: properties/templates/properties/catalog.html:304
+msgid "Новое"
+msgstr "New"
+
+#: properties/templates/properties/catalog.html:312
+#: properties/templates/properties/index.html:238
+msgid "Без названия"
+msgstr "Untitled"
+
+#: properties/templates/properties/catalog.html:329
+msgid "комн."
+msgstr "rooms"
+
+#: properties/templates/properties/catalog.html:335
+#: properties/templates/properties/index.html:247
+msgid "м²"
+msgstr "m²"
+
+#: properties/templates/properties/catalog.html:343
+msgid "Показать на карте"
+msgstr "Show on map"
+
+#: properties/templates/properties/catalog.html:352
+msgid "Ничего не найдено"
+msgstr "Nothing found"
+
+#: properties/templates/properties/catalog.html:353
+msgid "Попробуйте изменить параметры фильтрации или сбросить их."
+msgstr "Try changing the filter parameters or reset them."
+
+#: properties/templates/properties/catalog.html:362
+msgid "Назад"
+msgstr "Back"
+
+#: properties/templates/properties/catalog.html:376
+msgid "Вперед"
+msgstr "Forward"
+
 #: properties/templates/properties/index.html:182
 msgid "Недвижимость в солнечной Грузии"
 msgstr "Real Estate in Sunny Georgia"
@@ -574,7 +696,7 @@ msgid "Недвижимость в"
 msgstr "Real Estate in"
 
 #: properties/templates/properties/index.html:183
-#: properties/templates/properties/index.html:300
+#: properties/templates/properties/index.html:307
 msgid "Грузии"
 msgstr "Georgia"
 
@@ -621,7 +743,7 @@ msgid "Ru / En / Ka"
 msgstr "Ru / En / Ka"
 
 #: properties/templates/properties/index.html:206
-#: properties/templates/properties/index.html:290
+#: properties/templates/properties/index.html:297
 msgid "Adjara Estate — агентство недвижимости в Грузии"
 msgstr "Adjara Estate — Real Estate Agency in Georgia"
 
@@ -651,20 +773,16 @@ msgstr ""
 msgid "Все объекты"
 msgstr "All Properties"
 
-#: properties/templates/properties/index.html:242
-msgid "м²"
-msgstr "m²"
-
-#: properties/templates/properties/index.html:247
+#: properties/templates/properties/index.html:253
 msgid "Объекты скоро появятся..."
 msgstr "Properties coming soon..."
 
-#: properties/templates/properties/index.html:257 templates/base.html:212
+#: properties/templates/properties/index.html:264 templates/base.html:212
 #: templates/base.html:254
 msgid "Почему Грузия"
 msgstr "Why Georgia"
 
-#: properties/templates/properties/index.html:258
+#: properties/templates/properties/index.html:265
 msgid ""
 "Грузия — страна, где комфортная жизнь сочетается с возможностями для "
 "инвестиций в недвижимость."
@@ -672,11 +790,11 @@ msgstr ""
 "Georgia is a country where comfortable living meets real estate investment "
 "opportunities."
 
-#: properties/templates/properties/index.html:265
+#: properties/templates/properties/index.html:272
 msgid "Мягкий климат и природа"
 msgstr "Mild Climate and Nature"
 
-#: properties/templates/properties/index.html:266
+#: properties/templates/properties/index.html:273
 msgid ""
 "Субтропики, море и горы рядом. Здесь мягкая зима и теплое лето, а уникальный "
 "ландшафт позволяет наслаждаться природой круглый год."
@@ -684,11 +802,11 @@ msgstr ""
 "Subtropics, sea, and mountains all nearby. Mild winters and warm summers, "
 "with a unique landscape that lets you enjoy nature all year round."
 
-#: properties/templates/properties/index.html:271
+#: properties/templates/properties/index.html:278
 msgid "Активное развитие"
 msgstr "Active Development"
 
-#: properties/templates/properties/index.html:272
+#: properties/templates/properties/index.html:279
 msgid ""
 "В курортных городах активно обновляется инфраструктура: от современных "
 "набережных и парков до новых жилых комплексов и торговых центров."
@@ -696,11 +814,11 @@ msgstr ""
 "Resort towns are actively upgrading their infrastructure — from modern "
 "promenades and parks to new residential complexes and shopping centers."
 
-#: properties/templates/properties/index.html:277
+#: properties/templates/properties/index.html:284
 msgid "Гостеприимство и колорит"
 msgstr "Hospitality and Local Charm"
 
-#: properties/templates/properties/index.html:278
+#: properties/templates/properties/index.html:285
 msgid ""
 "Местная культура, кухня и традиционное радушие создают атмосферу уюта. Сюда "
 "хочется возвращаться, а переезд проходит комфортно и легко."
@@ -708,16 +826,16 @@ msgstr ""
 "Local culture, cuisine, and traditional warmth create a cozy atmosphere. "
 "You'll want to come back, and moving here feels comfortable and easy."
 
-#: properties/templates/properties/index.html:299 templates/base.html:213
+#: properties/templates/properties/index.html:306 templates/base.html:213
 #: templates/base.html:255 templates/base.html:304
 msgid "О нас"
 msgstr "About Us"
 
-#: properties/templates/properties/index.html:300
+#: properties/templates/properties/index.html:307
 msgid "Знаем рынок недвижимости"
 msgstr "We Know the Real Estate Market"
 
-#: properties/templates/properties/index.html:304
+#: properties/templates/properties/index.html:311
 msgid ""
 "Adjara Estate — агентство недвижимости в Грузии. Мы помогаем нашим клиентам "
 "найти недвижимость для жизни, отдыха, бизнеса и инвестиций."
@@ -725,7 +843,7 @@ msgstr ""
 "Adjara Estate is a real estate agency in Georgia. We help our clients find "
 "properties for living, leisure, business, and investment."
 
-#: properties/templates/properties/index.html:309
+#: properties/templates/properties/index.html:316
 msgid ""
 "Мы работаем с объектами в Кобулети, Батуми и других перспективных районах "
 "Грузии: квартирами, частными домами, земельными участками, коммерческой и "
@@ -735,7 +853,7 @@ msgstr ""
 "Georgia: apartments, private houses, land plots, commercial, and investment "
 "properties."
 
-#: properties/templates/properties/index.html:314
+#: properties/templates/properties/index.html:321
 msgid ""
 "Наша задача — сделать покупку недвижимости понятной и комфортной. Мы "
 "сопровождаем клиента на всех этапах — от подбора объекта и организации "
@@ -749,51 +867,51 @@ msgstr ""
 "just about offering a property, but finding one that truly matches your "
 "goals and budget."
 
-#: properties/templates/properties/index.html:320
+#: properties/templates/properties/index.html:327
 msgid "Почему выбирают Adjara Estate"
 msgstr "Why Choose Adjara Estate"
 
-#: properties/templates/properties/index.html:325
+#: properties/templates/properties/index.html:332
 msgid "Индивидуальный подбор недвижимости"
 msgstr "Individual Property Selection"
 
-#: properties/templates/properties/index.html:329
+#: properties/templates/properties/index.html:336
 msgid "Актуальная база объектов"
 msgstr "Up-to-Date Property Database"
 
-#: properties/templates/properties/index.html:333
+#: properties/templates/properties/index.html:340
 msgid "Знание местного рынка"
 msgstr "Local Market Knowledge"
 
-#: properties/templates/properties/index.html:337
+#: properties/templates/properties/index.html:344
 msgid "Помощь в проверке документов"
 msgstr "Document Verification Assistance"
 
-#: properties/templates/properties/index.html:341
+#: properties/templates/properties/index.html:348
 msgid "Сопровождение сделки"
 msgstr "Transaction Support"
 
-#: properties/templates/properties/index.html:345
+#: properties/templates/properties/index.html:352
 msgid "Поддержка иностранных покупателей"
 msgstr "Support for Foreign Buyers"
 
-#: properties/templates/properties/index.html:349
+#: properties/templates/properties/index.html:356
 msgid "Консультации по вопросам покупки и инвестиций"
 msgstr "Consultations on Purchasing and Investment"
 
-#: properties/templates/properties/index.html:354
+#: properties/templates/properties/index.html:361
 msgid "Adjara Estate — ваш надёжный проводник в мире недвижимости Грузии."
 msgstr "Adjara Estate — your trusted guide in Georgia's real estate market."
 
-#: properties/templates/properties/index.html:357
+#: properties/templates/properties/index.html:364
 msgid "Найдите своё место в Грузии вместе с нами."
 msgstr "Find your place in Georgia with us."
 
-#: properties/templates/properties/index.html:368
+#: properties/templates/properties/index.html:375
 msgid "Готовы найти свой дом у моря?"
 msgstr "Ready to find your seaside home?"
 
-#: properties/templates/properties/index.html:369
+#: properties/templates/properties/index.html:376
 msgid ""
 "Оставьте заявку — подберём варианты под ваш бюджет и расскажем всё о районе "
 "на понятном вам языке."
@@ -801,11 +919,11 @@ msgstr ""
 "Leave a request — we'll find options within your budget and tell you "
 "everything about the area in a language you understand."
 
-#: properties/templates/properties/index.html:370
+#: properties/templates/properties/index.html:377
 msgid "Позвонить нам"
 msgstr "Call Us"
 
-#: properties/templates/properties/index.html:374
+#: properties/templates/properties/index.html:381
 msgid "Ежедневно с 10:00 до 20:00"
 msgstr "Daily from 10:00 AM to 8:00 PM"
 
@@ -841,7 +959,7 @@ msgstr "Submit Request"
 msgid "Меню"
 msgstr "Menu"
 
-#: templates/base.html:290 
+#: templates/base.html:290
 msgid ""
 "Агентство недвижимости, специализирующееся на Кобулети и побережье Аджарии."
 msgstr "Real estate agency specializing in Kobuleti and the Adjara coastline."

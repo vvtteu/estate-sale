@@ -33,3 +33,12 @@ def trans_address(property_obj):
     if not translation:
         translation = property_obj.translations.filter(language="ru").first()
     return translation.address_text if translation else property_obj.address
+
+@register.filter
+def trans_status(property_obj):
+    """Возвращает статус на текущем языке."""
+    lang = get_language()[:2]
+    translation = property_obj.status.translations.filter(language=lang).first()
+    if not translation:
+        translation = property_obj.status.translations.filter(language="ru").first()
+    return translation.title if translation else property_obj.status.slug

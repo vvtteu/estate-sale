@@ -44,11 +44,11 @@
   .drawer-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 20px 24px;
+    justify-content: right;
+    padding: 5px 10px;
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
-    background: var(--white); /* Убеждаемся, что шапка не прозрачная */
+    background: var(--white);
     z-index: 2;
   }
 
@@ -63,7 +63,7 @@
       width: 100%; 
     }
     .drawer-header {
-      padding: 16px 20px; 
+      padding: 5px 10px; 
     }
   }
 </style>
@@ -72,9 +72,9 @@
 
 <div id="map-drawer">
   <div class="drawer-header">
-    <span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); font-weight: 600;">Расположение объекта</span>
+    <!-- <span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); font-weight: 600;">Расположение объекта</span> -->
     <button id="map-drawer-close" style="background: none; border: none; cursor: pointer; font-size: 26px; color: var(--text-muted); line-height: 1; padding: 5px;">
-      <i class="ti ti-x">x</i>
+      <h5>X</h5>
     </button>
   </div>
   <div id="map-drawer-map"></div>
