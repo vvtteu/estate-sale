@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 11:25+0000\n"
+"POT-Creation-Date: 2026-09-11 19:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,8 +63,9 @@ msgid "Статусы"
 msgstr ""
 
 #: core/settings.py:202 properties/models.py:574
+#: properties/templates/properties/detail.html:214
 msgid "Характеристики"
-msgstr ""
+msgstr "მახასიათებლები"
 
 #: core/settings.py:207 properties/models.py:649
 msgid "Варианты выбора"
@@ -160,8 +161,8 @@ msgstr ""
 msgid "Служебное"
 msgstr ""
 
-#: properties/admin.py:233 templates/base.html:214 templates/base.html:256
-#: templates/base.html:306
+#: properties/admin.py:233 templates/base.html:214 templates/base.html:259
+#: templates/base.html:309
 msgid "Контакты"
 msgstr "კონტაქტები"
 
@@ -201,6 +202,8 @@ msgstr ""
 
 #: properties/models.py:61 properties/models.py:74 properties/models.py:285
 #: properties/templates/properties/catalog.html:215
+#: properties/templates/properties/detail.html:200
+#: properties/templates/properties/detail.html:217
 msgid "Тип сделки"
 msgstr "გარიგების ტიპი"
 
@@ -298,17 +301,17 @@ msgstr ""
 msgid "Курсы валют"
 msgstr ""
 
-#: properties/models.py:304
+#: properties/models.py:304 properties/templates/properties/detail.html:221
 msgid "Город"
-msgstr ""
+msgstr "ქალაქი"
 
 #: properties/models.py:305
 msgid "Например: Тбилиси"
 msgstr ""
 
-#: properties/models.py:311
+#: properties/models.py:311 properties/templates/properties/detail.html:226
 msgid "Район"
-msgstr ""
+msgstr "რაიონი"
 
 #: properties/models.py:312
 msgid "Например: Ваке"
@@ -555,17 +558,19 @@ msgstr ""
 msgid "С кодом страны. Например: +995591234567"
 msgstr ""
 
-#: properties/models.py:782 users/models.py:9
+#: properties/models.py:782 templates/account/profile.html:140
+#: users/models.py:9
 msgid "Номер телефона"
-msgstr ""
+msgstr "ტელეფონის ნომერი"
 
 #: properties/models.py:783
 msgid "Отображается на сайте как контактный номер."
 msgstr ""
 
-#: properties/models.py:787
+#: properties/models.py:787 templates/account/login.html:89
+#: templates/account/profile.html:132
 msgid "Email"
-msgstr ""
+msgstr "ელ. ფოსტა"
 
 #: properties/templates/properties/catalog.html:193
 msgid "Каталог недвижимости"
@@ -650,6 +655,7 @@ msgid "В избранное"
 msgstr "რჩეულებში"
 
 #: properties/templates/properties/catalog.html:304
+#: properties/templates/properties/detail.html:148
 msgid "Новое"
 msgstr "ახალი"
 
@@ -659,11 +665,15 @@ msgid "Без названия"
 msgstr "სახელის გარეშე"
 
 #: properties/templates/properties/catalog.html:329
+#: templates/account/profile.html:195
 msgid "комн."
 msgstr "ოთახი"
 
 #: properties/templates/properties/catalog.html:335
+#: properties/templates/properties/detail.html:186
+#: properties/templates/properties/detail.html:234
 #: properties/templates/properties/index.html:247
+#: templates/account/profile.html:198
 msgid "м²"
 msgstr "მ²"
 
@@ -686,6 +696,72 @@ msgstr "უკან"
 #: properties/templates/properties/catalog.html:376
 msgid "Вперед"
 msgstr "წინ"
+
+#: properties/templates/properties/detail.html:136
+msgid "Вернуться к каталогу"
+msgstr "კატალოგში დაბრუნება"
+
+#: properties/templates/properties/detail.html:164
+msgid "Галерея объекта"
+msgstr "ობიექტის გალერეა"
+
+#: properties/templates/properties/detail.html:168
+msgid "Нет фото"
+msgstr "ფოტო არ არის"
+
+#: properties/templates/properties/detail.html:185
+msgid "Площадь"
+msgstr "ფართი"
+
+#: properties/templates/properties/detail.html:193
+msgid "Тип"
+msgstr "ტიპი"
+
+#: properties/templates/properties/detail.html:207
+msgid "Описание объекта"
+msgstr "ობიექტის აღწერა"
+
+#: properties/templates/properties/detail.html:209
+#, fuzzy
+#| msgid "Объекты скоро появятся..."
+msgid "Описание скоро появится."
+msgstr "ობიექტები მალე გამოჩნდება..."
+
+#: properties/templates/properties/detail.html:233
+msgid "Площадь дома"
+msgstr "სახლის ფართი"
+
+#: properties/templates/properties/detail.html:251
+msgid "Расположение на карте"
+msgstr "მდებარეობა რუკაზე"
+
+#: properties/templates/properties/detail.html:259
+msgid "Нажмите, чтобы показать карту"
+msgstr "დააჭირეთ რუკის საჩვენებლად"
+
+#: properties/templates/properties/detail.html:278
+msgid "Похожие предложения"
+msgstr "მსგავსი შეთავაზებები"
+
+#: properties/templates/properties/includes/price_panel.html:3
+msgid "Здравствуйте! Меня интересует объект"
+msgstr "გამარჯობა! მაინტერესებს ობიექტი"
+
+#: properties/templates/properties/includes/price_panel.html:6
+msgid "Стоимость предложения"
+msgstr "შეთავაზების ფასი"
+
+#: properties/templates/properties/includes/price_panel.html:18
+msgid "/ месяц"
+msgstr "/ თვეში"
+
+#: properties/templates/properties/includes/price_panel.html:28
+msgid "Показать номер"
+msgstr "ნომრის ჩვენება"
+
+#: properties/templates/properties/includes/price_panel.html:38
+msgid "Написать в WhatsApp"
+msgstr "მიწერეთ WhatsApp-ში"
 
 #: properties/templates/properties/index.html:182
 msgid "Недвижимость в солнечной Грузии"
@@ -779,7 +855,7 @@ msgid "Объекты скоро появятся..."
 msgstr "ობიექტები მალე გამოჩნდება..."
 
 #: properties/templates/properties/index.html:264 templates/base.html:212
-#: templates/base.html:254
+#: templates/base.html:257
 msgid "Почему Грузия"
 msgstr "რატომ საქართველო"
 
@@ -830,7 +906,7 @@ msgstr ""
 "ატმოსფეროს. აქ დაბრუნება გინდა, ხოლო გადმოსვლა კომფორტულად და მარტივად გადის."
 
 #: properties/templates/properties/index.html:306 templates/base.html:213
-#: templates/base.html:255 templates/base.html:304
+#: templates/base.html:258 templates/base.html:307
 msgid "О нас"
 msgstr "ჩვენ შესახებ"
 
@@ -932,65 +1008,156 @@ msgstr "დაგვირეკეთ"
 msgid "Ежедневно с 10:00 до 20:00"
 msgstr "ყოველდღიურად 10:00-დან 20:00-მდე"
 
-#: templates/base.html:204 templates/base.html:287
-msgid "Real Estate in Kobuleti"
-msgstr "უძრავი ქონება ქობულეთში"
+#: templates/account/login.html:71
+msgid "С возвращением"
+msgstr "კეთილი იყოს თქვენი დაბრუნება"
 
-#: templates/base.html:211 templates/base.html:253 templates/base.html:293
-msgid "Объекты"
-msgstr "ობიექტები"
+#: templates/account/login.html:100
+msgid "Пароль"
+msgstr "პაროლი"
 
-#: templates/base.html:236 templates/base.html:262
-msgid "Кабинет"
-msgstr "კაბინეტი"
-
-#: templates/base.html:238 templates/base.html:263
-msgid "Выйти"
-msgstr "გასვლა"
-
-#: templates/base.html:240 templates/base.html:265
+#: templates/account/login.html:120 templates/account/signup.html:71
+#: templates/base.html:243 templates/base.html:268
 msgid "Войти"
 msgstr "შესვლა"
 
+#: templates/account/login.html:124
+msgid "Ещё нет аккаунта?"
+msgstr "ჯერ არ გაქვთ ანგარიში?"
+
+#: templates/account/login.html:124 templates/account/signup.html:67
+msgid "Зарегистрироваться"
+msgstr "დარეგისტრირდით"
+
+#: templates/account/logout.html:21
+msgid "Выход из системы"
+msgstr "სისტემიდან გასვლა"
+
+#: templates/account/logout.html:22
+msgid "Вы уверены, что хотите выйти из своего аккаунта?"
+msgstr "დარწმუნებული ხართ, რომ გსურთ ანგარიშიდან გასვლა?"
+
+#: templates/account/logout.html:29
+msgid "Да, выйти"
+msgstr "დიახ, გასვლა"
+
+#: templates/account/profile.html:125
+msgid "Мой профиль"
+msgstr "ჩემი პროფილი"
+
+#: templates/account/profile.html:126
+msgid "Управление контактными данными"
+msgstr "საკონტაქტო მონაცემების მართვა"
+
+#: templates/account/profile.html:147
+msgid "Сохранить изменения"
+msgstr "ცვლილებების შენახვა"
+
+#: templates/account/profile.html:153
+#, python-format
+msgid "Моё избранное (%(count)s)"
+msgstr "ჩემი რჩეულები (%(count)s)"
+
+#: templates/account/profile.html:162
+msgid "Убрать из избранного"
+msgstr "რჩეულებიდან წაშლა"
+
+#: templates/account/profile.html:209
+msgid "Список избранного пуст"
+msgstr "რჩეულების სია ცარიელია"
+
+#: templates/account/profile.html:210
+msgid ""
+"Вы еще не добавили ни одного объекта. Перейдите в каталог, чтобы найти дом "
+"вашей мечты."
+msgstr ""
+"თქვენ ჯერ არ დაამატეთ არცერთი ობიექტი. გადადით კატალოგში, რომ იპოვოთ თქვენი "
+"ოცნების სახლი."
+
+#: templates/account/profile.html:211
+#, fuzzy
+#| msgid "Вернуться к каталогу"
+msgid "Перейти в каталог"
+msgstr "კატალოგში დაბრუნება"
+
+#: templates/account/signup.html:45
+msgid "Создать аккаунт"
+msgstr "ანგარიშის შექმნა"
+
+#: templates/account/signup.html:71
+msgid "Уже есть аккаунт?"
+msgstr "უკვე გაქვთ ანგარიში?"
+
+#: templates/base.html:204 templates/base.html:290
+msgid "Real Estate in Kobuleti"
+msgstr "უძრავი ქონება ქობულეთში"
+
+#: templates/base.html:211 templates/base.html:256 templates/base.html:296
+msgid "Объекты"
+msgstr "ობიექტები"
+
+#: templates/base.html:239 templates/base.html:265
+msgid "Кабинет"
+msgstr "კაბინეტი"
+
 #: templates/base.html:241 templates/base.html:266
+msgid "Выйти"
+msgstr "გასვლა"
+
+#: templates/base.html:244 templates/base.html:269
 msgid "Регистрация"
 msgstr "რეგისტრაცია"
 
-#: templates/base.html:244 templates/base.html:270
+#: templates/base.html:247 templates/base.html:273
 msgid "Оставить заявку"
 msgstr "განაცხადის დატოვება"
 
-#: templates/base.html:245
+#: templates/base.html:248
 msgid "Меню"
 msgstr "მენიუ"
 
-#: templates/base.html:290
+#: templates/base.html:293
 msgid ""
 "Агентство недвижимости, специализирующееся на Кобулети и побережье Аджарии."
 msgstr ""
 "უძრავი ქონების სააგენტო, რომელიც სპეციალიზდება ქობულეთსა და აჭარის "
 "სანაპიროზე."
 
-#: templates/base.html:295
+#: templates/base.html:298
 msgid "Квартиры у моря"
 msgstr "ბინები ზღვის პირას"
 
-#: templates/base.html:296
+#: templates/base.html:299
 msgid "Дома с участком"
 msgstr "სახლები მიწის ნაკვეთით"
 
-#: templates/base.html:297
+#: templates/base.html:300
 msgid "Коммерческая"
 msgstr "კომერციული"
 
-#: templates/base.html:298
+#: templates/base.html:301
 msgid "Новостройки"
 msgstr "ახაშენებლები"
 
-#: templates/base.html:302
+#: templates/base.html:305
 msgid "Компания"
 msgstr "კომპანია"
 
-#: templates/base.html:305
+#: templates/base.html:308
 msgid "Отзывы"
 msgstr "გამოხმაურებები"
+
+#~ msgid "Номер телефона не заполнен в настройках сайта"
+#~ msgstr "ტელეფონის ნომერი არ არის შევსებული საიტის პარამეტრებში"
+
+#~ msgid ""
+#~ "Превосходный инвестиционный объект недвижимости премиум-класса, "
+#~ "расположенный в развивающемся курортном регионе Кобулети. Идеально "
+#~ "подходит как для личного проживания, так и для сдачи в аренду."
+#~ msgstr ""
+#~ "პრემიუმ კლასის შესანიშნავი საინვესტიციო უძრავი ქონების ობიექტი, რომელიც "
+#~ "მდებარეობს ქობულეთის განვითარებად კურორტულ რეგიონში. იდეალურად შეეფერება "
+#~ "როგორც პირადი ცხოვრებისთვის, ასევე გაქირავებისთვის."
+
+#~ msgid "Кобулети"
+#~ msgstr "ქობულეთი"

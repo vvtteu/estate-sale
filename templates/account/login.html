@@ -63,11 +63,12 @@
 </style>
 {% endblock %}
 
+{% load i18n %}
 {% block content %}
 <div class="auth-wrapper">
   <div class="auth-card">
     <div class="auth-brand">ADJARA <span>ESTATE</span></div>
-    <div class="auth-title">С возвращением</div>
+    <div class="auth-title">{% trans "С возвращением" %}</div>
 
     <!-- Кнопка входа через Google будет позже-->
 
@@ -85,7 +86,7 @@
 
       <!-- Ручной вывод поля Логин (Email) -->
       <p>
-        <label for="{{ form.login.id_for_label }}">Email</label>
+        <label for="{{ form.login.id_for_label }}">{% trans "Email" %}</label>
         {{ form.login }}
         {% if form.login.errors %}
           <ul class="errorlist">
@@ -96,7 +97,7 @@
 
       <!-- Ручной вывод поля Пароль -->
       <p>
-        <label for="{{ form.password.id_for_label }}">Пароль</label>
+        <label for="{{ form.password.id_for_label }}">{% trans "Пароль" %}</label>
         {{ form.password }}
         {% if form.password.errors %}
           <ul class="errorlist">
@@ -116,11 +117,11 @@
       <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
       {% endif %}
       
-      <button type="submit" class="btn-submit">Войти</button>
+      <button type="submit" class="btn-submit">{% trans "Войти" %}</button>
     </form>
 
     <div class="auth-links">
-      Ещё нет аккаунта? <a href="{% url 'account_signup' %}">Зарегистрироваться</a>
+      {% trans "Ещё нет аккаунта?" %} <a href="{% url 'account_signup' %}">{% trans "Зарегистрироваться" %}</a>
     </div>
   </div>
 </div>

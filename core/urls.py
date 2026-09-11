@@ -25,10 +25,11 @@ import django.conf.urls.i18n as i18n
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
-    path('accounts/', include('allauth.urls')),
+    
 ]
 
 urlpatterns += i18n_patterns(
+    path('accounts/', include('allauth.urls')),
     path("profile/", profile_view, name="profile"),
     path("", include("properties.urls", namespace="properties")),
     prefix_default_language=False,

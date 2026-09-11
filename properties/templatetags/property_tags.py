@@ -42,3 +42,21 @@ def trans_status(property_obj):
     if not translation:
         translation = property_obj.status.translations.filter(language="ru").first()
     return translation.title if translation else property_obj.status.slug
+
+@register.filter
+def trans_deal_type(property_obj):
+    """Возвращает тип сделки на текущем языке."""
+    lang = get_language()[:2]
+    translation = property_obj.deal_type.translations.filter(language=lang).first()
+    if not translation:
+        translation = property_obj.deal_type.translations.filter(language="ru").first()
+    return translation.title if translation else property_obj.deal_type.slug
+
+@register.filter
+def trans_type_name(property_type_obj):
+    """Возвращает название типа недвижимости на текущем языке."""
+    lang = get_language()[:2]
+    translation = property_type_obj.translations.filter(language=lang).first()
+    if not translation:
+        translation = property_type_obj.translations.filter(language="ru").first()
+    return translation.title if translation else property_type_obj.slug

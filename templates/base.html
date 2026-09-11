@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n lang_tags %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -219,17 +219,20 @@ header.menu-open .mobile-menu {
     <div class="header-actions">
       <!-- ДОРАБОТАТЬ -->
       <div class="lang-switcher">
-        <form action="{% url 'set_language' %}" method="post">
+        <form action="{% url 'set_language' %}" method="post" id="lang-form">
           {% csrf_token %}
-          <input name="next" type="hidden" value="/">
+          <input name="next" type="hidden" id="lang-next" value="/">
           <button type="submit" name="language" value="ru"
-                  class="lang-btn {% if LANGUAGE_CODE == 'ru' %}active{% endif %}">RU</button>
+                  class="lang-btn {% if LANGUAGE_CODE == 'ru' %}active{% endif %}"
+                  data-url="{% change_lang_url 'ru' %}">RU</button>
           <button type="submit" name="language" value="en"
-                  class="lang-btn {% if LANGUAGE_CODE == 'en' %}active{% endif %}">EN</button>
+                  class="lang-btn {% if LANGUAGE_CODE == 'en' %}active{% endif %}"
+                  data-url="{% change_lang_url 'en' %}">EN</button>
           <button type="submit" name="language" value="ka"
-                  class="lang-btn {% if LANGUAGE_CODE == 'ka' %}active{% endif %}">KA</button>
+                  class="lang-btn {% if LANGUAGE_CODE == 'ka' %}active{% endif %}"
+                  data-url="{% change_lang_url 'ka' %}">KA</button>
         </form>
-      </div
+      </div>
 
       {% if user.is_authenticated %}
         <a href="{% url 'profile' %}" class="auth-link">
@@ -241,7 +244,7 @@ header.menu-open .mobile-menu {
         <a href="{% url 'account_signup' %}" class="auth-link">{% trans "Регистрация" %}</a>
       {% endif %}
 
-      <a href="#cta" class="nav-cta">{% trans "Оставить заявку" %}</a>
+      <!-- <a href="#cta" class="nav-cta">{% trans "Оставить заявку" %}</a> -->
       <button class="burger" aria-label="{% trans 'Меню' %}">☰</button>
     </div>
   </div>
@@ -267,7 +270,7 @@ header.menu-open .mobile-menu {
       {% endif %}
     </div>
 
-    <a href="#cta" class="mobile-cta">{% trans "Оставить заявку" %}</a>
+    <!-- <a href="#cta" class="mobile-cta">{% trans "Оставить заявку" %}</a> -->
   </div>
 </header>
 
@@ -404,6 +407,12 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   }
+
+document.querySelectorAll('.lang-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.getElementById('lang-next').value = this.dataset.url;
+  });
+});  
 </script>
 </body>
 </html>

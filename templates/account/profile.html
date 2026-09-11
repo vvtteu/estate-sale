@@ -105,9 +105,11 @@
 </style>
 {% endblock %}
 
+{% load i18n property_tags %}
+
 {% block content %}
 <main class="container profile-page">
-  
+
   {% if messages %}
     <ul class="messages">
       {% for message in messages %}
@@ -117,83 +119,96 @@
   {% endif %}
 
   <div class="profile-layout">
-    
+
     <!-- ЛЕВАЯ КОЛОНКА: Настройки профиля -->
     <aside class="profile-sidebar">
-      <h2>Мой профиль</h2>
-      <p>Управление контактными данными</p>
+      <h2>{% trans "Мой профиль" %}</h2>
+      <p>{% trans "Управление контактными данными" %}</p>
 
       <form method="POST" class="profile-form">
         {% csrf_token %}
-        
+
         <div class="form-group">
-          <label for="{{ form.email.id_for_label }}">Email</label>
+          <label for="{{ form.email.id_for_label }}">{% trans "Email" %}</label>
           {{ form.email }}
-          {% if form.email.errors %}<div style="color:#d1495b; font-size:12px; margin-top:4px;">{{ form.email.errors.0 }}</div>{% endif %}
+          {% if form.email.errors %}
+            <div style="color:#d1495b; font-size:12px; margin-top:4px;">{{ form.email.errors.0 }}</div>
+          {% endif %}
         </div>
 
         <div class="form-group">
-          <label for="{{ form.phone_number.id_for_label }}">Номер телефона</label>
+          <label for="{{ form.phone_number.id_for_label }}">{% trans "Номер телефона" %}</label>
           {{ form.phone_number }}
-          {% if form.phone_number.errors %}<div style="color:#d1495b; font-size:12px; margin-top:4px;">{{ form.phone_number.errors.0 }}</div>{% endif %}
+          {% if form.phone_number.errors %}
+            <div style="color:#d1495b; font-size:12px; margin-top:4px;">{{ form.phone_number.errors.0 }}</div>
+          {% endif %}
         </div>
 
-        <button type="submit" class="btn-save">Сохранить изменения</button>
+        <button type="submit" class="btn-save">{% trans "Сохранить изменения" %}</button>
       </form>
     </aside>
 
     <!-- ПРАВАЯ КОЛОНКА: Избранное -->
     <section class="profile-content">
-      <h1>Моё избранное ({{ properties.count }})</h1>
-      
+      <h1>{% blocktrans with count=properties.count %}Моё избранное ({{ count }}){% endblocktrans %}</h1>
+
       {% if properties %}
         <div class="listings-grid">
           {% for property in properties %}
             <div class="card">
               <a href="{% url 'properties:detail' property.slug %}" class="card-img-link">
-                <button class="card-fav active" type="button" data-property-id="{{ property.id }}" aria-label="Убрать из избранного">
-                <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                        stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                </svg>
-              </button>
+                <button class="card-fav active" type="button"
+                        data-property-id="{{ property.id }}"
+                        aria-label="{% trans 'Убрать из избранного' %}">
+                  <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                          stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                  </svg>
+                </button>
                 <div class="card-img">
                   {% with img=property.main_image %}
                     {% if img %}
-                      <img src="{{ img.image.url }}" alt="{{ property.title_ru }}" loading="lazy" class="card-img-lazy">
+                      <img src="{{ img.image.url }}"
+                           alt="{{ property|trans_title }}"
+                           loading="lazy" class="card-img-lazy">
                     {% endif %}
                   {% endwith %}
                   <span class="card-badge" style="background: {{ property.status.color|default:'#0e1c2e' }};">
-                    {{ property.status }}
+                    {{ property|trans_status }}
                   </span>
                 </div>
               </a>
-              
+
               <div class="card-body">
                 <a href="{% url 'properties:detail' property.slug %}" class="card-title-link">
-                  <div class="card-title">{{ property.title_ru }}</div>
+                  <div class="card-title">{{ property|trans_title }}</div>
                 </a>
                 <div class="card-price">
                   {{ property.price }} {{ property.currency }}
                 </div>
                 <div class="card-addr">
                   <i class="ti ti-map-pin"></i>
-                  {{ property.address|default:property.city }}
+                  {{ property|trans_address|default:property.city }}
                 </div>
                 <div class="card-meta">
-                  {% if property.rooms %}<span><i class="ti ti-bed"></i> {{ property.rooms }} комн.</span>{% endif %}
-                  {% if property.area_total %}<span><i class="ti ti-ruler-2"></i> {{ property.area_total }} м²</span>{% endif %}
+                  {% if property.rooms %}
+                    <span><i class="ti ti-bed"></i> {{ property.rooms }} {% trans "комн." %}</span>
+                  {% endif %}
+                  {% if property.area_total %}
+                    <span><i class="ti ti-ruler-2"></i> {{ property.area_total }} {% trans "м²" %}</span>
+                  {% endif %}
                 </div>
               </div>
             </div>
           {% endfor %}
         </div>
+
       {% else %}
         <div class="empty-favorites">
           <i class="ti ti-bookmark-off"></i>
-          <h3>Список избранного пуст</h3>
-          <p>Вы еще не добавили ни одного объекта. Перейдите в каталог, чтобы найти дом вашей мечты.</p>
-          <a href="{% url 'properties:catalog' %}" class="btn-outline">Перейти в каталог</a>
+          <h3>{% trans "Список избранного пуст" %}</h3>
+          <p>{% trans "Вы еще не добавили ни одного объекта. Перейдите в каталог, чтобы найти дом вашей мечты." %}</p>
+          <a href="{% url 'properties:catalog' %}" class="btn-outline">{% trans "Перейти в каталог" %}</a>
         </div>
       {% endif %}
     </section>

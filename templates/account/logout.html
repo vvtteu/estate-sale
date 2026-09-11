@@ -14,18 +14,19 @@
 </style>
 {% endblock %}
 
+{% load i18n %}
 {% block content %}
 <div class="auth-wrapper">
   <div class="auth-card">
-    <h1 class="auth-title">Выход из системы</h1>
-    <p class="auth-desc">Вы уверены, что хотите выйти из своего аккаунта?</p>
+    <h1 class="auth-title">{% trans "Выход из системы" %}</h1>
+    <p class="auth-desc">{% trans "Вы уверены, что хотите выйти из своего аккаунта?" %}</p>
     
     <form method="POST" action="{% url 'account_logout' %}">
       {% csrf_token %}
       {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
       {% endif %}
-      <button type="submit" class="btn-submit">Да, выйти</button>
+      <button type="submit" class="btn-submit">{% trans "Да, выйти" %}</button>
     </form>
   </div>
 </div>

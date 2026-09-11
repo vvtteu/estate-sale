@@ -1,6 +1,9 @@
-{% load humanize %}
+{% load i18n humanize %}
+
+{% trans "Здравствуйте! Меня интересует объект" as wa_greeting %}
+
 <div class="price-panel">
-  <div class="panel-label">Стоимость предложения</div>
+  <div class="panel-label">{% trans "Стоимость предложения" %}</div>
 
   <div class="currency-toggle">
     <button type="button" class="curr-btn active" data-currency="usd">USD</button>
@@ -10,26 +13,33 @@
   <div class="main-price">
     <span class="price-usd">${{ property.price_in_usd|intcomma }}</span>
     <span class="price-gel" style="display:none;">{{ property.price_in_gel|intcomma }} ₾</span>
-    
+
     {% if property.deal_type.slug == 'rent' %}
-      <span class="price-period">/ месяц</span>
+      <span class="price-period">{% trans "/ месяц" %}</span>
     {% endif %}
   </div>
 
   <div class="contact-block">
-    <button type="button" class="btn-action btn-reveal" id="revealPhoneBtn">
-      <i class="ti ti-phone"></i> <span id="revealPhoneText">Показать номер</span>
+
+    {% if site_settings.phone_number %}
+    <button type="button" class="btn-action btn-reveal" id="revealPhoneBtn"
+            data-phone="{{ site_settings.phone_number }}">
+      <i class="ti ti-phone"></i>
+      <span id="revealPhoneText">{% trans "Показать номер" %}</span>
     </button>
+    {% endif %}
 
     {% if site_settings.whatsapp_number %}
-      <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Здравствуйте!%20Меня%20интересует%20объект%20{{ property.slug }}"
-         target="_blank" class="btn-action btn-whatsapp">
-        <i class="ti ti-brand-whatsapp"></i> Написать в WhatsApp
-      </a>
+    <a href="https://wa.me/{{ site_settings.whatsapp_number|cut:'+'|cut:' ' }}?text={{ wa_greeting|urlencode }}%20{{ property.slug }}"
+      class="btn-action btn-whatsapp"
+      target="_blank"
+      rel="noopener noreferrer">
+      <i class="ti ti-brand-whatsapp"></i>
+      {% trans "Написать в WhatsApp" %}
+    </a>
     {% endif %}
   </div>
 </div>
-
 <style>
   .currency-toggle { display: flex; gap: 6px; margin-bottom: 14px; }
   .curr-btn {
@@ -86,15 +96,23 @@
     });
   });
 
-  var revealBtn = document.getElementById('revealPhoneBtn');
-  if (revealBtn) {
-    revealBtn.addEventListener('click', function () {
-      var phone = "{{ site_settings.phone_number|default:'' }}";
-      if (!phone) {
-        alert('Номер телефона не заполнен в настройках сайта');
-        return;
-      }
-      this.outerHTML = '<a href="tel:' + phone + '" class="btn-action btn-reveal revealed"><i class="ti ti-phone"></i> ' + phone + '</a>';
-    });
-  }
+  (function() {
+  const btn = document.getElementById("revealPhoneBtn");
+  if (!btn) return;
+
+  const phone = btn.dataset.phone;
+  const textEl = document.getElementById("revealPhoneText");
+  let revealed = false;
+
+  btn.addEventListener("click", function() {
+    if (!revealed) {
+      textEl.textContent = phone;
+      btn.href = "tel:" + phone;
+      btn.tagName === "BUTTON" && btn.setAttribute("onclick", `window.location='tel:${phone}'`);
+      revealed = true;
+    } else {
+      window.location.href = "tel:" + phone;
+    }
+  });
+})();
 </script>

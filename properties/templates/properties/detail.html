@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n property_tags %}
 {% block title %}{{ property.title_ru }} — Adjara Estate{% endblock %}
 
 {% block extra_head %}
@@ -129,10 +129,11 @@
 {% endif %}
 {% endblock %}
 
+
 {% block content %}
 <main class="container detail-page">
   <a href="{% url 'properties:catalog' %}" class="back-link">
-    <i class="ti ti-arrow-narrow-left"></i> Вернуться к каталогу
+    <i class="ti ti-arrow-narrow-left"></i> {% trans "Вернуться к каталогу" %}
   </a>
 
   <div class="detail-grid">
@@ -140,33 +141,40 @@
       <div class="main-display">
         <div class="badges-layer">
           <span class="badge" style="background: {{ property.status.color|default:'#0e1c2e' }};">
-            {{ property.status }}
+            {{ property|trans_status }}
           </span>
           {% if property.is_new %}
-            <span class="badge badge-new"><i class="ti ti-point-filled"></i> Новое</span>
+            <span class="badge badge-new">
+              <i class="ti ti-point-filled"></i> {% trans "Новое" %}
+            </span>
           {% endif %}
         </div>
-        
+
         {% with main_img=property.main_image %}
-          <img id="viewed-photo" src="{% if main_img %}{{ main_img.image.url }}{% else %}/static/placeholder.jpg{% endif %}" alt="{{ property.title_ru }}">
+          <img id="viewed-photo"
+               src="{% if main_img %}{{ main_img.image.url }}{% else %}/static/placeholder.jpg{% endif %}"
+               alt="{{ property|trans_title }}">
         {% endwith %}
       </div>
 
       <div class="thumbs-grid">
         {% for img in property.images.all %}
-          <div class="thumb {% if forloop.first %}active{% endif %}" onclick="switchPhoto(this, '{{ img.image.url }}')">
-            <img src="{{ img.image.url }}" alt="Галерея объекта" loading="lazy">
+          <div class="thumb {% if forloop.first %}active{% endif %}"
+               onclick="switchPhoto(this, '{{ img.image.url }}')">
+            <img src="{{ img.image.url }}" alt="{% trans 'Галерея объекта' %}" loading="lazy">
           </div>
         {% empty %}
-          <div class="thumb active"><img src="/static/placeholder.jpg" alt="Нет фото"></div>
+          <div class="thumb active">
+            <img src="/static/placeholder.jpg" alt="{% trans 'Нет фото' %}">
+          </div>
         {% endfor %}
       </div>
 
       <div class="property-header">
-        <h1>{{ property.title_ru }}</h1>
+        <h1>{{ property|trans_title }}</h1>
         <div class="location-bar">
           <i class="ti ti-map-pin"></i>
-          <span>{{ property.address|default:property.district|default:property.city }}</span>
+          <span>{{ property|trans_address|default:property.city }}</span>
         </div>
       </div>
 
@@ -174,73 +182,64 @@
         {% if property.area_total %}
         <div class="metric-item">
           <div>
-            <div class="metric-label">Площадь</div>
-            <div class="metric-value">{{ property.area_total }} м²</div>
+            <div class="metric-label">{% trans "Площадь" %}</div>
+            <div class="metric-value">{{ property.area_total }} {% trans "м²" %}</div>
           </div>
         </div>
         {% endif %}
 
         <div class="metric-item">
           <div>
-            <div class="metric-label">Тип</div>
+            <div class="metric-label">{% trans "Тип" %}</div>
             <div class="metric-value">{{ property.property_type.get_full_name }}</div>
           </div>
         </div>
 
         <div class="metric-item">
           <div>
-            <div class="metric-label">Тип сделки</div>
-            <div class="metric-value">{{ property.deal_type }}</div>
+            <div class="metric-label">{% trans "Тип сделки" %}</div>
+            <div class="metric-value">{{ property|trans_deal_type }}</div>
           </div>
         </div>
-
       </div>
 
       <div class="info-section">
-        <h2>Описание объекта</h2>
+        <h2>{% trans "Описание объекта" %}</h2>
         <div class="description-text">
-          {% for trans in property.translations.all %}
-            {% if trans.language == 'ru' and trans.description %}
-              {{ trans.description }}
-            {% endif %}
-          {% empty %}
-            {{ property.address }}. Превосходный инвестиционный объект недвижимости премиум-класса, расположенный в развивающемся курортном регионе Кобулети. Идеально подходит как для личного проживания, так и для сдачи в аренду.
-          {% endfor %}
+          {{ property|trans_description|default:_("Описание скоро появится.") }}
         </div>
       </div>
 
       <div class="info-section">
-        <h2>Характеристики</h2>
+        <h2>{% trans "Характеристики" %}</h2>
         <div class="tech-specs">
           <div class="spec-row">
-            <span class="spec-label">Тип сделки</span>
-            <span class="spec-value">{{ property.deal_type }}</span>
+            <span class="spec-label">{% trans "Тип сделки" %}</span>
+            <span class="spec-value">{{ property|trans_deal_type }}</span>
           </div>
           <div class="spec-row">
-            <span class="spec-label">Город</span>
-            <span class="spec-value">{{ property.city|default:"Кобулети" }}</span>
+            <span class="spec-label">{% trans "Город" %}</span>
+            <span class="spec-value">{{ property.city|default:"Kobuleti" }}</span>
           </div>
           {% if property.district %}
           <div class="spec-row">
-            <span class="spec-label">Район</span>
+            <span class="spec-label">{% trans "Район" %}</span>
             <span class="spec-value">{{ property.district }}</span>
           </div>
           {% endif %}
 
           {% if property.area_living %}
           <div class="spec-row">
-              <div class="spec-label">Площадь дома</div>
-              <div class="spec-value">{{ property.area_living }} м²</div>
+            <span class="spec-label">{% trans "Площадь дома" %}</span>
+            <span class="spec-value">{{ property.area_living }} {% trans "м²" %}</span>
           </div>
           {% endif %}
-          
+
           {% for attr_val in property.attribute_values.all %}
             {% if attr_val.attribute.slug != 'rooms' %}
               <div class="spec-row">
                 <span class="spec-label">{{ attr_val.attribute }}</span>
-                <span class="spec-value">
-                  {{ attr_val.display_value }}
-                </span>
+                <span class="spec-value">{{ attr_val.display_value }}</span>
               </div>
             {% endif %}
           {% endfor %}
@@ -248,17 +247,23 @@
       </div>
 
       {% if property.location %}
-        <div class="info-section">
-          <h2>Расположение на карте</h2>
-          <div id="map-trigger" onclick="initDetailMap()" style="width: 100%; height: 220px; background: var(--teal-light); border-radius: 12px; border: 1.5px dashed var(--teal); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: background 0.2s;">
-            <i class="ti ti-map-2" style="font-size: 40px; color: var(--teal);"></i>
-            <span style="color: var(--teal); font-weight: 600; font-size: 15px;">Нажмите, чтобы показать карту</span>
-            <span style="color: var(--text-muted); font-size: 13px;">
-              {{ property.address|default:property.city }}
-            </span>
-          </div>
-          <div id="detail-map" style="display: none; height: 380px; border-radius: 12px; overflow: hidden;"></div>
+      <div class="info-section">
+        <h2>{% trans "Расположение на карте" %}</h2>
+        <div id="map-trigger" onclick="initDetailMap()" style="
+          width: 100%; height: 220px; background: var(--teal-light);
+          border-radius: 12px; border: 1.5px dashed var(--teal);
+          display: flex; flex-direction: column; align-items: center;
+          justify-content: center; gap: 12px; cursor: pointer;">
+          <i class="ti ti-map-2" style="font-size: 40px; color: var(--teal);"></i>
+          <span style="color: var(--teal); font-weight: 600; font-size: 15px;">
+            {% trans "Нажмите, чтобы показать карту" %}
+          </span>
+          <span style="color: var(--text-muted); font-size: 13px;">
+            {{ property|trans_address|default:property.city }}
+          </span>
         </div>
+        <div id="detail-map" style="display: none; height: 380px; border-radius: 12px; overflow: hidden;"></div>
+      </div>
       {% endif %}
 
     </section>
@@ -270,7 +275,7 @@
 
   {% if similar_properties %}
   <section class="similar-section">
-    <h2>Похожие предложения</h2>
+    <h2>{% trans "Похожие предложения" %}</h2>
     <div class="similar-grid">
       {% for sim in similar_properties %}
         <div class="card" style="background: var(--white); border-radius: 18px; overflow: hidden; border: 1px solid var(--border);">
@@ -279,12 +284,16 @@
           </a>
           <div style="padding: 20px;">
             <a href="{% url 'properties:detail' sim.slug %}">
-              <div style="font-size: 16px; color: var(--navy); font-weight: 700; margin-bottom: 6px;">{{ sim.title_ru }}</div>
+              <div style="font-size: 16px; color: var(--navy); font-weight: 700; margin-bottom: 6px;">
+                {{ sim|trans_title }}
+              </div>
             </a>
-            <div style="font-family: 'Manrope', sans-serif;; font-size: 22px; color: var(--navy);">
+            <div style="font-family: 'Manrope', sans-serif; font-size: 22px; color: var(--navy);">
               {{ sim.price }} {{ sim.currency }}
             </div>
-            <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;"><i class="ti ti-map-pin"></i> {{ sim.city }}</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+              <i class="ti ti-map-pin"></i> {{ sim.city }}
+            </div>
           </div>
         </div>
       {% endfor %}
@@ -302,6 +311,7 @@ function switchPhoto(thumbElement, imageUrl) {
 </script>
 
 {% if property.location %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 var detailMapInitialized = false;
@@ -318,7 +328,6 @@ function initDetailMap() {
   var lng = parseFloat("{{ property.location.x|stringformat:'.6f' }}");
 
   var map = L.map("detail-map").setView([lat, lng], 16);
-
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap contributors",
     maxZoom: 19,
@@ -326,7 +335,7 @@ function initDetailMap() {
 
   var icon = L.divIcon({
     className: "",
-    html: `<div style="width: 16px; height: 16px; background: #c9a24a; border: 3px solid #0e1c2e; border-radius: 50%; box-shadow: 0 2px 8px rgba(14,28,46,0.4);"></div>`,
+    html: `<div style="width:16px;height:16px;background:#c9a24a;border:3px solid #0e1c2e;border-radius:50%;box-shadow:0 2px 8px rgba(14,28,46,0.4);"></div>`,
     iconSize: [16, 16],
     iconAnchor: [8, 8],
     popupAnchor: [0, -12],
@@ -335,13 +344,9 @@ function initDetailMap() {
   L.marker([lat, lng], { icon })
     .addTo(map)
     .bindPopup(`
-      <div style="font-family: 'Manrope', sans-serif; min-width: 180px;">
-        <strong style="font-size: 14px; color: #0e1c2e;">
-          {% for trans in property.translations.all %}{% if trans.language == 'ru' %}{{ trans.title }}{% endif %}{% endfor %}
-        </strong><br>
-        <span style="color: #6b7280; font-size: 12px;">
-          {{ property.address|default:property.city }}
-        </span>
+      <div style="font-family:'Manrope',sans-serif;min-width:180px;">
+        <strong style="font-size:14px;color:#0e1c2e;">{{ property|trans_title }}</strong><br>
+        <span style="color:#6b7280;font-size:12px;">{{ property|trans_address|default:property.city }}</span>
       </div>
     `)
     .openPopup();

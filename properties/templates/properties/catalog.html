@@ -187,7 +187,7 @@
 {% endblock %}
 
 {% block content %}
-{% load i18n %}
+{% load i18n property_tags %}
 <main class="container catalog-page">
   <div class="catalog-head">
     <h1>{% trans "Каталог недвижимости" %}</h1>
@@ -225,10 +225,16 @@
             <option value="">{% trans "Все типы" %}</option>
             {% for type in property_types %}
               {% if not type.parent %}
-                <option value="{{ type.id }}" {% if request.GET.property_type == type.id|stringformat:"i" %}selected{% endif %}>{{ type }}</option>
+                <option value="{{ type.id }}"
+                        {% if request.GET.property_type == type.id|stringformat:"i" %}selected{% endif %}>
+                  {{ type|trans_type_name }}
+                </option>
                 {% for child in type.children.all %}
                   {% if child.is_active %}
-                    <option value="{{ child.id }}" {% if request.GET.property_type == child.id|stringformat:"i" %}selected{% endif %}>&nbsp;&nbsp;&nbsp;* {{ child }}</option>
+                    <option value="{{ child.id }}"
+                            {% if request.GET.property_type == child.id|stringformat:"i" %}selected{% endif %}>
+                      &nbsp;&nbsp;&nbsp;* {{ child|trans_type_name }}
+                    </option>
                   {% endif %}
                 {% endfor %}
               {% endif %}
@@ -271,7 +277,7 @@
   </form>
   <div class="listings-grid">
   {% for property in properties %}
-    <!-- КАРТОЧКА (уже сделана тобой) -->
+    <!-- КАРТОЧКА -->
     <div class="card">
       <button class="card-fav {% if property.id in user_favorites %}active{% endif %}" 
               type="button" 
