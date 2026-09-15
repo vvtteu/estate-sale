@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 import builtins
+from django.core.cache import cache
 from PIL import Image
 
 class Language(models.TextChoices):
@@ -37,7 +38,7 @@ class TranslationBase(BaseModel):
 
 
 # ==============================================================================
-# Тип сделки (Продажа / Аренда)
+# Тип сделки
 # ==============================================================================
 
 class DealType(BaseModel):
@@ -134,6 +135,23 @@ class PropertyType(BaseModel):
     def __str__(self):
         translation = self.translations.filter(language=Language.RU).first()
         return translation.title if translation else self.slug
+
+    def get_descendants_ids(self):
+        ids = [self.pk]
+        for child in self.children.filter(is_active=True):
+            ids.extend(child.get_descendants_ids())
+        return ids
+
+    def get_full_name(self, language="ru"):
+        translation = self.translations.filter(language=language).first()
+        title = translation.title if translation else self.slug
+
+        if self.parent:
+            parent_translation = self.parent.translations.filter(language=language).first()
+            parent_title = parent_translation.title if parent_translation else self.parent.slug
+            return f"{parent_title} — {title}"
+
+        return title
 
 
 class PropertyTypeTranslation(TranslationBase):
@@ -235,6 +253,22 @@ class ExchangeRate(BaseModel):
         verbose_name = _("Курс валют")
         verbose_name_plural = _("Курсы валют")
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete("latest_usd_to_gel")
+
+    @classmethod
+    def get_latest_rate(cls):
+        rate = cache.get("latest_usd_to_gel")
+        
+        if not rate:
+            latest = cls.objects.order_by("-effective_date").first()
+            rate = latest.usd_to_gel if latest else 2.75
+            
+            cache.set("latest_usd_to_gel", rate, 86400)
+            
+        return rate
+
     def __str__(self):
         return f"1 USD = {self.usd_to_gel} GEL ({self.effective_date})"
 
@@ -313,8 +347,19 @@ class Property(BaseModel):
         decimal_places=2,
         null=True,
         blank=True,
-        verbose_name=_("Общая площадь, м²")
+        verbose_name=_("Площадь участка / общая площадь, м²"),  
+        help_text=_("Для домов — площадь земельного участка. Для квартир — общая площадь.")
     )
+    
+    area_living = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name=_("Площадь дома / жилая площадь, м²"),
+        help_text=_("Для домов — площадь самого строения.")
+    )
+    
     slug = models.SlugField(
         unique=True,
         max_length=255,
@@ -367,6 +412,22 @@ class Property(BaseModel):
         from django.utils import timezone
         from datetime import timedelta
         return self.created_at >= timezone.now() - timedelta(days=7)
+
+    @property
+    def price_in_usd(self):
+        """Гарантированно возвращает цену в долларах"""
+        if self.currency == Currency.USD:
+            return int(self.price)
+        rate = ExchangeRate.get_latest_rate()
+        return int(self.price / rate)
+
+    @property
+    def price_in_gel(self):
+        """Гарантированно возвращает цену в лари"""
+        if self.currency == Currency.GEL:
+            return int(self.price)
+        rate = ExchangeRate.get_latest_rate()
+        return int(self.price * rate)
     
     def __str__(self):
         translation = self.translations.filter(language=Language.RU).first()

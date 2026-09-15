@@ -8,3 +8,4 @@ PyJWT
 deepl
 python-dotenv
 cryptography
+whitenoise

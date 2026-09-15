@@ -24,15 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)-d4(0q^mzjs#vt40nq1o2+&byq()k)$_)m4s3o279l8$-y3hy'
 
+SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-dev-key")
+DEBUG = os.environ.get("DEBUG", "True") == "True"
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
 
 DEEPL_API_KEY = os.environ.get("DEEPL_API_KEY", "")
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -47,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     "django.contrib.gis",
     'django.contrib.sites',
     'allauth',
@@ -58,10 +56,14 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+LANGUAGE_COOKIE_NAME = "django_language"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "django.middleware.locale.LocaleMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -126,23 +128,37 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
 LANGUAGE_CODE = 'ru'
+LANGUAGES = [
+    ("ru", _("Русский")),
+    ("en", _("English")),
+    ("ka", _("ქართული")),
+]
+
+
 
 TIME_ZONE = 'Asia/Tbilisi'
 
 USE_I18N = True
+USE_L10N = True
 
 USE_TZ = True
 
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
+LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR / "properties" / "static",
 ]
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 UNFOLD = {
     "SITE_TITLE": _("Панель управления"),
@@ -226,15 +242,16 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
-ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Вход только по email
-ACCOUNT_EMAIL_REQUIRED = True            # Email обязателен
-ACCOUNT_USERNAME_REQUIRED = False        # Логин (username) не нужен
-ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username' # У AbstractUser логин есть под капотом, просто мы его не просим у юзера
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  
+ACCOUNT_EMAIL_REQUIRED = True          
+ACCOUNT_USERNAME_REQUIRED = False      
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username' 
 
-# Пока отключим обязательное подтверждение почты, чтобы было легко тестировать локально.
-# На боевом сервере поменяем на 'mandatory' (обязательно).
+
 ACCOUNT_EMAIL_VERIFICATION = 'none' 
 
-# Куда перенаправлять пользователя после успешного входа/выхода
-LOGIN_REDIRECT_URL = '/'  # На главную страницу
+LOGIN_REDIRECT_URL = '/'  
 LOGOUT_REDIRECT_URL = '/'
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 209715200  
+FILE_UPLOAD_MAX_MEMORY_SIZE = 20971520

@@ -4,19 +4,7 @@ from unfold.admin import ModelAdmin, TabularInline, StackedInline
 from .widgets import LocationPickerWidget, LocationFormField
 from django import forms
 
-from .models import (
-    DealType, DealTypeTranslation,
-    PropertyType, PropertyTypeTranslation,
-    PropertyStatus, PropertyStatusTranslation,
-    ExchangeRate,
-    Property, PropertyTranslation, PropertyImage,
-    Attribute, AttributeTranslation,
-    AttributePropertyType,
-    AttributeChoice, AttributeChoiceTranslation,
-    PropertyAttributeValue,
-    FavoriteProperty,
-    SiteSettings,
-)
+from .models import *
 
 
 class PropertyAdminForm(forms.ModelForm):
@@ -27,7 +15,7 @@ class PropertyAdminForm(forms.ModelForm):
             address_field="address",
             city_field="city",
             district_field="district",
-            default_lat=41.7151,   # координаты твоего города по умолчанию
+            default_lat=41.7151,   
             default_lng=44.8271,
         ),
     )
@@ -206,7 +194,7 @@ class PropertyAdmin(ModelAdmin):
             "description": _("Кликните на карте — адрес, город и район заполнятся автоматически. Поля можно поправить вручную."),
             "fields": ("location", "address", "city", "district"),
         }),
-        (_("Параметры"), {"fields": ("area_total",)}),
+        (_("Параметры"), {"fields": ("area_total", "area_living")}),
         (_("Публикация"), {"fields": ("is_published", "published_at")}),
         (_("Служебное"), {"fields": ("created_by", "created_at", "updated_at"), "classes": ("collapse",)}),
     )
