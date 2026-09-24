@@ -16,26 +16,24 @@
     opacity: 1;
   }
 
-  /* Сама выезжающая панель */
   #map-drawer {
     position: fixed;
     top: 0;
     right: 0;
-    width: 600px; /* Сделали пошире, как ты просила */
+    width: 600px; 
     height: 100vh;
-    height: 100dvh; /* Специально для Safari на iPhone, чтобы не пряталось за адресной строкой */
+    height: 100dvh; 
     background: var(--white);
     z-index: 500;
     box-shadow: -8px 0 40px rgba(14,28,46,0.18);
     display: flex;
     flex-direction: column;
-    /* Убираем панель за правый край на 100% её ширины */
     transform: translateX(100%);
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    visibility: hidden; /* Чтобы не скроллилась, когда спрятана */
+    visibility: hidden; 
   }
 
-  /* Класс, который добавляется через JS для открытия */
+ 
   #map-drawer.open {
     transform: translateX(0);
     visibility: visible;
@@ -67,6 +65,14 @@
     }
   }
 </style>
+{% load i18n property_tags %}
+
+<script>
+  const TRANS = {
+    openCard: "{% trans 'Открыть карточку' %}",
+    lang: "{{ LANGUAGE_CODE|default:'ru' }}",  // ← текущий язык
+  };
+</script>
 
 <div id="map-overlay"></div>
 
@@ -100,10 +106,9 @@
   function initDrawerMap() {
     if (drawerMap) return;
     drawerMap = L.map("map-drawer-map", {
-      zoomControl: false // Скрываем дефолтный зум, добавим свой ниже
+      zoomControl: false
     }).setView([41.7151, 44.8271], 12);
-    
-    // Переносим кнопки зума вниз направо, чтобы на телефонах было удобно тянуться пальцем
+
     L.control.zoom({ position: 'bottomright' }).addTo(drawerMap);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -116,10 +121,9 @@
     const drawer = document.getElementById("map-drawer");
     const overlay = document.getElementById("map-overlay");
 
-    // Открываем через добавление классов (CSS сам сделает плавную анимацию)
     overlay.classList.add("visible");
     drawer.classList.add("open");
-    document.body.style.overflow = "hidden"; // Блокируем скролл сайта
+    document.body.style.overflow = "hidden";
 
     initDrawerMap();
 
@@ -127,8 +131,8 @@
     const feature = features.find(f => f.id === propertyId);
 
     if (!feature) {
-        console.error("Объект не найден! ID:", propertyId);
-        return;
+      console.error("Объект не найден! ID:", propertyId);
+      return;
     }
 
     setTimeout(() => {
@@ -139,46 +143,39 @@
 
       const icon = L.divIcon({
         className: "",
-        html: `
-            <div style="
-                width: 16px;
-                height: 16px;
-                background: #c9a24a;
-                border: 3px solid #0e1c2e;
-                border-radius: 50%;
-                box-shadow: 0 2px 8px rgba(14,28,46,0.4);
-            "></div>
-        `,
+        html: `<div style="
+          width: 16px; height: 16px;
+          background: #c9a24a;
+          border: 3px solid #0e1c2e;
+          border-radius: 50%;
+          box-shadow: 0 2px 8px rgba(14,28,46,0.4);
+        "></div>`,
         iconSize: [16, 16],
         iconAnchor: [8, 8],
         popupAnchor: [0, -12],
-    });
+      });
 
       drawerMarker = L.marker([feature.lat, feature.lng], { icon })
-          .addTo(drawerMap)
-          .bindPopup(`
-              <div style="min-width: 180px; font-family: 'Manrope', sans-serif;">
-                  ${feature.image
-                      ? `<img src="${feature.image}" style="width:100%; height:110px; object-fit:cover; border-radius:6px; margin-bottom:8px;">`
-                      : ""}
-                  <strong style="font-size:14px; color:#0e1c2e; line-height: 1.2; display: block; margin-bottom: 4px;">${feature.title}</strong>
-                  <span style="color:#6b7280; font-size:12px;"><i class="ti ti-map-pin"></i> ${feature.city}</span><br>
-                  <a href="/catalog/${feature.slug}/" style="color:#2f7a74; font-size:13px; font-weight:600; margin-top:8px; display:inline-block; border-bottom: 1px solid currentColor; padding-bottom: 2px;">
-                      Открыть карточку →
-                  </a>
-              </div>
-          `, { maxWidth: 260 })
-          .openPopup();
+      .addTo(drawerMap)
+      .bindPopup(`
+        <div style="min-width: 200px; font-family: 'Manrope', sans-serif; text-align: center;">
+          ${feature.image
+            ? `<img src="${feature.image}" style="width:100%; height:110px; object-fit:cover; border-radius:6px; margin-bottom:8px;">`
+            : ""}
+          <a href="/catalog/${feature.slug}/"
+            style="color:#2f7a74; font-size:13px; font-weight:600; display:inline-block; border-bottom:1px solid currentColor; padding-bottom:2px;">
+            ${TRANS.openCard} →
+          </a>
+        </div>
+      `, { maxWidth: 260 })
+      .openPopup();
 
     }, 350);
   }
 
   function closeDrawer() {
-    // Закрываем, просто удаляя классы
     document.getElementById("map-drawer").classList.remove("open");
     document.getElementById("map-overlay").classList.remove("visible");
-    
-    // Возвращаем скролл сайта с небольшой задержкой (чтобы мобилки не дергались)
     setTimeout(() => {
       document.body.style.overflow = "";
     }, 300);

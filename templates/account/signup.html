@@ -49,7 +49,6 @@
         <p>
           <label for="{{ field.id_for_label }}">{{ field.label }}</label>
           {{ field }}
-          
           {% if field.errors %}
             <ul class="errorlist">
               {% for error in field.errors %}

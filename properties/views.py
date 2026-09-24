@@ -158,7 +158,8 @@ def property_detail_view(request, slug):
     return render(request, "properties/detail.html", context)
 
 def properties_geojson(request):
-    """Возвращает координаты всех опубликованных объектов для карты каталога."""
+    from django.utils.translation import get_language
+    
     properties = (
         Property.objects.filter(is_published=True, location__isnull=False)
         .select_related("status")
@@ -168,16 +169,19 @@ def properties_geojson(request):
 
     features = []
     for p in properties:
-        ru_trans = next((t for t in p.translations.all() if t.language == "ru"), None)
+        titles = {}
+        for t in p.translations.all():
+            titles[t.language] = t.title
+
         main_img = p.images.filter(is_main=True).first() or p.images.first()
 
         features.append({
             "id": p.id,
             "slug": p.slug,
-            "title": ru_trans.title if ru_trans else p.slug,
+            "titles": titles,           
+            "city": p.city,             
             "price": str(p.price),
             "currency": p.currency,
-            "city": p.city,
             "status_color": p.status.color if p.status else "#0e1c2e",
             "image": main_img.image.url if main_img else None,
             "lat": p.location.y,

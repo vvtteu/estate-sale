@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-11 19:08+0000\n"
+"POT-Creation-Date: 2026-09-24 08:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,7 +135,7 @@ msgid "Основное"
 msgstr ""
 
 #: properties/admin.py:192 properties/models.py:319
-#: properties/templates/properties/catalog.html:239
+#: properties/templates/properties/catalog.html:248
 msgid "Цена"
 msgstr "Price"
 
@@ -161,8 +161,8 @@ msgstr ""
 msgid "Служебное"
 msgstr ""
 
-#: properties/admin.py:233 templates/base.html:214 templates/base.html:259
-#: templates/base.html:309
+#: properties/admin.py:233 templates/base.html:551 templates/base.html:626
+#: templates/base.html:683
 msgid "Контакты"
 msgstr "Contacts"
 
@@ -201,7 +201,7 @@ msgid "Порядок сортировки"
 msgstr ""
 
 #: properties/models.py:61 properties/models.py:74 properties/models.py:285
-#: properties/templates/properties/catalog.html:215
+#: properties/templates/properties/catalog.html:218
 #: properties/templates/properties/detail.html:200
 #: properties/templates/properties/detail.html:217
 msgid "Тип сделки"
@@ -241,7 +241,7 @@ msgid "К каким типам сделок относится данная к�
 msgstr ""
 
 #: properties/models.py:132 properties/models.py:162 properties/models.py:291
-#: properties/models.py:611 properties/templates/properties/catalog.html:223
+#: properties/models.py:611 properties/templates/properties/catalog.html:226
 msgid "Тип недвижимости"
 msgstr "Property Type"
 
@@ -585,91 +585,96 @@ msgid "Очистить поиск"
 msgstr "Clear search"
 
 #: properties/templates/properties/catalog.html:208
+#: properties/templates/properties/catalog.html:211
 msgid "Показать фильтры"
 msgstr "Show filters"
 
-#: properties/templates/properties/catalog.html:217
+#: properties/templates/properties/catalog.html:209
+msgid "Скрыть фильтры"
+msgstr "Hide filters"
+
+#: properties/templates/properties/catalog.html:220
 msgid "Все варианты"
 msgstr "All options"
 
-#: properties/templates/properties/catalog.html:218
+#: properties/templates/properties/catalog.html:221
 msgid "Купить"
 msgstr "Buy"
 
-#: properties/templates/properties/catalog.html:219
+#: properties/templates/properties/catalog.html:222
 msgid "Арендовать"
 msgstr "Rent"
 
-#: properties/templates/properties/catalog.html:225
+#: properties/templates/properties/catalog.html:228
 msgid "Все типы"
 msgstr "All types"
 
-#: properties/templates/properties/catalog.html:241
-#: properties/templates/properties/catalog.html:258
+#: properties/templates/properties/catalog.html:250
+#: properties/templates/properties/catalog.html:267
 msgid "От"
 msgstr "From"
 
-#: properties/templates/properties/catalog.html:242
-#: properties/templates/properties/catalog.html:259
+#: properties/templates/properties/catalog.html:251
+#: properties/templates/properties/catalog.html:268
 msgid "До"
 msgstr "To"
 
-#: properties/templates/properties/catalog.html:246
+#: properties/templates/properties/catalog.html:255
 msgid "Комнат"
 msgstr "Rooms"
 
-#: properties/templates/properties/catalog.html:248
+#: properties/templates/properties/catalog.html:257
 msgid "Любое"
 msgstr "Any"
 
-#: properties/templates/properties/catalog.html:249
+#: properties/templates/properties/catalog.html:258
 msgid "1 комната"
 msgstr "1 room"
 
-#: properties/templates/properties/catalog.html:250
+#: properties/templates/properties/catalog.html:259
 msgid "2 комнаты"
 msgstr "2 rooms"
 
-#: properties/templates/properties/catalog.html:251
+#: properties/templates/properties/catalog.html:260
 msgid "3 комнаты"
 msgstr "3 rooms"
 
-#: properties/templates/properties/catalog.html:252
+#: properties/templates/properties/catalog.html:261
 msgid "4+ комнат"
 msgstr "4+ rooms"
 
-#: properties/templates/properties/catalog.html:256
+#: properties/templates/properties/catalog.html:265
 msgid "Площадь м²"
 msgstr "Area m²"
 
-#: properties/templates/properties/catalog.html:265
+#: properties/templates/properties/catalog.html:274
 msgid "Сбросить всё"
 msgstr "Reset all"
 
-#: properties/templates/properties/catalog.html:267
+#: properties/templates/properties/catalog.html:276
 msgid "Найти объекты"
 msgstr "Find properties"
 
-#: properties/templates/properties/catalog.html:279
+#: properties/templates/properties/catalog.html:288
 msgid "В избранное"
 msgstr "Add to favorites"
 
-#: properties/templates/properties/catalog.html:304
+#: properties/templates/properties/catalog.html:313
 #: properties/templates/properties/detail.html:148
 msgid "Новое"
 msgstr "New"
 
-#: properties/templates/properties/catalog.html:312
+#: properties/templates/properties/catalog.html:321
 #: properties/templates/properties/index.html:238
 msgid "Без названия"
 msgstr "Untitled"
 
-#: properties/templates/properties/catalog.html:329
+#: properties/templates/properties/catalog.html:338
 #: templates/account/profile.html:195
 msgid "комн."
 msgstr "rooms"
 
-#: properties/templates/properties/catalog.html:335
+#: properties/templates/properties/catalog.html:344
 #: properties/templates/properties/detail.html:186
 #: properties/templates/properties/detail.html:234
 #: properties/templates/properties/index.html:247
@@ -677,23 +682,23 @@ msgstr "rooms"
 msgid "м²"
 msgstr "m²"
 
-#: properties/templates/properties/catalog.html:343
+#: properties/templates/properties/catalog.html:352
 msgid "Показать на карте"
 msgstr "Show on map"
 
-#: properties/templates/properties/catalog.html:352
+#: properties/templates/properties/catalog.html:361
 msgid "Ничего не найдено"
 msgstr "Nothing found"
 
-#: properties/templates/properties/catalog.html:353
+#: properties/templates/properties/catalog.html:362
 msgid "Попробуйте изменить параметры фильтрации или сбросить их."
 msgstr "Try changing the filter parameters or reset them."
 
-#: properties/templates/properties/catalog.html:362
+#: properties/templates/properties/catalog.html:371
 msgid "Назад"
 msgstr "Back"
 
-#: properties/templates/properties/catalog.html:376
+#: properties/templates/properties/catalog.html:385
 msgid "Вперед"
 msgstr "Forward"
 
@@ -742,6 +747,10 @@ msgstr "Click to show map"
 #: properties/templates/properties/detail.html:278
 msgid "Похожие предложения"
 msgstr "Similar Properties"
+
+#: properties/templates/properties/includes/map_drawer.html:74
+msgid "Открыть карточку"
+msgstr "Open Card"
 
 #: properties/templates/properties/includes/price_panel.html:3
 msgid "Здравствуйте! Меня интересует объект"
@@ -853,8 +862,8 @@ msgstr "All Properties"
 msgid "Объекты скоро появятся..."
 msgstr "Properties coming soon..."
 
-#: properties/templates/properties/index.html:264 templates/base.html:212
-#: templates/base.html:257
+#: properties/templates/properties/index.html:264 templates/base.html:549
+#: templates/base.html:624
 msgid "Почему Грузия"
 msgstr "Why Georgia"
 
@@ -902,8 +911,8 @@ msgstr ""
 "Local culture, cuisine, and traditional warmth create a cozy atmosphere. "
 "You'll want to come back, and moving here feels comfortable and easy."
 
-#: properties/templates/properties/index.html:306 templates/base.html:213
-#: templates/base.html:258 templates/base.html:307
+#: properties/templates/properties/index.html:306 templates/base.html:550
+#: templates/base.html:625 templates/base.html:681
 msgid "О нас"
 msgstr "About Us"
 
@@ -1011,8 +1020,8 @@ msgstr "Welcome Back"
 msgid "Пароль"
 msgstr "Password"
 
-#: templates/account/login.html:120 templates/account/signup.html:71
-#: templates/base.html:243 templates/base.html:268
+#: templates/account/login.html:120 templates/account/signup.html:70
+#: templates/base.html:605 templates/base.html:639
 msgid "Войти"
 msgstr "Log In"
 
@@ -1020,7 +1029,7 @@ msgstr "Log In"
 msgid "Ещё нет аккаунта?"
 msgstr "Don't have an account yet?"
 
-#: templates/account/login.html:124 templates/account/signup.html:67
+#: templates/account/login.html:124 templates/account/signup.html:66
 msgid "Зарегистрироваться"
 msgstr "Sign Up"
 
@@ -1070,8 +1079,6 @@ msgstr ""
 "home."
 
 #: templates/account/profile.html:211
-#, fuzzy
-#| msgid "Вернуться к каталогу"
 msgid "Перейти в каталог"
 msgstr "Back to catalog"
 
@@ -1079,66 +1086,67 @@ msgstr "Back to catalog"
 msgid "Создать аккаунт"
 msgstr "Create Account"
 
-#: templates/account/signup.html:71
+#: templates/account/signup.html:70
 msgid "Уже есть аккаунт?"
 msgstr "Already have an account?"
 
-#: templates/base.html:204 templates/base.html:290
+#: templates/base.html:537 templates/base.html:665
 msgid "Real Estate in Kobuleti"
 msgstr "Real Estate in Kobuleti"
 
-#: templates/base.html:211 templates/base.html:256 templates/base.html:296
+#: templates/base.html:546 templates/base.html:622 templates/base.html:670
 msgid "Объекты"
 msgstr "Properties"
 
-#: templates/base.html:239 templates/base.html:265
+#: templates/base.html:598 templates/base.html:633
 msgid "Кабинет"
 msgstr "Dashboard"
 
-#: templates/base.html:241 templates/base.html:266
+#: templates/base.html:601 templates/base.html:636
 msgid "Выйти"
 msgstr "Log Out"
 
-#: templates/base.html:244 templates/base.html:269
+#: templates/base.html:608 templates/base.html:640
 msgid "Регистрация"
 msgstr "Sign Up"
 
-#: templates/base.html:247 templates/base.html:273
+#: templates/base.html:612 templates/base.html:644
 msgid "Оставить заявку"
 msgstr "Submit Request"
 
-#: templates/base.html:248
+#: templates/base.html:613
 msgid "Меню"
 msgstr "Menu"
 
-#: templates/base.html:293
-msgid ""
-"Агентство недвижимости, специализирующееся на Кобулети и побережье Аджарии."
-msgstr "Real estate agency specializing in Kobuleti and the Adjara coastline."
-
-#: templates/base.html:298
+#: templates/base.html:672
 msgid "Квартиры у моря"
 msgstr "Seaside Apartments"
 
-#: templates/base.html:299
+#: templates/base.html:673
 msgid "Дома с участком"
 msgstr "Houses with Land"
 
-#: templates/base.html:300
+#: templates/base.html:674
 msgid "Коммерческая"
 msgstr "Commercial"
 
-#: templates/base.html:301
+#: templates/base.html:675
 msgid "Новостройки"
 msgstr "New Developments"
 
-#: templates/base.html:305
+#: templates/base.html:679
 msgid "Компания"
 msgstr "Company"
 
-#: templates/base.html:308
+#: templates/base.html:682
 msgid "Отзывы"
 msgstr "Testimonials"
+
+#~ msgid ""
+#~ "Агентство недвижимости, специализирующееся на Кобулети и побережье "
+#~ "Аджарии."
+#~ msgstr ""
+#~ "Real estate agency specializing in Kobuleti and the Adjara coastline."
 
 #~ msgid "Номер телефона не заполнен в настройках сайта"
 #~ msgstr "Phone number is not set in site settings"

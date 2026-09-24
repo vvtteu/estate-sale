@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-11 19:09+0000\n"
+"POT-Creation-Date: 2026-09-24 08:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,7 +135,7 @@ msgid "Основное"
 msgstr ""
 
 #: properties/admin.py:192 properties/models.py:319
-#: properties/templates/properties/catalog.html:239
+#: properties/templates/properties/catalog.html:248
 msgid "Цена"
 msgstr "ფასი"
 
@@ -161,8 +161,8 @@ msgstr ""
 msgid "Служебное"
 msgstr ""
 
-#: properties/admin.py:233 templates/base.html:214 templates/base.html:259
-#: templates/base.html:309
+#: properties/admin.py:233 templates/base.html:551 templates/base.html:626
+#: templates/base.html:683
 msgid "Контакты"
 msgstr "კონტაქტები"
 
@@ -201,7 +201,7 @@ msgid "Порядок сортировки"
 msgstr ""
 
 #: properties/models.py:61 properties/models.py:74 properties/models.py:285
-#: properties/templates/properties/catalog.html:215
+#: properties/templates/properties/catalog.html:218
 #: properties/templates/properties/detail.html:200
 #: properties/templates/properties/detail.html:217
 msgid "Тип сделки"
@@ -241,7 +241,7 @@ msgid "К каким типам сделок относится данная к�
 msgstr ""
 
 #: properties/models.py:132 properties/models.py:162 properties/models.py:291
-#: properties/models.py:611 properties/templates/properties/catalog.html:223
+#: properties/models.py:611 properties/templates/properties/catalog.html:226
 msgid "Тип недвижимости"
 msgstr "უძრავი ქონების ტიპი"
 
@@ -585,91 +585,96 @@ msgid "Очистить поиск"
 msgstr "ძიების გასუფთავება"
 
 #: properties/templates/properties/catalog.html:208
+#: properties/templates/properties/catalog.html:211
 msgid "Показать фильтры"
 msgstr "ფილტრების ჩვენება"
 
-#: properties/templates/properties/catalog.html:217
+#: properties/templates/properties/catalog.html:209
+msgid "Скрыть фильтры"
+msgstr "ფილტრების დამალვა"
+
+#: properties/templates/properties/catalog.html:220
 msgid "Все варианты"
 msgstr "ყველა ვარიანტი"
 
-#: properties/templates/properties/catalog.html:218
+#: properties/templates/properties/catalog.html:221
 msgid "Купить"
 msgstr "ყიდვა"
 
-#: properties/templates/properties/catalog.html:219
+#: properties/templates/properties/catalog.html:222
 msgid "Арендовать"
 msgstr "ქირავება"
 
-#: properties/templates/properties/catalog.html:225
+#: properties/templates/properties/catalog.html:228
 msgid "Все типы"
 msgstr "ყველა ტიპი"
 
-#: properties/templates/properties/catalog.html:241
-#: properties/templates/properties/catalog.html:258
+#: properties/templates/properties/catalog.html:250
+#: properties/templates/properties/catalog.html:267
 msgid "От"
 msgstr "დან"
 
-#: properties/templates/properties/catalog.html:242
-#: properties/templates/properties/catalog.html:259
+#: properties/templates/properties/catalog.html:251
+#: properties/templates/properties/catalog.html:268
 msgid "До"
 msgstr "მდე"
 
-#: properties/templates/properties/catalog.html:246
+#: properties/templates/properties/catalog.html:255
 msgid "Комнат"
 msgstr "ოთახი"
 
-#: properties/templates/properties/catalog.html:248
+#: properties/templates/properties/catalog.html:257
 msgid "Любое"
 msgstr "ნებისმიერი"
 
-#: properties/templates/properties/catalog.html:249
+#: properties/templates/properties/catalog.html:258
 msgid "1 комната"
 msgstr "1 ოთახი"
 
-#: properties/templates/properties/catalog.html:250
+#: properties/templates/properties/catalog.html:259
 msgid "2 комнаты"
 msgstr "2 ოთახი"
 
-#: properties/templates/properties/catalog.html:251
+#: properties/templates/properties/catalog.html:260
 msgid "3 комнаты"
 msgstr "3 ოთახი"
 
-#: properties/templates/properties/catalog.html:252
+#: properties/templates/properties/catalog.html:261
 msgid "4+ комнат"
 msgstr "4+ ოთახი"
 
-#: properties/templates/properties/catalog.html:256
+#: properties/templates/properties/catalog.html:265
 msgid "Площадь м²"
 msgstr "ფართი მ²"
 
-#: properties/templates/properties/catalog.html:265
+#: properties/templates/properties/catalog.html:274
 msgid "Сбросить всё"
 msgstr "ყველაფრის გასუფთავება"
 
-#: properties/templates/properties/catalog.html:267
+#: properties/templates/properties/catalog.html:276
 msgid "Найти объекты"
 msgstr "ობიექტების ძებნა"
 
-#: properties/templates/properties/catalog.html:279
+#: properties/templates/properties/catalog.html:288
 msgid "В избранное"
 msgstr "რჩეულებში"
 
-#: properties/templates/properties/catalog.html:304
+#: properties/templates/properties/catalog.html:313
 #: properties/templates/properties/detail.html:148
 msgid "Новое"
 msgstr "ახალი"
 
-#: properties/templates/properties/catalog.html:312
+#: properties/templates/properties/catalog.html:321
 #: properties/templates/properties/index.html:238
 msgid "Без названия"
 msgstr "სახელის გარეშე"
 
-#: properties/templates/properties/catalog.html:329
+#: properties/templates/properties/catalog.html:338
 #: templates/account/profile.html:195
 msgid "комн."
 msgstr "ოთახი"
 
-#: properties/templates/properties/catalog.html:335
+#: properties/templates/properties/catalog.html:344
 #: properties/templates/properties/detail.html:186
 #: properties/templates/properties/detail.html:234
 #: properties/templates/properties/index.html:247
@@ -677,23 +682,23 @@ msgstr "ოთახი"
 msgid "м²"
 msgstr "მ²"
 
-#: properties/templates/properties/catalog.html:343
+#: properties/templates/properties/catalog.html:352
 msgid "Показать на карте"
 msgstr "რუკაზე ჩვენება"
 
-#: properties/templates/properties/catalog.html:352
+#: properties/templates/properties/catalog.html:361
 msgid "Ничего не найдено"
 msgstr "ვერაფერი მოიძებნა"
 
-#: properties/templates/properties/catalog.html:353
+#: properties/templates/properties/catalog.html:362
 msgid "Попробуйте изменить параметры фильтрации или сбросить их."
 msgstr "სცადეთ ფილტრაციის პარამეტრების შეცვლა ან გასუფთავება."
 
-#: properties/templates/properties/catalog.html:362
+#: properties/templates/properties/catalog.html:371
 msgid "Назад"
 msgstr "უკან"
 
-#: properties/templates/properties/catalog.html:376
+#: properties/templates/properties/catalog.html:385
 msgid "Вперед"
 msgstr "წინ"
 
@@ -742,6 +747,10 @@ msgstr "დააჭირეთ რუკის საჩვენებლა�
 #: properties/templates/properties/detail.html:278
 msgid "Похожие предложения"
 msgstr "მსგავსი შეთავაზებები"
+
+#: properties/templates/properties/includes/map_drawer.html:74
+msgid "Открыть карточку"
+msgstr "ბარათის გახსნა"
 
 #: properties/templates/properties/includes/price_panel.html:3
 msgid "Здравствуйте! Меня интересует объект"
@@ -854,8 +863,8 @@ msgstr "ყველა ობიექტი"
 msgid "Объекты скоро появятся..."
 msgstr "ობიექტები მალე გამოჩნდება..."
 
-#: properties/templates/properties/index.html:264 templates/base.html:212
-#: templates/base.html:257
+#: properties/templates/properties/index.html:264 templates/base.html:549
+#: templates/base.html:624
 msgid "Почему Грузия"
 msgstr "რატომ საქართველო"
 
@@ -905,8 +914,8 @@ msgstr ""
 "ადგილობრივი კულტურა, სამზარეულო და ტრადიციული გულთბილობა ქმნის კომფორტის "
 "ატმოსფეროს. აქ დაბრუნება გინდა, ხოლო გადმოსვლა კომფორტულად და მარტივად გადის."
 
-#: properties/templates/properties/index.html:306 templates/base.html:213
-#: templates/base.html:258 templates/base.html:307
+#: properties/templates/properties/index.html:306 templates/base.html:550
+#: templates/base.html:625 templates/base.html:681
 msgid "О нас"
 msgstr "ჩვენ შესახებ"
 
@@ -1016,8 +1025,8 @@ msgstr "კეთილი იყოს თქვენი დაბრუნე
 msgid "Пароль"
 msgstr "პაროლი"
 
-#: templates/account/login.html:120 templates/account/signup.html:71
-#: templates/base.html:243 templates/base.html:268
+#: templates/account/login.html:120 templates/account/signup.html:70
+#: templates/base.html:605 templates/base.html:639
 msgid "Войти"
 msgstr "შესვლა"
 
@@ -1025,7 +1034,7 @@ msgstr "შესვლა"
 msgid "Ещё нет аккаунта?"
 msgstr "ჯერ არ გაქვთ ანგარიში?"
 
-#: templates/account/login.html:124 templates/account/signup.html:67
+#: templates/account/login.html:124 templates/account/signup.html:66
 msgid "Зарегистрироваться"
 msgstr "დარეგისტრირდით"
 
@@ -1075,8 +1084,6 @@ msgstr ""
 "ოცნების სახლი."
 
 #: templates/account/profile.html:211
-#, fuzzy
-#| msgid "Вернуться к каталогу"
 msgid "Перейти в каталог"
 msgstr "კატალოგში დაბრუნება"
 
@@ -1084,68 +1091,68 @@ msgstr "კატალოგში დაბრუნება"
 msgid "Создать аккаунт"
 msgstr "ანგარიშის შექმნა"
 
-#: templates/account/signup.html:71
+#: templates/account/signup.html:70
 msgid "Уже есть аккаунт?"
 msgstr "უკვე გაქვთ ანგარიში?"
 
-#: templates/base.html:204 templates/base.html:290
+#: templates/base.html:537 templates/base.html:665
 msgid "Real Estate in Kobuleti"
 msgstr "უძრავი ქონება ქობულეთში"
 
-#: templates/base.html:211 templates/base.html:256 templates/base.html:296
+#: templates/base.html:546 templates/base.html:622 templates/base.html:670
 msgid "Объекты"
 msgstr "ობიექტები"
 
-#: templates/base.html:239 templates/base.html:265
+#: templates/base.html:598 templates/base.html:633
 msgid "Кабинет"
 msgstr "კაბინეტი"
 
-#: templates/base.html:241 templates/base.html:266
+#: templates/base.html:601 templates/base.html:636
 msgid "Выйти"
 msgstr "გასვლა"
 
-#: templates/base.html:244 templates/base.html:269
+#: templates/base.html:608 templates/base.html:640
 msgid "Регистрация"
 msgstr "რეგისტრაცია"
 
-#: templates/base.html:247 templates/base.html:273
+#: templates/base.html:612 templates/base.html:644
 msgid "Оставить заявку"
 msgstr "განაცხადის დატოვება"
 
-#: templates/base.html:248
+#: templates/base.html:613
 msgid "Меню"
 msgstr "მენიუ"
 
-#: templates/base.html:293
-msgid ""
-"Агентство недвижимости, специализирующееся на Кобулети и побережье Аджарии."
-msgstr ""
-"უძრავი ქონების სააგენტო, რომელიც სპეციალიზდება ქობულეთსა და აჭარის "
-"სანაპიროზე."
-
-#: templates/base.html:298
+#: templates/base.html:672
 msgid "Квартиры у моря"
 msgstr "ბინები ზღვის პირას"
 
-#: templates/base.html:299
+#: templates/base.html:673
 msgid "Дома с участком"
 msgstr "სახლები მიწის ნაკვეთით"
 
-#: templates/base.html:300
+#: templates/base.html:674
 msgid "Коммерческая"
 msgstr "კომერციული"
 
-#: templates/base.html:301
+#: templates/base.html:675
 msgid "Новостройки"
 msgstr "ახაშენებლები"
 
-#: templates/base.html:305
+#: templates/base.html:679
 msgid "Компания"
 msgstr "კომპანია"
 
-#: templates/base.html:308
+#: templates/base.html:682
 msgid "Отзывы"
 msgstr "გამოხმაურებები"
+
+#~ msgid ""
+#~ "Агентство недвижимости, специализирующееся на Кобулети и побережье "
+#~ "Аджарии."
+#~ msgstr ""
+#~ "უძრავი ქონების სააგენტო, რომელიც სპეციალიზდება ქობულეთსა და აჭარის "
+#~ "სანაპიროზე."
 
 #~ msgid "Номер телефона не заполнен в настройках сайта"
 #~ msgstr "ტელეფონის ნომერი არ არის შევსებული საიტის პარამეტრებში"

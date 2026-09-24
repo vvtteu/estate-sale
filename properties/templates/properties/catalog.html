@@ -204,7 +204,10 @@
     </div>
 
     <!-- КНОПКА ПОКАЗА ФИЛЬТРОВ (появится только на мобилках) -->
-    <button type="button" class="btn-toggle-filters">
+    <button type="button" class="btn-toggle-filters" 
+        data-text-show="{% trans 'Показать фильтры' %}" 
+        data-text-hide="{% trans 'Скрыть фильтры' %}">
+      <i class="ti ti-adjustments-horizontal"></i>
       <span>{% trans "Показать фильтры" %}</span>
     </button>
 
@@ -403,15 +406,18 @@ document.addEventListener('DOMContentLoaded', function() {
   const btnText = toggleBtn ? toggleBtn.querySelector('span') : null;
   const btnIcon = toggleBtn ? toggleBtn.querySelector('i') : null;
 
-  if (toggleBtn && filtersWrapper) {
+  if (toggleBtn && filtersWrapper && btnText && btnIcon) {
+    const textShow = toggleBtn.getAttribute('data-text-show');
+    const textHide = toggleBtn.getAttribute('data-text-hide');
+
     toggleBtn.addEventListener('click', function() {
       filtersWrapper.classList.toggle('show');
       
       if (filtersWrapper.classList.contains('show')) {
-        btnText.textContent = 'Скрыть фильтры';
+        btnText.textContent = textHide;
         btnIcon.className = 'ti ti-x';
       } else {
-        btnText.textContent = 'Показать фильтры';
+        btnText.textContent = textShow;
         btnIcon.className = 'ti ti-adjustments-horizontal';
       }
     });
