@@ -514,6 +514,32 @@
           display: none;
         }
       }
+
+      .footer-credit {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        opacity: 0.7;
+        flex-wrap: wrap;
+        color: white;
+      }
+
+      .footer-credit a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+        transition: opacity 0.2s ease;
+      }
+
+      .footer-credit a:hover {
+        opacity: 1;
+      }
+
+      .footer-mail {
+        border-bottom: none;
+        font-size: 15px;
+      }
     </style>
 
     <meta name="csrf-token" content="{{ csrf_token }}" />
@@ -588,7 +614,7 @@
                 class="lang-btn {% if LANGUAGE_CODE == 'ka' %}active{% endif %}"
                 data-url="{% change_lang_url 'ka' %}"
               >
-                KA
+                GE
               </button>
             </form>
           </div>
@@ -682,6 +708,14 @@
               <li><a href="#">{% trans "Отзывы" %}</a></li>
               <li><a href="#">{% trans "Контакты" %}</a></li>
             </ul>
+            <br>
+            <div class="footer-credit">
+                Designed & developed by
+                <a href="https://t.me/mistwalk" target="_blank" rel="noopener noreferrer">
+                  Kuznetsova Darya
+                </a>
+                  <a href="mailto:vvvrtvrvet@gmail.com">mail: vvvrtvrvet@gmail.com</a>
+              </div>
           </div>
         </div>
       </div>

@@ -191,7 +191,7 @@
         <div class="metric-item">
           <div>
             <div class="metric-label">{% trans "Тип" %}</div>
-            <div class="metric-value">{{ property.property_type.get_full_name }}</div>
+            <div class="metric-value">{{ property|trans_property_type }}</div>
           </div>
         </div>
 
@@ -238,8 +238,11 @@
           {% for attr_val in property.attribute_values.all %}
             {% if attr_val.attribute.slug != 'rooms' %}
               <div class="spec-row">
-                <span class="spec-label">{{ attr_val.attribute }}</span>
-                <span class="spec-value">{{ attr_val.display_value }}</span>
+                <span class="spec-label">{{ attr_val|trans_attr_name }}</span>
+                <span class="spec-value">
+                  {{ attr_val|trans_attr_value }}
+                  {% if attr_val.attribute.unit %} {{ attr_val.attribute.unit }}{% endif %}
+                </span>
               </div>
             {% endif %}
           {% endfor %}
